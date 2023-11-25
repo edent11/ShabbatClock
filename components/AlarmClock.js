@@ -39,12 +39,7 @@ const AlarmClock = (props) => {
 
 
 
-
-
-
   return (
-
-
 
 
     <View name="alarmBox" className={"flex flex-row items-center justify-between w-20/22 h-28 p-3.5 border-b-4 border-blue-100 rounded "}>
