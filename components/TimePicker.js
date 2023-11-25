@@ -4,7 +4,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useColorScheme } from "nativewind";
 
 const TimePicker = (props) => {
-    // const TimePicker = (props, { onSelect }) => {
 
     const [modalVisible, setModalVisible] = useState(true);
     const [text, setText] = useState('test');
@@ -15,9 +14,10 @@ const TimePicker = (props) => {
 
     const onTimeChangeIOS = () => {
 
-        let selectedMinutes = fixMinutesDisplay(date.getMinutes());
+        let selectedMinutes = fixDisplay(date.getMinutes());
+        let selectedHours = fixDisplay(date.getHours());
 
-        props.onSelect(selectedDate.getHours(), selectedMinutes);
+        props.onSelect(selectedHours + ":" + selectedMinutes);
     };
 
 
@@ -27,8 +27,9 @@ const TimePicker = (props) => {
 
         if (event?.type === 'set') {
 
-            let selectedMinutes = fixMinutesDisplay(selectedDate.getMinutes());
-            props.onSelect(selectedDate.getHours(), selectedMinutes);
+            let selectedMinutes = fixDisplay(selectedDate.getMinutes());
+            let selectedHours = fixDisplay(selectedDate.getHours());
+            props.onSelect(selectedHours + ":" + selectedMinutes);
         }
         if (event?.type === 'dismissed') {
 
@@ -45,12 +46,12 @@ const TimePicker = (props) => {
 
     };
 
-    const fixMinutesDisplay = (minutes) => {
+    const fixDisplay = (time) => {
 
-        if (minutes > 10)
-            return minutes;
+        if (time > 9)
+            return time;
         else
-            return `0${minutes}`;
+            return `0${time}`;
 
     }
 

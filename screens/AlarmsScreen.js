@@ -14,23 +14,51 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function AlarmsScreen() {
     const { t } = useTranslation();
-    const [alarms, setAlarms] = useState([{ hours: 10, minutes: 56, isSwitchEnabled: false }]);
+    const [alarms, setAlarms] = useState([{ time: "10:30", isToggleEnabled: false }]);
     const [isTimePickerActive, setTimePicker] = useState(false);
 
-    const addAlarm = (newHours, newMinutes) => {
+
+    const addAlarm = (newTime) => {
         setAlarms(prevAlarms => {
-            return [...prevAlarms, { hours: newHours, minutes: newMinutes, isSwitchEnabled: true }];
+            return [...prevAlarms, { time: newTime, isToggleEnabled: true }];
         });
 
 
         setTimePicker(false);
     }
 
-    const deleteAlarm = (id) => {
+    const editAlarmTime = (alarmID, newTime) => {
+
+        const newAlarmsArray = alarms.map((alarm, index) => {
+            if (index === alarmID) {
+                alarm.time = newTime;
+                alarm.isToggleEnabled = true;
+
+            }
+            return alarm;
+        });
+
+        setAlarms(newAlarmsArray);
+    }
+
+    const editAlarmToggle = (alarmID, newTime) => {
+
+        const newAlarmsArray = alarms.map((alarm, index) => {
+            if (index === alarmID) {
+                alarm.isToggleEnabled = !alarm.isToggleEnabled;
+            }
+
+            return alarm;
+        });
+
+        setAlarms(newAlarmsArray);
+    }
+
+    const deleteAlarm = (alarmId) => {
 
         setAlarms(prevAlarms => {
             return prevAlarms.filter((alarm, index) => {
-                return index !== id;
+                return index !== alarmId;
 
             })
         });
@@ -39,18 +67,6 @@ export default function AlarmsScreen() {
         setTimePicker(false);
     }
 
-    const alarmsSort = () => {
-
-        setAlarms(prevAlarms => {
-            return prevAlarms.filter((alarm, index) => {
-                return index !== id;
-
-            })
-        });
-
-
-        setTimePicker(false);
-    }
 
     return (
 
@@ -59,7 +75,7 @@ export default function AlarmsScreen() {
             {isTimePickerActive &&
                 <TimePicker
                     active={isTimePickerActive}
-                    onSelect={(newHours, newMinutes) => { addAlarm(newHours, newMinutes); }}
+                    onSelect={(newTime) => { addAlarm(newTime); }}
                     onCancel={() => setTimePicker(false)}
                     label='add alarm' />}
 
@@ -67,25 +83,29 @@ export default function AlarmsScreen() {
 
             <View className='h-5/7'>
 
+
                 < ScrollView className="pt-5 mx-1" >
 
                     <View name="AlarmsContainer" className="flex flex-1 items-center bg-slate-600 h-full">
 
-                        {alarms
-                            .sort()
-                            ?.map((alarm, index) => {
+                        {
+                            alarms
+                                .sort((a, b) => a.time > b.time ? 1 : -1)
+                                ?.map((alarm, index) => {
 
-                                return (
-                                    <AlarmClock
-                                        key={index}
-                                        hours={alarm.hours}
-                                        minutes={alarm.minutes}
-                                        isSwitchEnabled={alarm.isSwitchEnabled}
-                                    />
+                                    return (
+                                        <AlarmClock
+                                            key={index}
+                                            id={index}
+                                            time={alarm.time}
+                                            toggle={alarm.isToggleEnabled}
+                                            editTime={(alarmID, newTime) => editAlarmTime(alarmID, newTime)}
+                                            editToggle={(alarmID, newTime) => editAlarmToggle(alarmID, newTime)}
+                                        />
 
 
-                                )
-                            })}
+                                    )
+                                })}
 
 
                     </View>

@@ -14,28 +14,11 @@ const AlarmClock = (props) => {
     await useFonts();
   };
 
-  const [isSwitchEnabled, setIsSwitchEnabled] = useState(props.isSwitchEnabled);
-
-  const toggleSwitch = () => setIsSwitchEnabled(previousState => !previousState);
 
   const [isOneDaySelected, setOneDay] = useState();
   const [isTwoDaySelected, setTwoDay] = useState(false);
   const [isThreeDaySelected, setThreeDay] = useState(false);
   const [isTimePickerActive, setTimePicker] = useState(false);
-  const [time, setTime] = useState(props.hours + ":" + props.minutes);
-
-
-  const setUserTime = () => {
-    console.log(isTimePickerActive);
-    setTimePicker(true);
-  };
-
-  const getUserTime = (hours, minutes) => {
-    // console.log(hours, minutes);
-    setTime(hours + ":" + minutes);
-    setTimePicker(false);
-
-  };
 
 
 
@@ -46,15 +29,15 @@ const AlarmClock = (props) => {
 
       <TimePicker
         active={isTimePickerActive}
-        onSelect={(hours, minutes) => { getUserTime(hours, minutes); }}
+        onSelect={(newTime) => { setTimePicker(false); props.editTime(props.id, newTime); }}
         onCancel={() => setTimePicker(false)}
         label='edit alarm' />
 
 
       <View name='time' className="flex flex-1  flex-row items-center h-full">
-        <Pressable onPress={setUserTime} >
+        <Pressable onPress={() => setTimePicker(true)} >
           <View>
-            <Text className="text-3xl text-white ">{time}</Text>
+            <Text className="text-3xl text-white ">{props.time}</Text>
           </View>
 
         </Pressable>
@@ -90,11 +73,10 @@ const AlarmClock = (props) => {
 
       <View name='switchView' className="flex-row items-center justify-end">
         <Switch
-          // style={styles.switch}
           trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isSwitchEnabled}
+          onValueChange={() => props.editToggle(props.id)}
+          value={props.toggle}
         />
 
       </View>
@@ -104,70 +86,6 @@ const AlarmClock = (props) => {
     </View >
 
 
-
-
   )
 }
-
-// const styles = StyleSheet.create({
-
-
-
-//   alarmBox: {
-//     marginTop: 10,
-//     display: 'flex',
-//     flexDirection: 'row',
-//     alignItems: 'center',
-
-//     justifyContent: 'space-between',
-//     backgroundColor: 'red',
-//     width: '95%',
-//     height: 100,
-//     padding: 15,
-//     borderRadius: 20,
-//     borderBottomColor: 'rgba(255, 255, 255, 0.9)',
-//     borderBottomWidth: 5
-
-
-
-//   },
-
-//   clockView: {
-
-
-//     display: 'flex',
-//     height: '100%',
-//     flex: 2,
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     // backgroundColor: 'red',
-
-//   },
-
-//   swtichView: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     justifyContent: 'flex-end',
-//   },
-
-//   // time: {
-//   //   // fontFamily: 'MPLUSRounded1cMedium',
-//   //   fontSize: 20,
-//   //   paddingLeft: 10,
-//   // },
-
-//   // switch: {
-
-//   //   // position: 'absolute',
-//   //   // right: 0,
-//   //   // fontFamily: 'MPLUSRounded1cMedium',
-
-
-
-//   // }
-
-
-// });
-
 export default AlarmClock
