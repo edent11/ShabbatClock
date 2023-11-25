@@ -14,12 +14,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function AlarmsScreen() {
     const { t } = useTranslation();
-    const [alarms, setAlarms] = useState([{ hours: '10', minutes: '00', isSwitchEnabled: false }]);
+    const [alarms, setAlarms] = useState([{ hours: 10, minutes: 56, isSwitchEnabled: false }]);
     const [isTimePickerActive, setTimePicker] = useState(false);
 
-    const addAlarm = (hours, minutes) => {
+    const addAlarm = (newHours, newMinutes) => {
         setAlarms(prevAlarms => {
-            return [...prevAlarms, { hours: hours, minutes: minutes, isSwitchEnabled: true }];
+            return [...prevAlarms, { hours: newHours, minutes: newMinutes, isSwitchEnabled: true }];
         });
 
 
@@ -39,6 +39,19 @@ export default function AlarmsScreen() {
         setTimePicker(false);
     }
 
+    const alarmsSort = () => {
+
+        setAlarms(prevAlarms => {
+            return prevAlarms.filter((alarm, index) => {
+                return index !== id;
+
+            })
+        });
+
+
+        setTimePicker(false);
+    }
+
     return (
 
         <View className={"pt-10 dark:bg-black h-11/12"} >
@@ -46,7 +59,7 @@ export default function AlarmsScreen() {
             {isTimePickerActive &&
                 <TimePicker
                     active={isTimePickerActive}
-                    onSelect={(hours, minutes) => { addAlarm(hours, minutes); }}
+                    onSelect={(newHours, newMinutes) => { addAlarm(newHours, newMinutes); }}
                     onCancel={() => setTimePicker(false)}
                     label='add alarm' />}
 
@@ -58,19 +71,21 @@ export default function AlarmsScreen() {
 
                     <View name="AlarmsContainer" className="flex flex-1 items-center bg-slate-600 h-full">
 
-                        {alarms?.map((alarm, index) => {
+                        {alarms
+                            .sort()
+                            ?.map((alarm, index) => {
 
-                            return (
-                                <AlarmClock
-                                    key={index}
-                                    hours={alarm.hours}
-                                    minutes={alarm.minutes}
-                                    isSwitchEnabled={alarm.isSwitchEnabled}
-                                />
+                                return (
+                                    <AlarmClock
+                                        key={index}
+                                        hours={alarm.hours}
+                                        minutes={alarm.minutes}
+                                        isSwitchEnabled={alarm.isSwitchEnabled}
+                                    />
 
 
-                            )
-                        })}
+                                )
+                            })}
 
 
                     </View>

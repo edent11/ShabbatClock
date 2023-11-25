@@ -17,7 +17,7 @@ const TimePicker = (props) => {
 
         let selectedMinutes = fixMinutesDisplay(date.getMinutes());
 
-        props.onSelect(date.getHours(), selectedMinutes);
+        props.onSelect(selectedDate.getHours(), selectedMinutes);
     };
 
 
@@ -102,7 +102,7 @@ const TimePicker = (props) => {
                                             />
 
                                             <Button
-                                                title= {props.label}
+                                                title={props.label}
                                                 onPress={onTimeChangeIOS}
 
                                             >

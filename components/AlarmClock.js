@@ -32,7 +32,7 @@ const AlarmClock = (props) => {
 
   const getUserTime = (hours, minutes) => {
     // console.log(hours, minutes);
-    setTime(hours + ':' + minutes);
+    setTime(hours + ":" + minutes);
     setTimePicker(false);
 
   };
@@ -50,62 +50,55 @@ const AlarmClock = (props) => {
         onCancel={() => setTimePicker(false)}
         label='edit alarm' />
 
-      <GestureHandlerRootView>
-        <Swipeable
 
-        >
-
-
-          <View name='time' className="flex flex-1  flex-row items-center h-full">
-            <Pressable onPress={setUserTime} >
-              <View>
-                <Text className="text-3xl text-white ">{time}</Text>
-              </View>
-
-            </Pressable>
+      <View name='time' className="flex flex-1  flex-row items-center h-full">
+        <Pressable onPress={setUserTime} >
+          <View>
+            <Text className="text-3xl text-white ">{time}</Text>
           </View>
 
-          <View name='buttons' className="flex flex-initial flex-row items-center justify-center ">
-            <Pressable onPress={() => setOneDay(!isOneDaySelected)}>
-              <View className={`bg-red-400 ${isOneDaySelected ? 'opacity-100' : 'opacity-30'}
+        </Pressable>
+      </View>
+
+      <View name='buttons' className="flex flex-initial flex-row items-center justify-center ">
+        <Pressable onPress={() => setOneDay(!isOneDaySelected)}>
+          <View className={`bg-red-400 ${isOneDaySelected ? 'opacity-100' : 'opacity-30'}
                              h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-                <Text>1</Text>
-              </View>
+            <Text>1</Text>
+          </View>
 
-            </Pressable>
+        </Pressable>
 
-            <Pressable onPress={() => setTwoDay(!isTwoDaySelected)}>
-              <View className={`bg-blue-400 ${isTwoDaySelected ? 'opacity-100' : 'opacity-30'}
+        <Pressable onPress={() => setTwoDay(!isTwoDaySelected)}>
+          <View className={`bg-blue-400 ${isTwoDaySelected ? 'opacity-100' : 'opacity-30'}
                             h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-                <Text>2</Text>
-              </View>
+            <Text>2</Text>
+          </View>
 
-            </Pressable>
+        </Pressable>
 
-            <Pressable onPress={() => setThreeDay(!isThreeDaySelected)}>
-              <View className={`bg-green-400 ${isThreeDaySelected ? ' opacity-100' : 'opacity-30'}
+        <Pressable onPress={() => setThreeDay(!isThreeDaySelected)}>
+          <View className={`bg-green-400 ${isThreeDaySelected ? ' opacity-100' : 'opacity-30'}
                            h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-                <Text>3</Text>
-              </View>
-
-            </Pressable>
+            <Text>3</Text>
           </View>
 
+        </Pressable>
+      </View>
 
 
-          <View name='switchView' className="flex-row items-center justify-end">
-            <Switch
-              // style={styles.switch}
-              trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isSwitchEnabled}
-            />
 
-          </View>
+      <View name='switchView' className="flex-row items-center justify-end">
+        <Switch
+          // style={styles.switch}
+          trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={isSwitchEnabled}
+        />
 
-        </Swipeable>
-      </GestureHandlerRootView >
+      </View>
+
 
 
     </View >
