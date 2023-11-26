@@ -2,7 +2,7 @@
 import { React, useState } from 'react'
 import AlarmClock from '../components/AlarmClock'
 import TimePicker from '../components/TimePicker'
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Vibration } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useColorScheme } from "nativewind";
 import TopBar from '../components/TopBar'
@@ -16,6 +16,7 @@ export default function AlarmsScreen() {
     const { t } = useTranslation();
     const [alarms, setAlarms] = useState([{ time: "10:30", isToggleEnabled: false }]);
     const [isTimePickerActive, setTimePicker] = useState(false);
+
 
 
     const addAlarm = (newTime) => {
@@ -82,13 +83,17 @@ export default function AlarmsScreen() {
                                 ?.map((alarm, index) => {
 
                                     return (
+
                                         <AlarmClock
                                             key={index}
                                             id={index}
                                             time={alarm.time}
                                             toggle={alarm.isToggleEnabled}
                                             onEdit={(alarmID, time, toggle) => editAlarm(alarmID, time, toggle)}
+                                            onRemove={(alarmID) => deleteAlarm(alarmID)}
                                         />
+
+
 
 
                                     )
@@ -117,7 +122,7 @@ export default function AlarmsScreen() {
             <View name='plus button' className='absolute bottom-7 inset-x-0 w-full flex items-center'>
 
                 <TouchableOpacity
-                    onPress={() => { setTimePicker(true) }}>
+                    onPress={() => { Vibration.vibrate(100); setTimePicker(true); }}>
                     <MaterialCommunityIcons name="plus-circle" size={60} color="#3474eb" />
                 </TouchableOpacity>
             </View>

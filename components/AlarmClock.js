@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text, Switch, Pressable, Alert, StyleSheet, Platform, Modal } from 'react-native'
+import { View, Text, Switch, Pressable, Alert, StyleSheet, Platform, Modal, Vibration } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useFonts from '../assets/hooks/useFonts';
 import TimePicker from '../components/TimePicker'
-import { GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
+
 
 
 
@@ -26,6 +27,19 @@ const AlarmClock = (props) => {
 
 
     <View name="alarmBox" className={"flex flex-row items-center justify-between w-20/22 h-28 p-3.5 border-b-4 border-blue-100 rounded "}>
+
+      <View name='remove' className='absolute top-0'>
+        <Pressable
+          onLongPress={() => {
+            Vibration.vibrate(200);
+            props.onRemove(props.id)
+          }}
+        >
+
+          <MaterialCommunityIcons name="delete-empty" size={24} color="black" />
+        </Pressable>
+
+      </View>
 
       <TimePicker
         active={isTimePickerActive}
@@ -75,7 +89,10 @@ const AlarmClock = (props) => {
         <Switch
           trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={() => props.onEdit(props.id, props.time, !props.toggle)}
+          onValueChange={() => {
+            props.onEdit(props.id, props.time, !props.toggle);
+            Vibration.vibrate(100);
+          }}
           value={props.toggle}
         />
 
