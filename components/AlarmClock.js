@@ -29,7 +29,7 @@ const AlarmClock = (props) => {
 
       <TimePicker
         active={isTimePickerActive}
-        onSelect={(newTime) => { setTimePicker(false); props.editTime(props.id, newTime); }}
+        onSelect={(newTime) => { setTimePicker(false); props.onEdit(props.id, newTime, props.toggle); }}
         onCancel={() => setTimePicker(false)}
         label='edit alarm' />
 
@@ -75,7 +75,7 @@ const AlarmClock = (props) => {
         <Switch
           trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
           ios_backgroundColor="#3e3e3e"
-          onValueChange={() => props.editToggle(props.id)}
+          onValueChange={() => props.onEdit(props.id, props.time, !props.toggle)}
           value={props.toggle}
         />
 

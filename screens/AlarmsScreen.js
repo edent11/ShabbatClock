@@ -27,12 +27,12 @@ export default function AlarmsScreen() {
         setTimePicker(false);
     }
 
-    const editAlarmTime = (alarmID, newTime) => {
+    const editAlarm = (alarmID, time, toggle) => {
 
         const newAlarmsArray = alarms.map((alarm, index) => {
             if (index === alarmID) {
-                alarm.time = newTime;
-                alarm.isToggleEnabled = true;
+                alarm.time = time;
+                alarm.isToggleEnabled = toggle;
 
             }
             return alarm;
@@ -41,18 +41,6 @@ export default function AlarmsScreen() {
         setAlarms(newAlarmsArray);
     }
 
-    const editAlarmToggle = (alarmID, newTime) => {
-
-        const newAlarmsArray = alarms.map((alarm, index) => {
-            if (index === alarmID) {
-                alarm.isToggleEnabled = !alarm.isToggleEnabled;
-            }
-
-            return alarm;
-        });
-
-        setAlarms(newAlarmsArray);
-    }
 
     const deleteAlarm = (alarmId) => {
 
@@ -99,8 +87,7 @@ export default function AlarmsScreen() {
                                             id={index}
                                             time={alarm.time}
                                             toggle={alarm.isToggleEnabled}
-                                            editTime={(alarmID, newTime) => editAlarmTime(alarmID, newTime)}
-                                            editToggle={(alarmID, newTime) => editAlarmToggle(alarmID, newTime)}
+                                            onEdit={(alarmID, time, toggle) => editAlarm(alarmID, time, toggle)}
                                         />
 
 
