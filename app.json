@@ -6,11 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -20,13 +15,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/musical-note.png",
         "backgroundColor": "#ffffff",
-        "userInterfaceStyle": "automatic"
-      }
+        "userInterfaceStyle": "automatic",
+        "useNextNotificationApi": true
+      },
+      "package": "com.eDenT11.ShabbatClock"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "97052e37-4b63-46ac-9a58-a87c68b6b98f"
+      }
+    },
+    "owner": "edenta11"
   }
 }

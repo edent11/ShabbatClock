@@ -5,6 +5,7 @@ import InfoScreen from "../screens/InfoScreen";
 import DateAndTimePicker from "./TimePicker";
 
 
+
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
@@ -70,7 +71,7 @@ const Tabs = () => {
 
             < Tab.Screen
                 name="Info"
-                component={DateAndTimePicker}
+                component={InfoScreen}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return (

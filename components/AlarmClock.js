@@ -41,15 +41,15 @@ const AlarmClock = (props) => {
 
       </View>
 
-      <TimePicker
+      {/* <TimePicker
         active={isTimePickerActive}
         onSelect={(newTime) => { setTimePicker(false); props.onEdit(props.id, newTime, props.toggle); }}
         onCancel={() => setTimePicker(false)}
-        label='edit alarm' />
+        label='edit alarm' /> */}
 
 
       <View name='time' className="flex flex-1  flex-row items-center h-full">
-        <Pressable onPress={() => setTimePicker(true)} >
+        <Pressable onPress={() => props.onEditTime(props.id)} >
           <View>
             <Text className="text-3xl text-white ">{props.time}</Text>
           </View>
@@ -90,7 +90,7 @@ const AlarmClock = (props) => {
           trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
           ios_backgroundColor="#3e3e3e"
           onValueChange={() => {
-            props.onEdit(props.id, props.time, !props.toggle);
+            props.onEditToggle(props.id);
             Vibration.vibrate(100);
           }}
           value={props.toggle}
