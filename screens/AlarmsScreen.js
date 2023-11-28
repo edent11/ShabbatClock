@@ -8,31 +8,31 @@ import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-var alarmIdEdit = '';
+let alarmIdEdit = '';
 
 export default function AlarmsScreen() {
 
     const { t } = useTranslation();
-    const [alarms, setAlarms] = useState([{ time: "10:30", isToggleEnabled: false }]);
+    const [alarms, setAlarms] = useState([{ hours: "10", minutes: "10", isToggleEnabled: false }]);
     const [isAddAlarm, setTimePickerAddAlarm] = useState(false);
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
 
 
-    const addAlarm = (newTime) => {
+    const addAlarm = (hours, minutes) => {
 
         setTimePickerAddAlarm(false);
 
         setAlarms(prevAlarms => {
-            return [...prevAlarms, { time: newTime, isToggleEnabled: true }];
+            return [...prevAlarms, { hours: hours, minutes: minutes, isToggleEnabled: true }];
         });
 
 
         setTimePicker(false);
     }
 
-    const editAlarmTime = (time) => {
+    const editAlarmTime = (hours, minutes) => {
 
         setTimePickerEditAlarm(false);
 
@@ -40,7 +40,9 @@ export default function AlarmsScreen() {
 
         const newAlarmsArray = alarms.map((alarm, index) => {
             if (index === alarmIdEdit) {
-                alarm.time = time;
+                alarm.hours = hours;
+                alarm.minutes = minutes;
+                alarm.isToggleEnabled = true;
 
             }
             return alarm;
@@ -72,7 +74,19 @@ export default function AlarmsScreen() {
         });
     }
 
-    { console.log(alarms) }
+    const fixTimeDisplay = (hours, minutes) => {
+
+        if (hours < 10)
+            hours = '0' + hours;
+
+        if (minutes < 10)
+            minutes = '0' + minutes;
+
+        return hours + ":" + minutes;
+
+    }
+
+
 
     return (
 
@@ -82,7 +96,7 @@ export default function AlarmsScreen() {
             {/* {isAddAlarm || isEditAlarm && */}
             < TimePicker
                 active={isAddAlarm || isEditAlarm}
-                onSelect={(newTime) => { isAddAlarm ? addAlarm(newTime) : editAlarmTime(newTime) }}
+                onSelect={(hours, minutes) => { isAddAlarm ? addAlarm(hours, minutes) : editAlarmTime(hours, minutes) }}
                 // onSelect={(newTime) => { isAddAlarm ? addAlarm(newTime) : editAlarmTime(alarmIdChange, newTime) }}
                 onCancel={() => { setTimePickerEditAlarm(false); setTimePickerAddAlarm(false); }}
                 label='add alarm' />
@@ -99,7 +113,16 @@ export default function AlarmsScreen() {
 
                         {
                             alarms
-                                .sort((a, b) => a.time > b.time ? 1 : -1)
+                                .sort((a, b) => {
+                                    if (a.hours > b.hours)
+                                        return 1;
+                                    else if (a.hours === b.hours) {
+                                        if (a.minutes > b.minutes)
+                                            return 1;
+                                        else return -1;
+                                    } else return -1;
+
+                                })
                                 ?.map((alarm, index) => {
 
                                     return (
@@ -107,7 +130,7 @@ export default function AlarmsScreen() {
                                         <AlarmClock
                                             key={index}
                                             id={index}
-                                            time={alarm.time}
+                                            time={fixTimeDisplay(alarm.hours, alarm.minutes)}
                                             toggle={alarm.isToggleEnabled}
                                             onEditToggle={(alarmID) => editAlarmToggle(alarmID)}
                                             onEditTime={(alarmID) => {

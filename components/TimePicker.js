@@ -14,10 +14,7 @@ const TimePicker = (props) => {
 
     const onTimeChangeIOS = () => {
 
-        let selectedMinutes = fixDisplay(date.getMinutes());
-        let selectedHours = fixDisplay(date.getHours());
-
-        props.onSelect(selectedHours + ":" + selectedMinutes);
+        props.onSelect(selectedDate.getHours(), selectedDate.getMinutes());
     };
 
 
@@ -27,9 +24,7 @@ const TimePicker = (props) => {
 
         if (event?.type === 'set') {
 
-            let selectedMinutes = fixDisplay(selectedDate.getMinutes());
-            let selectedHours = fixDisplay(selectedDate.getHours());
-            props.onSelect(selectedHours + ":" + selectedMinutes);
+            props.onSelect(selectedDate.getHours(), selectedDate.getMinutes());
         }
         if (event?.type === 'dismissed') {
 
@@ -46,14 +41,14 @@ const TimePicker = (props) => {
 
     };
 
-    const fixDisplay = (time) => {
+    // const fixDisplay = (time) => {
 
-        if (time > 9)
-            return time;
-        else
-            return `0${time}`;
+    //     if (time > 9)
+    //         return time;
+    //     else
+    //         return `0${time}`;
 
-    }
+    // }
 
 
     return (
