@@ -3,7 +3,7 @@ import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
 import { DateTimePicker } from '@react-native-community/datetimepicker';
-import AlarmNotification from "../screens/AlarmNotification";
+
 
 
 export default function InfoScreen() {

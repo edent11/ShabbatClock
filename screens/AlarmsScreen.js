@@ -7,39 +7,45 @@ import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AlarmNotification from "../components/AlarmNotification";
+
 
 let alarmIdEdit = '';
 
 export default function AlarmsScreen() {
 
+    const alarmsManager = new AlarmNotification();
     const { t } = useTranslation();
-    const [alarms, setAlarms] = useState([{ hours: "10", minutes: "10", isToggleEnabled: false }]);
+    const [alarms, setAlarms] = useState([{ notificationId: null, hours: "10", minutes: "30", isToggleEnabled: false }]);
     const [isAddAlarm, setTimePickerAddAlarm] = useState(false);
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
 
 
-    const addAlarm = (hours, minutes) => {
+    async function addAlarm(hours, minutes) {
 
         setTimePickerAddAlarm(false);
 
+        let notificationId = await alarmsManager.scheduleAlarm(hours, minutes);
+        console.log(notificationId);
+
         setAlarms(prevAlarms => {
-            return [...prevAlarms, { hours: hours, minutes: minutes, isToggleEnabled: true }];
+            return [...prevAlarms, { notificationId: notificationId, hours: hours, minutes: minutes, isToggleEnabled: true }];
         });
 
 
-        setTimePicker(false);
     }
 
-    const editAlarmTime = (hours, minutes) => {
+    async function editAlarmTime(hours, minutes) {
 
         setTimePickerEditAlarm(false);
 
-        console.log(alarmIdEdit);
+        let notificationId = await alarmsManager.scheduleAlarm(hours, minutes);
 
         const newAlarmsArray = alarms.map((alarm, index) => {
             if (index === alarmIdEdit) {
+                alarm.notificationId = notificationId;
                 alarm.hours = hours;
                 alarm.minutes = minutes;
                 alarm.isToggleEnabled = true;
@@ -51,11 +57,25 @@ export default function AlarmsScreen() {
         setAlarms(newAlarmsArray);
     }
 
-    const editAlarmToggle = (alarmID) => {
+    async function schedule(hours, minutes) {
+
+        return await alarmsManager.scheduleAlarm(hours, minutes);
+
+    }
+
+    async function editAlarmToggle(alarmID) {
 
         const newAlarmsArray = alarms.map((alarm, index) => {
             if (index === alarmID) {
                 alarm.isToggleEnabled = !alarm.isToggleEnabled;
+
+                if (alarm.isToggleEnabled) {
+                    alarm.notificationId = schedule(alarm.hours, alarm.minutes);
+
+                } else {
+                    if (alarm.notificationId !== null)
+                        alarmsManager.cancelAlarm(alarm.notificationId);
+                }
 
             }
             return alarm;
