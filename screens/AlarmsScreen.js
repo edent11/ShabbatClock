@@ -22,66 +22,116 @@ export default function AlarmsScreen() {
 
 
 
-
     async function addAlarm(hours, minutes) {
 
+        var notificationId = '';
         setTimePickerAddAlarm(false);
+        const proms = new Promise((resolve, reject) => {
+            alarmsManager.scheduleAlarm(hours, minutes)
+                .then((res) => {
+                    notificationId = res;
+                    resolve("successfully scheduled alarm: " + notificationId + " Time: " + hours + " : " + minutes);
+                })
+                .catch(error => reject('error while adding new alarm: ' + error));
 
-        let notificationId = await alarmsManager.scheduleAlarm(hours, minutes);
-        console.log(notificationId);
-
-        setAlarms(prevAlarms => {
-            return [...prevAlarms, { notificationId: notificationId, hours: hours, minutes: minutes, isToggleEnabled: true }];
         });
+
+        proms.then((res) => {
+            setAlarms(prevAlarms => {
+                return [...prevAlarms, { notificationId: notificationId, hours: hours, minutes: minutes, isToggleEnabled: true }];
+            });
+            console.log(res);
+        });
+
+
+
 
 
     }
 
-    async function editAlarmTime(hours, minutes) {
+
+
+    function editAlarmTime(hours, minutes) {
 
         setTimePickerEditAlarm(false);
 
-        let notificationId = await alarmsManager.scheduleAlarm(hours, minutes);
+        var newAlarmsArray = [];
 
-        const newAlarmsArray = alarms.map((alarm, index) => {
-            if (index === alarmIdEdit) {
-                alarm.notificationId = notificationId;
-                alarm.hours = hours;
-                alarm.minutes = minutes;
-                alarm.isToggleEnabled = true;
+        const proms = new Promise((resolve, reject) => {
+            newAlarmsArray = alarms.map((alarm, index) => {
+                if (index == alarmIdEdit) {
 
-            }
-            return alarm;
-        });
+                    if (alarm.notificationId != null) {
+                        alarmsManager.cancelAlarm(alarm.notificationId).then(() => resolve("successfully cancelled alarm: " + alarm.notificationId))
+                            .catch(error => reject('error while scheduling alarm: ' + error));
 
-        setAlarms(newAlarmsArray);
-    }
+                    }
+                    alarmsManager.scheduleAlarm(hours, minutes)
+                        .then((notificationId) => {
+                            alarm.notificationId = notificationId;
+                            alarm.hours = hours;
+                            alarm.minutes = minutes;
+                            alarm.isToggleEnabled = true;
+                            resolve("successfully scheduled alarm: " + notificationId + " Time: " + hours + " : " + minutes);
+                        })
+                        .catch(error => reject('error while scheduling alarm: ' + error));
 
-    async function schedule(hours, minutes) {
 
-        return await alarmsManager.scheduleAlarm(hours, minutes);
 
-    }
-
-    async function editAlarmToggle(alarmID) {
-
-        const newAlarmsArray = alarms.map((alarm, index) => {
-            if (index === alarmID) {
-                alarm.isToggleEnabled = !alarm.isToggleEnabled;
-
-                if (alarm.isToggleEnabled) {
-                    alarm.notificationId = schedule(alarm.hours, alarm.minutes);
-
-                } else {
-                    if (alarm.notificationId !== null)
-                        alarmsManager.cancelAlarm(alarm.notificationId);
                 }
-
-            }
-            return alarm;
+                return alarm;
+            });
         });
-        setAlarms(newAlarmsArray);
+
+        proms.then((res) => {
+            setAlarms(newAlarmsArray);
+            console.log(res);
+        });
     }
+
+
+
+
+    function editAlarmToggle(alarmID) {
+
+        var newAlarmsArray = [];
+        const proms = new Promise((resolve, reject) => {
+            newAlarmsArray = alarms.map((alarm, index) => {
+
+                if (index == alarmID) {
+
+                    if (!alarm.isToggleEnabled) {
+
+                        alarmsManager.scheduleAlarm(alarm.hours, alarm.minutes)
+                            .then((notificationId) => {
+                                alarm.notificationId = notificationId;
+                                alarm.isToggleEnabled = true;
+                                resolve("successfully scheduled alarm: " + notificationId + " Time: " + alarm.hours + " : " + alarm.minutes);
+
+                            })
+                            .catch(error => reject('error while scheduling alarm: ' + error));
+
+
+                    } else {
+                        if (alarm.notificationId !== null)
+                            alarmsManager.cancelAlarm(alarm.notificationId).then(() => {
+                                alarm.isToggleEnabled = false;
+                                resolve("successfully cancelled alarm: " + alarm.notificationId);
+                                alarm.notificationId = null;
+
+                            }).catch(error => reject('error while canceling alarm: ' + error));
+                    }
+                }
+                return alarm;
+            });
+        });
+        proms.then((res) => {
+            setAlarms(newAlarmsArray);
+            console.log(res);
+        });
+
+    }
+
 
 
     const deleteAlarm = (alarmId) => {
@@ -107,17 +157,13 @@ export default function AlarmsScreen() {
     }
 
 
-
     return (
-
 
         < View className={"pt-10 dark:bg-black h-11/12"} >
 
-            {/* {isAddAlarm || isEditAlarm && */}
             < TimePicker
                 active={isAddAlarm || isEditAlarm}
                 onSelect={(hours, minutes) => { isAddAlarm ? addAlarm(hours, minutes) : editAlarmTime(hours, minutes) }}
-                // onSelect={(newTime) => { isAddAlarm ? addAlarm(newTime) : editAlarmTime(alarmIdChange, newTime) }}
                 onCancel={() => { setTimePickerEditAlarm(false); setTimePickerAddAlarm(false); }}
                 label='add alarm' />
 
