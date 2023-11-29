@@ -21,31 +21,41 @@ export default function AlarmsScreen() {
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
+    function scheduleNewAlarm(hours, minutes, alarm) {
+
+        return new Promise((resolve, reject) => {
+            alarmsManager.scheduleAlarm(hours, minutes)
+                .then((notificationId) => {
+                    resolve(notificationId);
+                })
+                .catch(error => reject('error while scheduling alarm: ' + error));
+
+        });
+    }
+
+    function cancelScheduledAlarm(alarm) {
+
+        return new Promise((resolve, reject) => {
+            alarmsManager.cancelAlarm(alarm.notificationId).
+                then(() => {
+                    resolve("successfully cancelled alarm: " + alarm.notificationId);
+
+                })
+                .catch(error => reject('error while cancelling alarm: ' + error));
+        });
+
+    }
 
     async function addAlarm(hours, minutes) {
 
-        var notificationId = '';
         setTimePickerAddAlarm(false);
-        const proms = new Promise((resolve, reject) => {
-            alarmsManager.scheduleAlarm(hours, minutes)
-                .then((res) => {
-                    notificationId = res;
-                    resolve("successfully scheduled alarm: " + notificationId + " Time: " + hours + " : " + minutes);
-                })
-                .catch(error => reject('error while adding new alarm: ' + error));
 
-        });
-
-        proms.then((res) => {
+        scheduleNewAlarm(hours, minutes, null).then((res) => {
             setAlarms(prevAlarms => {
-                return [...prevAlarms, { notificationId: notificationId, hours: hours, minutes: minutes, isToggleEnabled: true }];
+                return [...prevAlarms, { notificationId: res, hours: hours, minutes: minutes, isToggleEnabled: true }];
             });
-            console.log(res);
-        });
-
-
-
-
+            console.log(`successfully scheduled alarm: ${res} Time: ${hours}:${minutes}`);
+        }).catch((error) => console.log(error));
 
     }
 
@@ -62,21 +72,37 @@ export default function AlarmsScreen() {
                 if (index == alarmIdEdit) {
 
                     if (alarm.notificationId != null) {
-                        alarmsManager.cancelAlarm(alarm.notificationId).then(() => resolve("successfully cancelled alarm: " + alarm.notificationId))
-                            .catch(error => reject('error while scheduling alarm: ' + error));
+                        cancelScheduledAlarm(alarm).then(res => {
+                            scheduleNewAlarm(hours, minutes, alarm).
+                                then(res => {
+
+                                    alarm.notificationId = res;
+                                    alarm.hours = hours;
+                                    alarm.minutes = minutes;
+                                    alarm.isToggleEnabled = true;
+                                    resolve(`successfully scheduled alarm: ${res} Time: ${hours}:${minutes}`);
+
+                                })
+                                .catch(error => reject(error));
+                            resolve(res);
+                        })
+                            .catch(error => reject(error));
 
                     }
-                    alarmsManager.scheduleAlarm(hours, minutes)
-                        .then((notificationId) => {
-                            alarm.notificationId = notificationId;
-                            alarm.hours = hours;
-                            alarm.minutes = minutes;
-                            alarm.isToggleEnabled = true;
-                            resolve("successfully scheduled alarm: " + notificationId + " Time: " + hours + " : " + minutes);
-                        })
-                        .catch(error => reject('error while scheduling alarm: ' + error));
+                    else {
 
+                        scheduleNewAlarm(hours, minutes, alarm).
+                            then(res => {
 
+                                alarm.notificationId = res;
+                                alarm.hours = hours;
+                                alarm.minutes = minutes;
+                                alarm.isToggleEnabled = true;
+                                resolve(`successfully scheduled alarm: ${res} Time: ${hours}:${minutes}`);
+
+                            })
+                            .catch(error => reject(error));
+                    }
 
                 }
                 return alarm;
@@ -86,7 +112,7 @@ export default function AlarmsScreen() {
         proms.then((res) => {
             setAlarms(newAlarmsArray);
             console.log(res);
-        });
+        }).catch(error => console(error));
     }
 
 
@@ -102,33 +128,35 @@ export default function AlarmsScreen() {
 
                     if (!alarm.isToggleEnabled) {
 
-                        alarmsManager.scheduleAlarm(alarm.hours, alarm.minutes)
-                            .then((notificationId) => {
-                                alarm.notificationId = notificationId;
+                        scheduleNewAlarm(alarm.hours, alarm.minutes, alarm).
+                            then(res => {
+                                resolve(`successfully scheduled alarm: ${res} Time: ${alarm.hours}:${alarm.minutes}`);
                                 alarm.isToggleEnabled = true;
-                                resolve("successfully scheduled alarm: " + notificationId + " Time: " + alarm.hours + " : " + alarm.minutes);
-
+                                alarm.notificationId = res;
                             })
-                            .catch(error => reject('error while scheduling alarm: ' + error));
+                            .catch(error => reject(error));
 
 
                     } else {
-                        if (alarm.notificationId !== null)
-                            alarmsManager.cancelAlarm(alarm.notificationId).then(() => {
-                                alarm.isToggleEnabled = false;
-                                resolve("successfully cancelled alarm: " + alarm.notificationId);
-                                alarm.notificationId = null;
-
-                            }).catch(error => reject('error while canceling alarm: ' + error));
+                        if (alarm.notificationId != null)
+                            cancelScheduledAlarm(alarm).
+                                then(res => {
+                                    console.log("hi");
+                                    resolve(res);
+                                    alarm.isToggleEnabled = false;
+                                    alarm.notificationId = null;
+                                })
+                                .catch(error => reject(error));
                     }
                 }
                 return alarm;
             });
         });
+
         proms.then((res) => {
             setAlarms(newAlarmsArray);
             console.log(res);
-        });
+        }).catch(error => console(error));
 
     }
 
@@ -227,29 +255,4 @@ export default function AlarmsScreen() {
         </View >
     )
 }
-
-// const styles = StyleSheet.create({
-
-//     safeContainer: {
-
-//         backgroundColor: 'red',
-//         display: 'flex',
-//         height: '100%',
-//         paddingTop: Platform.OS === 'android' ? 25 : 0
-//     },
-
-//     alarmsContainer: {
-//         flex: 2,
-//         display: 'flex',
-//         flexDirection: 'column',
-
-//         justifyContent: 'center',
-//         alignItems: 'center',
-
-
-//     },
-
-
-
-// });
 
