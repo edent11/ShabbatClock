@@ -21,7 +21,7 @@ export default function AlarmsScreen() {
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
-    function scheduleNewAlarm(hours, minutes, alarm) {
+    async function scheduleNewAlarm(hours, minutes, alarm) {
 
         return new Promise((resolve, reject) => {
             alarmsManager.scheduleAlarm(hours, minutes)
@@ -33,12 +33,12 @@ export default function AlarmsScreen() {
         });
     }
 
-    function cancelScheduledAlarm(alarm) {
+    async function cancelScheduledAlarm(notificationId) {
 
         return new Promise((resolve, reject) => {
-            alarmsManager.cancelAlarm(alarm.notificationId).
+            alarmsManager.cancelAlarm(notificationId).
                 then(() => {
-                    resolve("successfully cancelled alarm: " + alarm.notificationId);
+                    resolve("successfully cancelled alarm: " + notificationId);
 
                 })
                 .catch(error => reject('error while cancelling alarm: ' + error));
@@ -61,7 +61,7 @@ export default function AlarmsScreen() {
 
 
 
-    function editAlarmTime(hours, minutes) {
+    async function editAlarmTime(hours, minutes) {
 
         setTimePickerEditAlarm(false);
 
@@ -72,7 +72,7 @@ export default function AlarmsScreen() {
                 if (index == alarmIdEdit) {
 
                     if (alarm.notificationId != null) {
-                        cancelScheduledAlarm(alarm).then(res => {
+                        cancelScheduledAlarm(alarm.notificationId).then(res => {
                             scheduleNewAlarm(hours, minutes, alarm).
                                 then(res => {
 
@@ -112,13 +112,13 @@ export default function AlarmsScreen() {
         proms.then((res) => {
             setAlarms(newAlarmsArray);
             console.log(res);
-        }).catch(error => console(error));
+        }).catch(error => console.log(error));
     }
 
 
 
 
-    function editAlarmToggle(alarmID) {
+    async function editAlarmToggle(alarmID) {
 
         var newAlarmsArray = [];
         const proms = new Promise((resolve, reject) => {
@@ -139,9 +139,8 @@ export default function AlarmsScreen() {
 
                     } else {
                         if (alarm.notificationId != null)
-                            cancelScheduledAlarm(alarm).
+                            cancelScheduledAlarm(alarm.notificationId).
                                 then(res => {
-                                    console.log("hi");
                                     resolve(res);
                                     alarm.isToggleEnabled = false;
                                     alarm.notificationId = null;
@@ -156,7 +155,7 @@ export default function AlarmsScreen() {
         proms.then((res) => {
             setAlarms(newAlarmsArray);
             console.log(res);
-        }).catch(error => console(error));
+        }).catch(error => console.log(error));
 
     }
 
@@ -164,13 +163,31 @@ export default function AlarmsScreen() {
 
     const deleteAlarm = (alarmId) => {
 
+        alarmToDelete = {};
         setAlarms(prevAlarms => {
             return prevAlarms.filter((alarm, index) => {
+                alarmToDelete = alarm;
                 return index !== alarmId;
 
             })
         });
+
+        console.log(alarmToDelete);
+
+        const proms = new Promise((resolve, reject) => {
+            if (alarmToDelete.notificationId != null) {
+                cancelScheduledAlarm(alarmToDelete.notificationId).
+                    then(res => resolve(res))
+                    .catch(error => reject(error))
+            }
+            else resolve("No alarm to delete");
+        });
+
+        proms.then((res) => {
+            console.log(res);
+        }).catch(error => console.log(error));
     }
+
 
     const fixTimeDisplay = (hours, minutes) => {
 
