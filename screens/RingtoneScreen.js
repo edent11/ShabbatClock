@@ -6,14 +6,17 @@ import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
+import AlarmNotification from "../components/AlarmNotification";
 
-
-
+global.alarmSound = ringtones[0].file;
 export default function RingtoneScreen() {
 
+    const alarmsManager = new AlarmNotification();
     const { t } = useTranslation();
-    const [ringtone, setRingtone] = useState(ringtones[0]);
+    const [ringtone, setRingtone] = useState({});
     const [sound, setSound] = useState(null);
+    const [lastRingtoneChosen, setLastRingtonChosen] = useState();
+
 
 
     async function playSound(ringtone) {
@@ -56,12 +59,16 @@ export default function RingtoneScreen() {
 
                     <RadioButtonList
                         data={ringtones}
-                        onSelect={(chosenRingtone) => { setRingtone(chosenRingtone); playSound(chosenRingtone); }} />
+                        onSelect={chosenRingtone => { setLastRingtoneChosen(chosenRingtone); playSound(chosenRingtone); }} />
 
                 </ScrollView >
             </View>
 
-            <Button className='' onPress={() => setSound(null)} title={t('save')} />
+            <Button onPress={() => {
+                global.alarmSound = ringtone;
+                setRingtone(lastRingtoneChosen);
+            }} title={t('save')} />
+            <Button color={"red"} onPress={() => alarmsManager.testAlarm()} title={t('alarm_example')} />
 
             <Text className='text-center text-base bg-slate-900 text-white'> {t('Your ringtone: ') + ringtone.name}</Text>
 
