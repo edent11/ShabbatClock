@@ -17,7 +17,7 @@ export default function AlarmsScreen() {
 
     const alarmsManager = new AlarmNotification();
     const { t } = useTranslation();
-    const [alarms, setAlarms] = useState([{ id: 0, colorsEnabled: 0, notificationId: { red: null, blue: null, green: null }, hours: "10", minutes: "30", isToggleEnabled: false }]);
+    const [alarms, setAlarms] = useState([{ id: 0, enabledColors: 0, notificationId: { red: null, blue: null, green: null }, hours: "10", minutes: "30", isToggleEnabled: false }]);
     const [isAddAlarm, setTimePickerAddAlarm] = useState(false);
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
@@ -30,12 +30,12 @@ export default function AlarmsScreen() {
             if (index == alarmID) {
                 if (alarm.notificationId[color] == null) {
                     alarm.notificationId[color] = 'on';
-                    alarm.colorsEnabled++;
+                    alarm.enabledColors++;
                 }
 
                 else if (alarm.notificationId[color] == 'on') {
                     alarm.notificationId[color] = null;
-                    alarm.colorsEnabled--;
+                    alarm.enabledColors--;
 
                 }
                 else {
@@ -43,13 +43,13 @@ export default function AlarmsScreen() {
                         .then((res) => {
                             console.log(res);
                             alarm.notificationId[color] = null;
-                            alarm.colorsEnabled--;
+                            alarm.enabledColors--;
 
 
                         });
                 }
 
-                if (alarm.colorsEnabled == 0)
+                if (alarm.enabledColors == 0)
                     alarm.isToggleEnabled = false;
             }
             return alarm;
@@ -109,7 +109,10 @@ export default function AlarmsScreen() {
             setAlarms(prevAlarms => {
                 return [...prevAlarms, {
                     notificationId: { red: res, blue: null, green: null },
-                    hours: hours, minutes: minutes, isToggleEnabled: true
+                    enabledColors: 1,
+                    hours: hours,
+                    minutes: minutes,
+                    isToggleEnabled: true
                 }];
             });
             console.log(`color:(red) successfully scheduled alarm: (${res}) Time: (${hours}:${minutes})`);
@@ -138,10 +141,9 @@ export default function AlarmsScreen() {
                     })
                         .catch(error => console.log(error));
                 }
-                scheduleColors(alarm).
-                    then(res => {
-                        resolve(res);
-                    })
+                scheduleColors(alarm).then(res => {
+                    resolve(res);
+                })
                     .catch(error => reject(error));
 
                 return alarm;
@@ -191,14 +193,16 @@ export default function AlarmsScreen() {
 
     async function editAlarmToggle(alarmID) {
 
-        var newAlarmsArray = [];
-        empty = true;
+        var empty = true;
 
         newAlarmsArray = (Promise.all(alarms.map(async alarm => {
             if (alarm.id == alarmID) {
 
                 if (!alarm.isToggleEnabled) {
-
+                    if (alarm.enabledColors == 0) {
+                        alarm.notificationId.red = 'on'
+                        alarm.enabledColors = 1;
+                    }
                     await scheduleColors(alarm).
                         then(res => {
                             console.log(res);
@@ -206,30 +210,26 @@ export default function AlarmsScreen() {
                         })
                         .catch(error => console.log(error));
 
+
                 } else {
+                    if (alarm.enabledColors > 0) {
 
-                    for (color in alarm.notificationId)
-                        if (alarm.notificationId[color] != null)
-                            empty = false;
+                        await cancelScheduledAlarm(alarm.notificationId, null).
+                            then(res => {
 
+
+                                alarm.isToggleEnabled = false;
+                                alarm.notificationId.red = null;
+                                alarm.notificationId.green = null;
+                                alarm.notificationId.blue = null;
+                                console.log(res);
+                            })
+                            .catch(error => console.log(error));
+                    }
                 }
-                if (!empty) {
-
-                    await cancelScheduledAlarm(alarm.notificationId, null).
-                        then(res => {
-
-
-                            alarm.isToggleEnabled = false;
-                            alarm.notificationId.red = null;
-                            alarm.notificationId.green = null;
-                            alarm.notificationId.blue = null;
-                            console.log(res);
-                        })
-                        .catch(error => console.log(error));
-                }
-
             }
             return alarm;
+
         }))).then((newAlarmsArray) => setAlarms(newAlarmsArray))
 
 
