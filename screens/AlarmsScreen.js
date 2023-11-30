@@ -21,7 +21,7 @@ export default function AlarmsScreen() {
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
-    async function scheduleNewAlarm(hours, minutes, alarm) {
+    async function scheduleNewAlarm(hours, minutes) {
 
         return new Promise((resolve, reject) => {
             alarmsManager.scheduleAlarm(hours, minutes)
@@ -50,7 +50,7 @@ export default function AlarmsScreen() {
 
         setTimePickerAddAlarm(false);
 
-        scheduleNewAlarm(hours, minutes, null).then((res) => {
+        scheduleNewAlarm(hours, minutes).then((res) => {
             setAlarms(prevAlarms => {
                 return [...prevAlarms, { notificationId: res, hours: hours, minutes: minutes, isToggleEnabled: true }];
             });
@@ -73,36 +73,23 @@ export default function AlarmsScreen() {
 
                     if (alarm.notificationId != null) {
                         cancelScheduledAlarm(alarm.notificationId).then(res => {
-                            scheduleNewAlarm(hours, minutes, alarm).
-                                then(res => {
-
-                                    alarm.notificationId = res;
-                                    alarm.hours = hours;
-                                    alarm.minutes = minutes;
-                                    alarm.isToggleEnabled = true;
-                                    resolve(`successfully scheduled alarm: ${res} Time: ${hours}:${minutes}`);
-
-                                })
-                                .catch(error => reject(error));
-                            resolve(res);
+                            alarm.notificationId = null;
+                            console.log(res);
                         })
-                            .catch(error => reject(error));
-
+                            .catch(error => console.log(error));
                     }
-                    else {
+                    scheduleNewAlarm(hours, minutes).
+                        then(res => {
 
-                        scheduleNewAlarm(hours, minutes, alarm).
-                            then(res => {
+                            alarm.notificationId = res;
+                            alarm.hours = hours;
+                            alarm.minutes = minutes;
+                            alarm.isToggleEnabled = true;
+                            resolve(`successfully scheduled alarm: ${res} Time: ${hours}:${minutes}`);
 
-                                alarm.notificationId = res;
-                                alarm.hours = hours;
-                                alarm.minutes = minutes;
-                                alarm.isToggleEnabled = true;
-                                resolve(`successfully scheduled alarm: ${res} Time: ${hours}:${minutes}`);
+                        })
+                        .catch(error => reject(error));
 
-                            })
-                            .catch(error => reject(error));
-                    }
 
                 }
                 return alarm;
@@ -128,7 +115,7 @@ export default function AlarmsScreen() {
 
                     if (!alarm.isToggleEnabled) {
 
-                        scheduleNewAlarm(alarm.hours, alarm.minutes, alarm).
+                        scheduleNewAlarm(alarm.hours, alarm.minutes).
                             then(res => {
                                 resolve(`successfully scheduled alarm: ${res} Time: ${alarm.hours}:${alarm.minutes}`);
                                 alarm.isToggleEnabled = true;
