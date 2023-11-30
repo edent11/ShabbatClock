@@ -31,6 +31,12 @@ export default function AlarmsScreen() {
                 if (alarm.notificationId[color] == null) {
                     alarm.notificationId[color] = 'on';
                     alarm.enabledColors++;
+                    // if (alarm.enabledColors == 1) {
+                    //     await scheduleColors(alarm).then(res => {
+                    //         console.log(res);
+                    //         alarm.isToggleEnabled = true;
+                    //     })
+                    // }
                 }
 
                 else if (alarm.notificationId[color] == 'on') {
@@ -85,7 +91,7 @@ export default function AlarmsScreen() {
             } else {
 
                 for (color in notificationId) {
-                    if (color != null) {
+                    if (notificationId[color] != null) {
                         alarmsManager.cancelAlarm(notificationId[color]).
                             then(() => {
                                 resolve(`color: ${color} successfully cancelled alarm: ${notificationId[color]}`);
@@ -193,7 +199,7 @@ export default function AlarmsScreen() {
 
     async function editAlarmToggle(alarmID) {
 
-        var empty = true;
+
 
         newAlarmsArray = (Promise.all(alarms.map(async alarm => {
             if (alarm.id == alarmID) {
@@ -201,7 +207,7 @@ export default function AlarmsScreen() {
                 if (!alarm.isToggleEnabled) {
                     if (alarm.enabledColors == 0) {
                         alarm.notificationId.red = 'on'
-                        alarm.enabledColors = 1;
+                        alarm.enabledColors++;
                     }
                     await scheduleColors(alarm).
                         then(res => {
