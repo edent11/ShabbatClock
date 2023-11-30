@@ -90,16 +90,15 @@ export default function AlarmsScreen() {
                     .catch(error => reject('error while cancelling alarm: ' + error));
             } else {
 
-                for (color in notificationId) {
+                for (const color in notificationId) {
                     if (notificationId[color] != null) {
-                        alarmsManager.cancelAlarm(notificationId[color]).
-                            then(() => {
+                        alarmsManager.cancelAlarm(notificationId[color])
+                            .then(() => {
                                 resolve(`color: ${color} successfully cancelled alarm: ${notificationId[color]}`);
 
                             })
                             .catch(error => reject('error while cancelling alarm: ' + error));
                     }
-                    else resolve(`No colors to delete`);
 
                 }
             }
@@ -171,7 +170,7 @@ export default function AlarmsScreen() {
         return new Promise(async (resolve, reject) => {
 
 
-            for (color in alarm.notificationId) {
+            for (let color in alarm.notificationId) {
 
 
                 if (alarm.notificationId[color] != null) {
