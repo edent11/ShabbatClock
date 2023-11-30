@@ -58,24 +58,25 @@ const AlarmClock = (props) => {
       </View>
 
       <View name='buttons' className="flex flex-initial flex-row items-center justify-center ">
-        <Pressable onPress={() => setOneDay(!isOneDaySelected)}>
-          <View className={`bg-red-400 ${isOneDaySelected ? 'opacity-100' : 'opacity-30'}
+        <Pressable onPress={() => props.onColorSelection(props.id, 'red')}>
+          <View className={`bg-red-400 ${props.isRedDaySelected ? 'opacity-100' : 'opacity-30'}
                              h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
             <Text>1</Text>
           </View>
 
         </Pressable>
 
-        <Pressable onPress={() => setTwoDay(!isTwoDaySelected)}>
-          <View className={`bg-blue-400 ${isTwoDaySelected ? 'opacity-100' : 'opacity-30'}
+        <Pressable onPress={() => props.onColorSelection(props.id, 'blue')}>
+          < View className={
+            `bg-blue-400 ${props.isBlueDaySelected ? 'opacity-100' : 'opacity-30'}
                             h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
             <Text>2</Text>
           </View>
 
         </Pressable>
 
-        <Pressable onPress={() => setThreeDay(!isThreeDaySelected)}>
-          <View className={`bg-green-400 ${isThreeDaySelected ? ' opacity-100' : 'opacity-30'}
+        <Pressable onPress={() => props.onColorSelection(props.id, 'green')}>
+          <View className={`bg-green-400 ${props.isGreenDaySelected ? ' opacity-100' : 'opacity-30'}
                            h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
             <Text>3</Text>
           </View>
