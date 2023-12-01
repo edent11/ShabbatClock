@@ -30,13 +30,15 @@ export default function AlarmsScreen() {
             if (index == alarmID) {
                 if (alarm.notificationId[color] == null) {
                     alarm.notificationId[color] = 'on';
-                    alarm.enabledColors++;
-                    // if (alarm.enabledColors == 1) {
-                    //     await scheduleColors(alarm).then(res => {
-                    //         console.log(res);
-                    //         alarm.isToggleEnabled = true;
-                    //     })
-                    // }
+                    if (alarm.isToggleEnabled) {
+                        await scheduleNewAlarm(alarm.hours, alarm.minutes)
+                            .then((noteID) => {
+                                alarm.enabledColors++;
+                                alarm.notificationId[color] = noteID;
+                                console.log(`color:(${color}) successfully scheduled alarm: (${noteID}) Time: (${alarm.hours}:${alarm.minutes})`);
+
+                            });
+                    }
                 }
 
                 else if (alarm.notificationId[color] == 'on') {
@@ -234,8 +236,6 @@ export default function AlarmsScreen() {
 
                                 if (alarm.notificationId.green != null)
                                     alarm.enabledColors--;
-
-                                // console.log(alarm.enabledColors);
 
                                 alarm.isToggleEnabled = false;
                                 alarm.notificationId.red = null;
