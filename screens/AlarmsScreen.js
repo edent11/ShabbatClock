@@ -37,7 +37,7 @@ export default function AlarmsScreen() {
                         await scheduleNewAlarm(alarm.hours, alarm.minutes)
                             .then((res) => {
                                 alarm.notificationId[color] = res[0];
-                                console.log(`color:(${color}) successfully scheduled alarm: (${res[1]}) Date: (${res[1]})`);
+                                console.log(`color:(${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
 
                             });
                     }
@@ -131,7 +131,7 @@ export default function AlarmsScreen() {
                     isToggleEnabled: true
                 }];
             });
-            console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Time: (${res[1]})`);
+            console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
         }).catch((error) => console.log(error));
 
     }
@@ -186,8 +186,8 @@ export default function AlarmsScreen() {
 
                     checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes)
                         .then(res => {
-                            textResolve.push(`color: ${color} successfully scheduled alarm: ${res[0]} Date: ${res[1]}\n`);
-                            alarm.notificationId[color] = res;
+                            textResolve.push(`color: ${color} successfully scheduled alarm: ${res[0]} Date: ${res[1]} Time: (${res[2]})\n`);
+                            alarm.notificationId[color] = res[0];
 
                         })
                         .catch(error => textReject.push(`unable to schedule alarm in color ${color} ` + error));
