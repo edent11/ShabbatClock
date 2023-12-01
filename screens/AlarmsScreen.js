@@ -121,6 +121,7 @@ export default function AlarmsScreen() {
         scheduleNewAlarm(hours, minutes).then((res) => {
             setAlarms(prevAlarms => {
                 return [...prevAlarms, {
+
                     notificationId: { red: res[0], blue: null, green: null },
                     enabledColors: 1,
                     hours: hours,
@@ -216,8 +217,8 @@ export default function AlarmsScreen() {
 
 
 
-        newAlarmsArray = (Promise.all(alarms.map(async alarm => {
-            if (alarm.id == alarmID) {
+        newAlarmsArray = (Promise.all(alarms.map(async (alarm, index) => {
+            if (index == alarmID) {
 
                 if (!alarm.isToggleEnabled) {
                     console.log(alarm.enabledColors);
@@ -273,14 +274,12 @@ export default function AlarmsScreen() {
         setAlarms(prevAlarms => {
             return prevAlarms.filter((alarm, index) => {
                 alarmToDelete = alarm;
-                return index !== alarmId;
+                return index != alarmId;
 
             })
         });
 
-        console.log(alarmToDelete);
-
-        const proms = new Promise((resolve, reject) => {
+        const cancelAlarm = new Promise((resolve, reject) => {
             if (alarmToDelete.notificationId != null) {
                 cancelScheduledAlarm(alarmToDelete.notificationId, null, alarmToDelete.hours, alarmToDelete.minutes)
                     .catch(error => reject(error))
@@ -288,8 +287,8 @@ export default function AlarmsScreen() {
             else resolve("No alarm to delete");
         });
 
-        proms.then((res) => {
-            console.log(res);
+        cancelAlarm.then((res) => {
+            console.log("operation: delete " + res);
         }).catch(error => console.log(error));
     }
 
@@ -356,7 +355,7 @@ export default function AlarmsScreen() {
 
                                         <AlarmClock
                                             key={index}
-                                            id={alarm.id}
+                                            id={index}
                                             // disabledToggle={alarm.enabledColors == 0 ? true : false}
                                             time={fixTimeDisplay(alarm.hours, alarm.minutes)}
                                             isRedDaySelected={alarm.notificationId.red ? true : false}
