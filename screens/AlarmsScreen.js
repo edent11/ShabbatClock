@@ -35,9 +35,9 @@ export default function AlarmsScreen() {
 
                     if (alarm.isToggleEnabled) {
                         await scheduleNewAlarm(alarm.hours, alarm.minutes)
-                            .then((noteID) => {
-                                alarm.notificationId[color] = noteID;
-                                console.log(`color:(${color}) successfully scheduled alarm: (${noteID}) Time: (${alarm.hours}:${alarm.minutes})`);
+                            .then((res) => {
+                                alarm.notificationId[color] = res[0];
+                                console.log(`color:(${color}) successfully scheduled alarm: (${res[1]}) Date: (${res[1]})`);
 
                             });
                     }
@@ -74,8 +74,8 @@ export default function AlarmsScreen() {
 
         return new Promise((resolve, reject) => {
             alarmsManager.scheduleAlarm(hours, minutes)
-                .then((notificationId) => {
-                    resolve(notificationId);
+                .then((res) => {
+                    resolve(res);
                 })
                 .catch(error => reject('error while scheduling alarm: ' + error));
 
@@ -121,17 +121,17 @@ export default function AlarmsScreen() {
 
         setTimePickerAddAlarm(false);
 
-        scheduleNewAlarm(hours, minutes).then((alarmID) => {
+        scheduleNewAlarm(hours, minutes).then((res) => {
             setAlarms(prevAlarms => {
                 return [...prevAlarms, {
-                    notificationId: { red: alarmID, blue: null, green: null },
+                    notificationId: { red: res[0], blue: null, green: null },
                     enabledColors: 1,
                     hours: hours,
                     minutes: minutes,
                     isToggleEnabled: true
                 }];
             });
-            console.log(`color: (red) successfully scheduled alarm: (${alarmID}) Time: (${hours}:${minutes})`);
+            console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Time: (${res[1]})`);
         }).catch((error) => console.log(error));
 
     }
@@ -186,7 +186,7 @@ export default function AlarmsScreen() {
 
                     checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes)
                         .then(res => {
-                            textResolve.push(`color: ${color} successfully scheduled alarm: ${res} Time: ${alarm.hours}:${alarm.minutes}\n`);
+                            textResolve.push(`color: ${color} successfully scheduled alarm: ${res[0]} Date: ${res[1]}\n`);
                             alarm.notificationId[color] = res;
 
                         })
