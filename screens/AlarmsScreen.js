@@ -299,6 +299,17 @@ export default function AlarmsScreen() {
 
     }
 
+    const addDaysForAlarm = (color) => {
+
+        switch (color) {
+
+            case 'red': return 0;
+            case 'blue': return 1;
+            case 'green': return 2;
+
+        }
+    }
+
 
     return (
 
