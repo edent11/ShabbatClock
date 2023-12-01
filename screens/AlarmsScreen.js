@@ -141,36 +141,43 @@ export default function AlarmsScreen() {
 
         var newAlarmsArray = [];
 
-        const proms = new Promise((resolve, reject) => {
+        newAlarmsArray = alarms.map((alarm, index) => {
 
-            newAlarmsArray = alarms.map((alarm, index) => {
+            var oldHours = alarm.hours;
+            var oldMinutes = alarm.hours;
 
-                if (index == alarmIdEdit) {
 
-                    cancelScheduledAlarm(alarm.notificationId, null, hours, minutes).then(() => {
-                        alarm.notificationId.red = alarm.notificationId.red ? 'on' : null;
-                        alarm.notificationId.blue = alarm.notificationId.blue ? 'on' : null;
-                        alarm.notificationId.green = alarm.notificationId.green ? 'on' : null;
+            if (index == alarmIdEdit) {
 
-                    })
-                        .catch(error => console.log(error));
-                }
+                var cancelPromise = cancelScheduledAlarm(alarm.notificationId, null, oldHours, oldMinutes).then(() => {
+                    alarm.notificationId.red = alarm.notificationId.red ? 'on' : null;
+                    alarm.notificationId.blue = alarm.notificationId.blue ? 'on' : null;
+                    alarm.notificationId.green = alarm.notificationId.green ? 'on' : null;
+
+                })
+                    .catch(error => console.log(error));
+            }
+
+            updateTime = new Promise(() => {
                 alarm.hours = hours;
                 alarm.minutes = minutes;
-
-                scheduleColors(alarm).then(res => {
-                    resolve(res);
-                })
-                    .catch(error => reject(error));
-
-                return alarm;
             });
-        });
 
-        proms.then((res) => {
-            setAlarms(newAlarmsArray);
-            console.log(res);
-        }).catch(error => console.log(error));
+
+            var colorsSchedule = scheduleColors(alarm).then(res => {
+                console.log(res);
+            })
+                .catch(error => console.log(error));
+
+            Promise.all(cancelPromise, updateTime, colorsSchedule)
+                .then(values => {
+                    setAlarms(newAlarmsArray);
+                    console.log(values);
+                })
+                .catch(error => console.log(error));
+
+            return alarm;
+        });
     }
 
 
