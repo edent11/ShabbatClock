@@ -50,8 +50,7 @@ export default function AlarmsScreen() {
                 }
                 else {
                     await cancelScheduledAlarm(alarm.notificationId, color, alarm.hours, alarm.minutes)
-                        .then((res) => {
-                            console.log(res);
+                        .then(() => {
                             alarm.notificationId[color] = null;
                             alarm.enabledColors--;
 
@@ -84,37 +83,35 @@ export default function AlarmsScreen() {
 
     async function cancelScheduledAlarm(notificationId, colorToDelete, hours, minutes) {
 
+        var promises = [];
 
+        if (colorToDelete != null) {
+            promises.push(await alarmsManager.cancelAlarm(notificationId[colorToDelete]).
+                then(() => {
+                    console.log(`color: (${colorToDelete}) successfully cancelled alarm: (${notificationId[colorToDelete]}) Time: (${hours}:${minutes})`);
+                })
+                .catch(error => console.log('error while cancelling alarm: ' + error)));
+        } else {
 
-        return new Promise(async (resolve, reject) => {
+            for (const color in notificationId) {
+                (async () => {
+                    if (notificationId[color] != null) {
 
-            if (colorToDelete != null) {
-                await alarmsManager.cancelAlarm(notificationId[colorToDelete]).
-                    then(() => {
-                        console.log(`color: (${colorToDelete}) successfully cancelled alarm: (${notificationId[colorToDelete]}) time: (${hours}:${minutes})`);
-                    })
-                    .catch(error => console.log('error while cancelling alarm: ' + error));
-            } else {
+                        var alarmColor = notificationId[color];
 
-                for (const color in notificationId) {
-                    (async () => {
-                        if (notificationId[color] != null) {
-                            var alarmColor = notificationId[color];
-                            await alarmsManager.cancelAlarm(alarmColor)
-                                .then(() => {
-                                    resolve('message');
-                                    console.log(`color: (${color}) successfully cancelled alarm: (${alarmColor}) time: ${hours}:${minutes}`);
+                        promises.push(await alarmsManager.cancelAlarm(alarmColor)
+                            .then(() => {
 
-                                })
-                                .catch(error => console.log('error while cancelling alarm: ' + error));
-                        }
-                    })()
-                }
+                                console.log(`color: (${color}) successfully cancelled alarm: (${alarmColor}) Time: ${hours}:${minutes}`);
 
+                            })
+                            .catch(error => console.log('error while cancelling alarm: ' + error)));
+                    }
+                })()
             }
 
-            resolve();
-        })
+        }
+        return Promise.all(promises);
     }
 
     async function addAlarm(hours, minutes) {
@@ -145,10 +142,11 @@ export default function AlarmsScreen() {
         var newAlarmsArray = [];
 
         const proms = new Promise((resolve, reject) => {
+
             newAlarmsArray = alarms.map((alarm, index) => {
+
                 if (index == alarmIdEdit) {
-                    alarm.hours = hours;
-                    alarm.minutes = minutes;
+
                     cancelScheduledAlarm(alarm.notificationId, null, hours, minutes).then(() => {
                         alarm.notificationId.red = alarm.notificationId.red ? 'on' : null;
                         alarm.notificationId.blue = alarm.notificationId.blue ? 'on' : null;
@@ -157,6 +155,9 @@ export default function AlarmsScreen() {
                     })
                         .catch(error => console.log(error));
                 }
+                alarm.hours = hours;
+                alarm.minutes = minutes;
+
                 scheduleColors(alarm).then(res => {
                     resolve(res);
                 })
@@ -229,7 +230,7 @@ export default function AlarmsScreen() {
                     if (alarm.enabledColors > 0) {
 
                         await cancelScheduledAlarm(alarm.notificationId, null, alarm.hours, alarm.minutes)
-                            .then(res => {
+                            .then(() => {
 
                                 if (alarm.notificationId.red != null)
                                     alarm.enabledColors--;
@@ -244,7 +245,7 @@ export default function AlarmsScreen() {
                                 alarm.notificationId.red = null;
                                 alarm.notificationId.blue = null;
                                 alarm.notificationId.green = null;
-                                console.log(res);
+
                             })
                             .catch(error => console.log(error));
                     }
@@ -275,7 +276,6 @@ export default function AlarmsScreen() {
         const proms = new Promise((resolve, reject) => {
             if (alarmToDelete.notificationId != null) {
                 cancelScheduledAlarm(alarmToDelete.notificationId, null, alarmToDelete.hours, alarmToDelete.minutes)
-                    .then(res => resolve(res))
                     .catch(error => reject(error))
             }
             else resolve("No alarm to delete");
