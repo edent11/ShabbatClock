@@ -80,30 +80,36 @@ export default function AlarmsScreen() {
 
     async function cancelScheduledAlarm(notificationId, colorToDelete) {
 
-        return new Promise((resolve, reject) => {
-            if (colorToDelete != null) {
-                alarmsManager.cancelAlarm(notificationId[colorToDelete]).
-                    then(() => {
-                        resolve(`color: ${colorToDelete} successfully cancelled alarm: ${notificationId[colorToDelete]}`);
 
+
+        return new Promise(async (resolve, reject) => {
+
+            if (colorToDelete != null) {
+                await alarmsManager.cancelAlarm(notificationId[colorToDelete]).
+                    then(() => {
+                        console.log(`color: ${colorToDelete} successfully cancelled alarm: ${notificationId[colorToDelete]}`);
                     })
-                    .catch(error => reject('error while cancelling alarm: ' + error));
+                    .catch(error => console.log('error while cancelling alarm: ' + error));
             } else {
 
                 for (const color in notificationId) {
-                    if (notificationId[color] != null) {
-                        alarmsManager.cancelAlarm(notificationId[color])
-                            .then(() => {
-                                resolve(`color: ${color} successfully cancelled alarm: ${notificationId[color]}`);
+                    (async () => {
+                        if (notificationId[color] != null) {
+                            await alarmsManager.cancelAlarm(notificationId[color])
+                                .then(() => {
+                                    resolve('message');
+                                    console.log(`color: ${color} successfully cancelled alarm: ${notificationId[color]}`);
 
-                            })
-                            .catch(error => reject('error while cancelling alarm: ' + error));
-                    }
-
+                                })
+                                .catch(error => console.log('error while cancelling alarm: ' + error));
+                        }
+                    })()
                 }
-            }
-        });
 
+            }
+
+            resolve();
+        })
     }
 
     async function addAlarm(hours, minutes) {
@@ -138,11 +144,11 @@ export default function AlarmsScreen() {
                 if (index == alarmIdEdit) {
                     alarm.hours = hours;
                     alarm.minutes = minutes;
-                    cancelScheduledAlarm(alarm.notificationId, null).then(res => {
-                        alarm.notificationId.red = null;
-                        alarm.notificationId.blue = null;
-                        alarm.notificationId.green = null;
-                        console.log(res);
+                    cancelScheduledAlarm(alarm.notificationId, null).then(() => {
+                        alarm.notificationId.red = alarm.notificationId.red ? 'on' : null;
+                        alarm.notificationId.blue = alarm.notificationId.blue ? 'on' : null;
+                        alarm.notificationId.green = alarm.notificationId.green ? 'on' : null;
+
                     })
                         .catch(error => console.log(error));
                 }
@@ -169,23 +175,20 @@ export default function AlarmsScreen() {
 
         return new Promise(async (resolve, reject) => {
 
-
             for (let color in alarm.notificationId) {
-
 
                 if (alarm.notificationId[color] != null) {
 
-                    checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes).
-                        then(res => {
+                    checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes)
+                        .then(res => {
                             textResolve.push(`color: ${color} successfully scheduled alarm: ${res} Time: ${alarm.hours}:${alarm.minutes}\n`);
                             alarm.notificationId[color] = res;
 
                         })
                         .catch(error => textReject.push(`unable to schedule alarm in color ${color} ` + error));
-
                 }
-
             }
+
 
             if (textResolve)
                 resolve(textResolve);
@@ -204,8 +207,9 @@ export default function AlarmsScreen() {
             if (alarm.id == alarmID) {
 
                 if (!alarm.isToggleEnabled) {
+                    console.log(alarm.enabledColors);
                     if (alarm.enabledColors == 0) {
-                        alarm.notificationId.red = 'on'
+                        alarm.notificationId.red = 'on';
                         alarm.enabledColors++;
                     }
                     await scheduleColors(alarm).
@@ -219,14 +223,24 @@ export default function AlarmsScreen() {
                 } else {
                     if (alarm.enabledColors > 0) {
 
-                        await cancelScheduledAlarm(alarm.notificationId, null).
-                            then(res => {
+                        await cancelScheduledAlarm(alarm.notificationId, null)
+                            .then(res => {
 
+                                if (alarm.notificationId.red != null)
+                                    alarm.enabledColors--;
+
+                                if (alarm.notificationId.blue != null)
+                                    alarm.enabledColors--;
+
+                                if (alarm.notificationId.green != null)
+                                    alarm.enabledColors--;
+
+                                // console.log(alarm.enabledColors);
 
                                 alarm.isToggleEnabled = false;
                                 alarm.notificationId.red = null;
-                                alarm.notificationId.green = null;
                                 alarm.notificationId.blue = null;
+                                alarm.notificationId.green = null;
                                 console.log(res);
                             })
                             .catch(error => console.log(error));
@@ -237,20 +251,6 @@ export default function AlarmsScreen() {
 
         }))).then((newAlarmsArray) => setAlarms(newAlarmsArray))
 
-
-
-
-        // proms.then((res) => { console.log(res); setAlarms(newAlarmsArray) });
-
-        // });
-
-
-
-        // proms.then((res) => {
-        //     // setAlarms(newAlarmsArray);
-        //     console.log(newAlarmsArray);
-        //     console.log(res);
-        // }).catch(error => console.log(error));
 
     }
 
@@ -336,6 +336,7 @@ export default function AlarmsScreen() {
                                         <AlarmClock
                                             key={index}
                                             id={alarm.id}
+                                            // disabledToggle={alarm.enabledColors == 0 ? true : false}
                                             time={fixTimeDisplay(alarm.hours, alarm.minutes)}
                                             isRedDaySelected={alarm.notificationId.red ? true : false}
                                             isBlueDaySelected={alarm.notificationId.blue ? true : false}

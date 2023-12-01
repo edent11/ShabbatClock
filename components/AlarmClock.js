@@ -95,6 +95,7 @@ const AlarmClock = (props) => {
             Vibration.vibrate(100);
           }}
           value={props.toggle}
+          disabled={props.disabledToggle}
         />
 
       </View>
