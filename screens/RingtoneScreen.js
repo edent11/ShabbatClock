@@ -15,7 +15,7 @@ export default function RingtoneScreen() {
     const { t } = useTranslation();
     const [ringtone, setRingtone] = useState({});
     const [sound, setSound] = useState(null);
-    const [lastRingtoneChosen, setLastRingtonChosen] = useState();
+    const [lastRingtoneChosen, setLastRingtoneChosen] = useState();
 
 
 
@@ -59,15 +59,21 @@ export default function RingtoneScreen() {
 
                     <RadioButtonList
                         data={ringtones}
-                        onSelect={chosenRingtone => { setLastRingtoneChosen(chosenRingtone); playSound(chosenRingtone); }} />
+                        onSelect={chosenRingtone => {
+                            setLastRingtoneChosen(chosenRingtone);
+                            playSound(chosenRingtone);
+                        }} />
 
                 </ScrollView >
             </View>
 
-            <Button onPress={() => {
-                global.alarmSound = ringtone;
-                setRingtone(lastRingtoneChosen);
-            }} title={t('save')} />
+            <Button
+                onPress={() => {
+                    global.alarmSound = ringtone;
+                    setRingtone(lastRingtoneChosen);
+                }}
+                title={t('save')} />
+
             <Button color={"red"} onPress={() => alarmsManager.testAlarm()} title={t('alarm_example')} />
 
             <Text className='text-center text-base bg-slate-900 text-white'> {t('Your ringtone: ') + ringtone.name}</Text>

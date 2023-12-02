@@ -1,5 +1,5 @@
 
-import { View, Text, Pressable, Image } from 'react-native';
+import { View, Text, Pressable, Image, ScrollView } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { useState } from 'react'
 import "../languages/i18n";
@@ -13,7 +13,7 @@ import { Entypo, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
 
 export default function RadioButtonList({ data, onSelect }) {
     const { t } = useTranslation();
-    const [userOption, setUserOption] = useState(null);
+    const [userOption, setUserOption] = useState(0);
 
 
     const selectHandler = (key, ringtone) => {
@@ -22,8 +22,7 @@ export default function RadioButtonList({ data, onSelect }) {
 
     };
 
-    const colorScheme = useColorScheme().colorScheme;
-    const isDarkMode = colorScheme === 'dark';
+    const isDarkMode = useColorScheme().colorScheme === 'dark';
 
     return (
         <View className='bg-opacity-60 '>
@@ -35,19 +34,15 @@ export default function RadioButtonList({ data, onSelect }) {
                         className={`flex flex-row justify-between items-center border-b-1 h-10 border-gray-300 mb-2 px-2  bg-slate-500 `}
 
                         onPress={() => { selectHandler(key, ringtone); }}
-
                     >
 
                         <Fontisto name="applemusic" size={24} color="black" />
-
-
 
                         <Text className={`text-lg text-white`}> {ringtone.name}</Text>
 
                         <Text className={`text-lg text-white`}> {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text>
 
                         <Entypo name="check" size={24} color={key === userOption ? isDarkMode ? "red" : "white" : 'transparent'} />
-
 
 
                         {/* <Image

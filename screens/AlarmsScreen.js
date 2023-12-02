@@ -148,7 +148,7 @@ export default function AlarmsScreen() {
         newAlarmsArray = alarms.map((alarm, index) => {
 
             var oldHours = alarm.hours;
-            var oldMinutes = alarm.hours;
+            var oldMinutes = alarm.minutes;
 
 
             if (index == alarmIdEdit) {
