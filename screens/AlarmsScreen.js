@@ -34,10 +34,13 @@ export default function AlarmsScreen() {
                     alarm.enabledColors++;
 
                     if (alarm.isToggleEnabled) {
-                        await scheduleNewAlarm(alarm.hours, alarm.minutes)
+
+                        alarmDay = addDaysForAlarm(color);
+
+                        await scheduleNewAlarm(alarm.hours, alarm.minutes, alarmDay)
                             .then((res) => {
                                 alarm.notificationId[color] = res[0];
-                                console.log(`color:(${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
+                                console.log(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
 
                             });
                     }
@@ -69,10 +72,10 @@ export default function AlarmsScreen() {
     }
 
 
-    async function scheduleNewAlarm(hours, minutes) {
+    async function scheduleNewAlarm(hours, minutes, alarmDay) {
 
         return new Promise((resolve, reject) => {
-            alarmsManager.scheduleAlarm(hours, minutes)
+            alarmsManager.scheduleAlarm(hours, minutes, alarmDay)
                 .then((res) => {
                     resolve(res);
                 })
@@ -118,7 +121,7 @@ export default function AlarmsScreen() {
 
         setTimePickerAddAlarm(false);
 
-        scheduleNewAlarm(hours, minutes).then((res) => {
+        scheduleNewAlarm(hours, minutes, alarmDay = 0).then((res) => {
             setAlarms(prevAlarms => {
                 return [...prevAlarms, {
 
@@ -193,9 +196,11 @@ export default function AlarmsScreen() {
 
                 if (alarm.notificationId[color] != null) {
 
-                    checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes)
+                    alarmDay = await addDaysForAlarm(color);
+
+                    checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes, alarmDay)
                         .then(res => {
-                            textResolve.push(`color: ${color} successfully scheduled alarm: ${res[0]} Date: ${res[1]} Time: (${res[2]})\n`);
+                            textResolve.push(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
                             alarm.notificationId[color] = res[0];
 
                         })
@@ -356,7 +361,6 @@ export default function AlarmsScreen() {
                                         <AlarmClock
                                             key={index}
                                             id={index}
-                                            // disabledToggle={alarm.enabledColors == 0 ? true : false}
                                             time={fixTimeDisplay(alarm.hours, alarm.minutes)}
                                             isRedDaySelected={alarm.notificationId.red ? true : false}
                                             isBlueDaySelected={alarm.notificationId.blue ? true : false}
