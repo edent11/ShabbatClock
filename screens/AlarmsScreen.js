@@ -1,5 +1,5 @@
 
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import AlarmClock from '../components/AlarmClock'
 import TimePicker from '../components/TimePicker'
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Vibration } from 'react-native';
@@ -8,7 +8,7 @@ import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AlarmNotification from "../components/AlarmNotification";
-import { getAlarmsManager } from "../assets/globals";
+import { getAlarmsManager, getDateDisplay, getTimeDisplay } from "../assets/globals";
 
 let alarmIdEdit = '';
 
@@ -41,7 +41,7 @@ export default function AlarmsScreen() {
                         await scheduleNewAlarm(alarm.hours, alarm.minutes, alarmDay)
                             .then((res) => {
                                 alarm.notificationId[color] = res[0];
-                                console.log(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
+                                console.log(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${getDateDisplay(res[1])}) Time: (${getTimeDisplay(res[1])})`);
                                 alarm.date[color] = res[1];
 
                             });
@@ -104,7 +104,7 @@ export default function AlarmsScreen() {
                         noteId = alarm.notificationId[colorToDelete];
                         alarm.notificationId[colorToDelete] = isUpdateTime ? noteId ? 'on' : null : null;
                         alarm.date[colorToDelete] = null;
-                        resolve(`color: (${colorToDelete}) successfully cancelled alarm: (${noteId}) Date: (${date}) Time: (${alarm.hours}:${alarm.minutes})`);
+                        resolve(`color: (${colorToDelete}) successfully cancelled alarm: (${noteId}) Date: (${getDateDisplay(date)}) Time: (${alarm.hours}:${alarm.minutes})`);
 
 
                     })
@@ -129,7 +129,7 @@ export default function AlarmsScreen() {
                                 date = alarm.date[color];
                                 alarm.notificationId[color] = isUpdateTime ? noteId ? 'on' : null : null;
                                 alarm.date[color] = null;
-                                resolve(`color: (${color}) successfully cancelled alarm: (${noteId}) Date: (${date}) Time: (${alarm.hours}:${alarm.minutes})\n`);
+                                resolve(`color: (${color}) successfully cancelled alarm: (${noteId}) Date: (${getDateDisplay(date)}) Time: (${alarm.hours}:${alarm.minutes})\n`);
 
 
 
@@ -165,31 +165,31 @@ export default function AlarmsScreen() {
                     isToggleEnabled: true
                 }];
             });
-            console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})`);
+            console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Date: (${getDateDisplay(res[1])}) Time: (${getTimeDisplay(res[1])})`);
 
 
         }).catch((error) => console.log(error));
 
     }
 
-    async function updateAlarmTime(alarm, hours, minutes) {
+    // async function updateAlarmTime(alarm, hours, minutes) {
 
-        return new Promise((resolve, reject) => {
-            alarm.hours = hours;
-            alarm.minutes = minutes;
-            resolve();
-        });
-    }
+    //     return new Promise((resolve, reject) => {
+    //         alarm.hours = hours;
+    //         alarm.minutes = minutes;
+    //         resolve();
+    //     });
+    // }
 
 
 
     async function editAlarmTime(hours, minutes) {
 
         setTimePickerEditAlarm(false);
-        var newAlarmsArray = [];
 
 
-        newAlarmsArray = await (Promise.all(alarms.map(async (alarm, index) => {
+
+        await (Promise.all(alarms.map(async (alarm, index) => {
 
             if (index == alarmIdEdit) {
 
@@ -230,7 +230,7 @@ export default function AlarmsScreen() {
 
                     checkScheduled = await scheduleNewAlarm(alarm.hours, alarm.minutes, alarmDay)
                         .then(res => {
-                            textResolve.push(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})\n`);
+                            textResolve.push(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${getDateDisplay(res[1])}) Time: (${getTimeDisplay(res[1])})\n`);
                             alarm.notificationId[color] = res[0];
                             alarm.date[color] = res[1];
                         })
@@ -246,8 +246,42 @@ export default function AlarmsScreen() {
         });
     }
 
+    function updateToggleWhenTimePassed() {
 
-    function getLastAlarm(alarm) {
+        var currentTime = new Date();
+        var lastAlarm;
+
+        Promise.all(alarms.map((alarm, index) => {
+
+
+            if (alarm.isToggleEnabled) {
+                lastAlarm = getLastAlarmDate(alarm);
+
+                if (lastAlarm <= currentTime) {
+                    setAlarmOff(alarm);
+                }
+
+            }
+            return alarm;
+        })).then(alarms => { setAlarms(alarms); });
+
+
+    }
+
+    function setAlarmOff(alarm) {
+
+        for (color in alarm.notificationId) {
+            console.log('first');
+            alarm.notificationId[color] = alarm.notificationId[color] ? 'on' : null;
+            alarm.date[color] = null;
+            alarm.isToggleEnabled = false;
+        }
+    }
+
+
+
+
+    function getLastAlarmDate(alarm) {
 
         if (alarm.date['green'] != null)
             return alarm.date['green'];
@@ -266,7 +300,7 @@ export default function AlarmsScreen() {
 
 
 
-        newAlarmsArray = (Promise.all(alarms.map(async (alarm, index) => {
+        (Promise.all(alarms.map(async (alarm, index) => {
 
             if (index == alarmID) {
 
@@ -302,6 +336,21 @@ export default function AlarmsScreen() {
 
 
     }
+
+    // function check() {
+
+    //     let date = new Date();
+    //     let sec = date.getSeconds();
+    //     setTimeout(() => {
+    //         setInterval(() => {
+    //             console.log("time changed!");
+    //             updateToggleWhenTimePassed();
+    //         }, 60 * 1000);
+    //     }, (60 - sec) * 1000);
+
+
+
+    // }
 
 
 
@@ -355,9 +404,46 @@ export default function AlarmsScreen() {
         }
     }
 
+    // const checkAlarmPassed = (color) => {
+
+    //     var currentDate = getDateDisplay(new Date());
+
+    //     alarms.map((alarm, index) => {
+
+    //         if (index == alarmID) {
+
+    //             if (alarm.isToggleEnabled) {
+
+    //                 for (color in alarm.date) {
+
+    //                     if (alarm.date[color] <= getDateDisplay(currentDate) && )
+
+    //                 }
+    //             }
+    //         }
+    //     })
+
+
+
+
+    // }
+
+    const MINUTE_MS = 60000;
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('Logs every minute');
+            updateToggleWhenTimePassed();
+        }, MINUTE_MS);
+
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [])
+
 
 
     return (
+
+
 
         < View className={"pt-10 dark:bg-black h-11/12"} >
 
@@ -376,6 +462,7 @@ export default function AlarmsScreen() {
                 < ScrollView className="pt-5 mx-1" >
 
                     <View name="AlarmsContainer" className="flex flex-1 items-center bg-slate-600 h-full">
+
 
                         {
                             alarms
