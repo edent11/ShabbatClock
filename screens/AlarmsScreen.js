@@ -9,6 +9,7 @@ import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AlarmNotification from "../components/AlarmNotification";
 import { getAlarmsManager, getDateDisplay, getTimeDisplay } from "../assets/globals";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let alarmIdEdit = '';
 
@@ -57,10 +58,11 @@ export default function AlarmsScreen() {
                     console.log("operation: cancel color \n");
                     await cancelScheduledAlarm(alarm, color, isUpdateTime = false)
                         .then((res) => console.log(res))
-                        .catch((err) => console.log(err));;
+                        .catch((err) => console.log(err));
 
                 }
 
+                console.log(alarm.enabledColors);
                 if (alarm.enabledColors == 0)
                     alarm.isToggleEnabled = false;
             }
@@ -99,7 +101,7 @@ export default function AlarmsScreen() {
             promises.push(new Promise(async (resolve, reject) => {
                 await alarmsManager.cancelAlarm(alarm.notificationId[colorToDelete])
                     .then(() => {
-
+                        alarm.enabledColors--;
                         date = alarm.date[colorToDelete];
                         noteId = alarm.notificationId[colorToDelete];
                         alarm.notificationId[colorToDelete] = isUpdateTime ? noteId ? 'on' : null : null;
@@ -125,7 +127,7 @@ export default function AlarmsScreen() {
                         await alarmsManager.cancelAlarm(noteId)
                             .then(() => {
 
-
+                                alarm.enabledColors--;
                                 date = alarm.date[color];
                                 alarm.notificationId[color] = isUpdateTime ? noteId ? 'on' : null : null;
                                 alarm.date[color] = null;
@@ -253,7 +255,7 @@ export default function AlarmsScreen() {
 
         Promise.all(alarms.map((alarm, index) => {
 
-
+            console.log(alarm);
             if (alarm.isToggleEnabled) {
                 lastAlarm = getLastAlarmDate(alarm);
 
@@ -262,16 +264,33 @@ export default function AlarmsScreen() {
                 }
 
             }
+
             return alarm;
         })).then(alarms => { setAlarms(alarms); });
 
 
     }
 
+    function checkIfAlarmEnabled(alarm) {
+
+        var currentTime = new Date();
+        var lastAlarm;
+
+        if (alarm.isToggleEnabled) {
+            lastAlarm = getLastAlarmDate(alarm);
+
+            if (lastAlarm <= currentTime) {
+                setAlarmOff(alarm);
+                return false
+            }
+            return true;
+        }
+        return false;
+    }
+
     function setAlarmOff(alarm) {
 
         for (color in alarm.notificationId) {
-            console.log('first');
             alarm.notificationId[color] = alarm.notificationId[color] ? 'on' : null;
             alarm.date[color] = null;
             alarm.isToggleEnabled = false;
@@ -323,7 +342,6 @@ export default function AlarmsScreen() {
                     await cancelScheduledAlarm(alarm, null, isUpdateTime = false)
                         .then((res) => {
                             alarm.isToggleEnabled = false;
-                            alarm.enabledColors = 0;
                             console.log(res);
                         })
                         .catch(error => console.log(error));
@@ -427,6 +445,8 @@ export default function AlarmsScreen() {
 
 
     // }
+
+
 
     const MINUTE_MS = 60000;
 
