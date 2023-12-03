@@ -6,12 +6,12 @@ import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
-import AlarmNotification from "../components/AlarmNotification";
+import { getAlarmsManager } from "../assets/globals";
 
 global.alarmSound = ringtones[0].file;
 export default function RingtoneScreen() {
 
-    const alarmsManager = new AlarmNotification();
+    const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
     const [ringtone, setRingtone] = useState(ringtones[0]);
     const [sound, setSound] = useState(null);
@@ -19,25 +19,23 @@ export default function RingtoneScreen() {
 
 
 
-    async function playSound(ringtone) {
+    async function playSound(chosenRingtone) {
 
-        console.log('Loading Sound');
-        console.log(ringtone);
-
-        const { sound } = await Audio.Sound.createAsync(ringtone.file);
+        // console.log('Loading Sound');
+        console.log("playing " + chosenRingtone.name);
+        const { sound } = await Audio.Sound.createAsync(chosenRingtone.file);
         setSound(sound);
 
-        console.log('Playing Sound');
+        // console.log('Playing Sound');
         await sound.playAsync();
     }
-
 
 
     useEffect(() => {
 
         return sound
             ? () => {
-                console.log('Unloading Sound');
+                // console.log('Unloading Sound');
                 sound.unloadAsync();
             }
             : undefined;
@@ -58,10 +56,10 @@ export default function RingtoneScreen() {
 
                     <RadioButtonList
                         data={ringtones}
-                        onSelect={chosenRingtone => {
-                            setLastRingtoneChosen(chosenRingtone);
+                        onSelect={async (chosenRingtone) => {
                             playSound(chosenRingtone);
-                            setRingtone(lastRingtoneChosen);
+                            setRingtone(chosenRingtone);
+
                         }} />
 
                 </ScrollView >
@@ -72,12 +70,12 @@ export default function RingtoneScreen() {
             <View className='mt-2'>
 
 
-                {/* <Button
-                    onPress={() => {
-                        global.alarmSound = ringtone;
-                        setRingtone(lastRingtoneChosen);
+                <Button
+                    onPress={async () => {
+                        await sound.stopAsync();
+                        await alarmsManager.changeAlarmRingtone(ringtone.name);
                     }}
-                    title={t('save')} /> */}
+                    title={t('save')} />
 
             </View>
 
