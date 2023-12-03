@@ -324,6 +324,7 @@ export default function AlarmsScreen() {
 
                     if (alarm.enabledColors == 0) {
                         alarm.notificationId.red = 'on';
+                        alarm.enabledColors++;
                     }
                     await scheduleColors(alarm)
                         .then(res => {

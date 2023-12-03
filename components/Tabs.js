@@ -30,7 +30,7 @@ const Tabs = () => {
 
                 tabBarShowLabel: false,
                 headerShown: false,
-                tabBarStyle: isDarkMode ? tw`h-22 absolute border-t-4 bg-slate-800 bg-opacity-100` : tw`absolute h-22 border-t-4 bg-white`
+                tabBarStyle: isDarkMode ? tw`h-18 absolute border-t-4 bg-slate-800 bg-opacity-100` : tw`absolute h-18 border-t-4 bg-white`
 
             }}
         >

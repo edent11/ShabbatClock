@@ -42,7 +42,7 @@ export default function RadioButtonList({ data, onSelect }) {
 
                         <Text className={`text-lg text-white`}> {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text>
 
-                        <Entypo name="check" size={24} color={key === userOption ? isDarkMode ? "red" : "white" : 'transparent'} />
+                        <Entypo name="check" size={24} color={key === userOption ? "green" : 'transparent'} />
 
 
                         {/* <Image

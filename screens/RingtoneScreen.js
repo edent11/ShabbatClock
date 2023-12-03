@@ -65,9 +65,9 @@ export default function RingtoneScreen() {
                 </ScrollView >
             </View>
 
-            <Text className='text-center text-base bg-slate-900 text-white'> {t('your_ringtone') + ': ' + ringtone.name}</Text>
+            <Text className='text-center bg-slate-900 text-white text-lg -top-2'> {t('your_ringtone') + ':   ' + ringtone.name}</Text>
 
-            <View className='mt-2'>
+            <View className=''>
 
 
                 <Button
@@ -80,10 +80,10 @@ export default function RingtoneScreen() {
                     title={t('save')} />
 
             </View>
+            <View className='mt-2'>
+                <Button color={"red"} onPress={() => alarmsManager.testAlarm()} title={t('alarm_example')} />
 
-            <Button color={"red"} onPress={() => alarmsManager.testAlarm()} title={t('alarm_example')} />
-
-
+            </View>
 
         </SafeAreaView >
 
