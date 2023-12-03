@@ -13,7 +13,7 @@ export default function RingtoneScreen() {
 
     const alarmsManager = new AlarmNotification();
     const { t } = useTranslation();
-    const [ringtone, setRingtone] = useState({});
+    const [ringtone, setRingtone] = useState(ringtones[0]);
     const [sound, setSound] = useState(null);
     const [lastRingtoneChosen, setLastRingtoneChosen] = useState();
 
@@ -48,7 +48,6 @@ export default function RingtoneScreen() {
 
         < SafeAreaView className={"pt-12 px-4 dark:bg-black h-full"} >
 
-
             <TopBar tabName={t('ringtone_screen')} />
 
             <View name='RingtonesView' className='mb-3 h-3/5' >
@@ -62,21 +61,28 @@ export default function RingtoneScreen() {
                         onSelect={chosenRingtone => {
                             setLastRingtoneChosen(chosenRingtone);
                             playSound(chosenRingtone);
+                            setRingtone(lastRingtoneChosen);
                         }} />
 
                 </ScrollView >
             </View>
 
-            <Button
-                onPress={() => {
-                    global.alarmSound = ringtone;
-                    setRingtone(lastRingtoneChosen);
-                }}
-                title={t('save')} />
+            <Text className='text-center text-base bg-slate-900 text-white'> {t('Your ringtone: ') + ringtone.name}</Text>
+
+            <View className='mt-2'>
+
+
+                {/* <Button
+                    onPress={() => {
+                        global.alarmSound = ringtone;
+                        setRingtone(lastRingtoneChosen);
+                    }}
+                    title={t('save')} /> */}
+
+            </View>
 
             <Button color={"red"} onPress={() => alarmsManager.testAlarm()} title={t('alarm_example')} />
 
-            <Text className='text-center text-base bg-slate-900 text-white'> {t('Your ringtone: ') + ringtone.name}</Text>
 
 
         </SafeAreaView >
