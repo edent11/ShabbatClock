@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       colors: {
         'light-blue': '#38bdf8',
-        'spacial-gray': '#f2f1f6'
+        'spacial-gray': '#f2f1f6',
+        'spacial-blue': '#3474eb'
       },
       fontFamily: {
         MPLUSRounded1cMedium: ['MPLUSRounded1c-Medium', 'sans-serif'],
@@ -33,6 +34,8 @@ module.exports = {
       height: {
         '1/6': '16%',
         '1/7': '14.2%',
+        '3/7': '42.8571429%',
+        '4/7': '57.14%',
         '5/7': '71.428571428%',
         '1/8': '12.5%',
         '11/12': '91.6%',

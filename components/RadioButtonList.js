@@ -31,18 +31,18 @@ export default function RadioButtonList({ data, onSelect }) {
                 return (
                     <Pressable
                         key={key}
-                        className={`flex flex-row justify-between items-center border-b-1 h-10 border-gray-300 mb-2 px-2  bg-slate-500 `}
+                        className={`flex flex-row justify-between items-center border-b-1 h-10 border-gray-300 mb-2 px-1  bg-slate-500 `}
 
                         onPress={() => { selectHandler(key, ringtone); }}
                     >
 
-                        <Fontisto name="applemusic" size={24} color="black" />
+                        <Fontisto name="applemusic" size={24} color={isDarkMode ? "black" : "white"} />
 
-                        <Text className={`text-lg text-white`}> {ringtone.name}</Text>
+                        <Text className={`text-base text-white`}> {ringtone.name}</Text>
 
-                        <Text className={`text-lg text-white`}> {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text>
+                        <Text className={`text-base text-white`}> {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text>
 
-                        <Entypo name="check" size={24} color={key === userOption ? "green" : 'transparent'} />
+                        <Entypo name="check" size={24} color={key === userOption ? "#1eff00" : 'transparent'} />
 
 
                         {/* <Image

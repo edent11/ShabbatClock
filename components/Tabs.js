@@ -60,7 +60,7 @@ const Tabs = () => {
                     tabBarIcon: ({ focused }) => {
                         return (
                             <View className="items-center justify-center">
-                                <MaterialIcons name="access-alarm" size={focused ? 28 : 24} color={isDarkMode ? focused ? "#38bdf8" : "white" : focused ? "red" : "#38bdf8"} />
+                                <MaterialIcons name="access-alarm" size={focused ? 30 : 24} color={isDarkMode ? focused ? "#38bdf8" : "white" : focused ? "#38bdf8" : "gray"} />
                                 {/* <Text className={`test-xs text-light-blue dark:text-white
                                  ${focused ? "text-red-600 dark:text-light-blue text-lg" : "text-light-blue dark:text-white"}`}>{t('alarms')}</Text> */}
                             </View>
@@ -76,7 +76,7 @@ const Tabs = () => {
                     tabBarIcon: ({ focused }) => {
                         return (
                             <View className="items-center justify-center">
-                                <AntDesign name="infocirlceo" size={focused ? 28 : 20} color={isDarkMode ? focused ? "#38bdf8" : "white" : focused ? "red" : "#38bdf8"} />
+                                <AntDesign name="infocirlceo" size={focused ? 28 : 20} color={isDarkMode ? focused ? "#38bdf8" : "white" : focused ? "#38bdf8" : "gray"} />
                                 {/* <Text className={`test-xs text-light-blue dark:text-white
                                  ${focused ? "text-red-600 dark:text-light-blue text-lg" : "text-light-blue dark:text-white"}`}>{t('info')}</Text> */}
                             </View>
@@ -115,21 +115,6 @@ const Tabs = () => {
     )
 }
 
-const styles = StyleSheet.create({
 
-    shadow: {
-
-        shadowColor: '#7F5DF0',
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0.75,
-        shadowRadius: 3.5,
-        elevation: 0,
-
-    }
-
-});
 
 export default Tabs;

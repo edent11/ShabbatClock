@@ -2,7 +2,7 @@
 import { React, useState, useEffect } from 'react'
 import AlarmClock from '../components/AlarmClock'
 import TimePicker from '../components/TimePicker'
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Vibration } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Vibration, ToastAndroid } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
@@ -22,7 +22,14 @@ export default function AlarmsScreen() {
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
+
+    const showToast = (message) => {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+    };
+
+
     async function setAlarmColor(alarmID, color) {
+
 
 
         newAlarms = await Promise.all(alarms.map(async (alarm, index) => {
@@ -330,6 +337,7 @@ export default function AlarmsScreen() {
                         .then(res => {
                             console.log(res);
                             alarm.isToggleEnabled = true;
+                            showToast(t("successfully scheduled alarm"));
                         })
                         .catch(error => console.log(error));
 
@@ -341,6 +349,7 @@ export default function AlarmsScreen() {
                         .then((res) => {
                             alarm.isToggleEnabled = false;
                             console.log(res);
+                            showToast(t("successfully cancelled alarm"));
                         })
                         .catch(error => console.log(error));
 

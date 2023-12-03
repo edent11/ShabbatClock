@@ -48,10 +48,10 @@ export default function RingtoneScreen() {
 
             <TopBar tabName={t('ringtone_screen')} />
 
-            <View name='RingtonesView' className='mb-3 h-3/5' >
+            <View name='RingtonesView' className='mb-3 h-2/4 mt-4' >
 
 
-                < ScrollView className=" border-2 border-slate-700 mx-1  bg-slate-700 " >
+                < ScrollView className=" border-2 border-slate-700  dark:bg-slate-700 " >
 
 
                     <RadioButtonList

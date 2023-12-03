@@ -28,11 +28,11 @@ const AlarmClock = (props) => {
 
     <View name="alarmBox" className={"flex flex-row items-center justify-between w-20/22 h-28 p-3.5 border-b-4 border-blue-100 rounded "}>
 
-      <View name='remove' className='absolute top-0'>
+      <View name='remove' className='absolute top-0 bg-white rounded-2xl wh'>
         <Pressable
           onLongPress={() => {
             Vibration.vibrate(200);
-            props.onRemove(props.id)
+            props.onRemove(props.id);
           }}
         >
 
@@ -61,7 +61,7 @@ const AlarmClock = (props) => {
         <Pressable onPress={() => props.onColorSelection(props.id, 'red')}>
           <View className={`bg-red-400 ${props.isRedDaySelected ? 'opacity-100' : 'opacity-30'}
                              h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text>1</Text>
+            <Text className='text-white font-semibold'>1</Text>
           </View>
 
         </Pressable>
@@ -70,7 +70,7 @@ const AlarmClock = (props) => {
           < View className={
             `bg-blue-400 ${props.isBlueDaySelected ? 'opacity-100' : 'opacity-30'}
                             h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text>2</Text>
+            <Text className='text-white font-semibold'>2</Text>
           </View>
 
         </Pressable>
@@ -78,7 +78,7 @@ const AlarmClock = (props) => {
         <Pressable onPress={() => props.onColorSelection(props.id, 'green')}>
           <View className={`bg-green-400 ${props.isGreenDaySelected ? ' opacity-100' : 'opacity-30'}
                            h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text>3</Text>
+            <Text className='text-white font-semibold'>3</Text>
           </View>
 
         </Pressable>

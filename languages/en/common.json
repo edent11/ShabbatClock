@@ -10,5 +10,7 @@
     "ringtone_screen": "Choose A Ringtone",
     "alarms_screen": "Schedule An Alarm",
     "alarm_example": "Alarm Test",
-    "your_ringtone": "chosen ringtone"
+    "your_ringtone": "chosen ringtone",
+    "successfully scheduled alarm": "successfully scheduled alarm",
+    "successfully cancelled alarm": "successfully cancelled alarm"
 }
