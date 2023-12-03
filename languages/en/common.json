@@ -9,5 +9,6 @@
     "info_screen": "Info",
     "ringtone_screen": "Choose A Ringtone",
     "alarms_screen": "Schedule An Alarm",
-    "alarm_example": "Alarm Test"
+    "alarm_example": "Alarm Test",
+    "your_ringtone": "chosen ringtone"
 }

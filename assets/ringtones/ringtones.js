@@ -70,46 +70,46 @@ export const ringtones = [
     {
         name: 'alarm_clock_3',
         file: alarm_clock_3,
-        duration: 33
+        duration: 29
     },
     {
         name: 'alarm_clock',
         file: alarm_clock,
-        duration: 33
+        duration: 5
     },
     {
         name: 'guitar',
         file: guitar,
-        duration: 33
+        duration: 22
     },
     {
         name: 'morning_alarm_foba',
         file: morning_alarm_foba,
-        duration: 33
+        duration: 7
     },
     {
         name: 'morning_birds',
         file: morning_birds,
-        duration: 33
+        duration: 19
     },
     {
         name: 'morning_ringtone',
         file: morning_ringtone,
-        duration: 33
+        duration: 22
     },
     {
         name: 'relaxation',
         file: relaxation,
-        duration: 33
+        duration: 21
     },
     {
         name: 'relaxing',
         file: relaxing,
-        duration: 33
+        duration: 27
     },
     {
         name: 'rooster_call',
         file: rooster_call,
-        duration: 33
+        duration: 2
     }
 ];

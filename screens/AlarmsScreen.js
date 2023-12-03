@@ -107,8 +107,6 @@ export default function AlarmsScreen() {
                         alarm.notificationId[colorToDelete] = isUpdateTime ? noteId ? 'on' : null : null;
                         alarm.date[colorToDelete] = null;
                         resolve(`color: (${colorToDelete}) successfully cancelled alarm: (${noteId}) Date: (${getDateDisplay(date)}) Time: (${alarm.hours}:${alarm.minutes})`);
-
-
                     })
 
                     .catch(error => { console.log('error while cancelling alarm: ' + error); reject(); });
@@ -132,9 +130,6 @@ export default function AlarmsScreen() {
                                 alarm.notificationId[color] = isUpdateTime ? noteId ? 'on' : null : null;
                                 alarm.date[color] = null;
                                 resolve(`color: (${color}) successfully cancelled alarm: (${noteId}) Date: (${getDateDisplay(date)}) Time: (${alarm.hours}:${alarm.minutes})\n`);
-
-
-
 
                             })
                             .catch(error => { console.log('error while cancelling alarm: ' + error); reject(); });
@@ -256,14 +251,16 @@ export default function AlarmsScreen() {
         Promise.all(alarms.map((alarm, index) => {
 
             console.log(alarm);
-            if (alarm.isToggleEnabled) {
-                lastAlarm = getLastAlarmDate(alarm);
 
-                if (lastAlarm <= currentTime) {
-                    setAlarmOff(alarm);
-                }
+            // console.log(alarm);
+            // if (alarm.isToggleEnabled) {
+            //     lastAlarm = getLastAlarmDate(alarm);
 
-            }
+            //     if (lastAlarm <= currentTime) {
+            //         setAlarmOff(alarm);
+            //     }
+
+            // }
 
             return alarm;
         })).then(alarms => { setAlarms(alarms); });
@@ -448,16 +445,17 @@ export default function AlarmsScreen() {
 
 
 
-    const MINUTE_MS = 60000;
+    // const MINUTE_MS = 60000;
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            console.log('Logs every minute');
-            updateToggleWhenTimePassed();
-        }, MINUTE_MS);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         console.log('Logs every minute');
 
-        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    }, [])
+    //         // updateToggleWhenTimePassed();
+    //     }, 7000);
+
+    //     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    // }, [])
 
 
 

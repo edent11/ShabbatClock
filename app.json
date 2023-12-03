@@ -15,7 +15,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/musical-note.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff",
         "userInterfaceStyle": "automatic",
         "useNextNotificationApi": true

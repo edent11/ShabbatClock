@@ -58,22 +58,24 @@ export default function RingtoneScreen() {
                         data={ringtones}
                         onSelect={async (chosenRingtone) => {
                             playSound(chosenRingtone);
-                            setRingtone(chosenRingtone);
+                            setLastRingtoneChosen(chosenRingtone);
 
                         }} />
 
                 </ScrollView >
             </View>
 
-            <Text className='text-center text-base bg-slate-900 text-white'> {t('Your ringtone: ') + ringtone.name}</Text>
+            <Text className='text-center text-base bg-slate-900 text-white'> {t('your_ringtone') + ': ' + ringtone.name}</Text>
 
             <View className='mt-2'>
 
 
                 <Button
                     onPress={async () => {
+
+                        setRingtone(lastRingtoneChosen);
                         await sound.stopAsync();
-                        await alarmsManager.changeAlarmRingtone(ringtone.name);
+                        await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
                     }}
                     title={t('save')} />
 
