@@ -128,8 +128,6 @@ export default function AlarmsScreen() {
                             .then(() => {
 
                                 date = alarm.date[color];
-
-
                                 alarm.notificationId[color] = isUpdateTime ? noteId ? 'on' : null : null;
                                 alarm.date[color] = null;
                                 alarm.enabledColors--;
@@ -237,7 +235,7 @@ export default function AlarmsScreen() {
                             textResolve.push(`color: (${color}) successfully scheduled alarm: (${res[0]}) Date: (${res[1]}) Time: (${res[2]})\n`);
                             alarm.notificationId[color] = res[0];
                             alarm.date[color] = res[1];
-
+                            alarm.enabledColors++;
                         })
                         .catch(error => textReject.push(`unable to schedule alarm in color ${color} ` + error));
                 }
@@ -272,6 +270,7 @@ export default function AlarmsScreen() {
 
 
         newAlarmsArray = (Promise.all(alarms.map(async (alarm, index) => {
+
             if (index == alarmID) {
 
                 if (!alarm.isToggleEnabled) {
