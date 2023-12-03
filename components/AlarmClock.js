@@ -3,7 +3,7 @@ import { View, Text, Switch, Pressable, Alert, StyleSheet, Platform, Modal, Vibr
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useFonts from '../assets/hooks/useFonts';
 import TimePicker from '../components/TimePicker'
-
+import { useColorScheme } from "nativewind";
 
 
 
@@ -15,11 +15,8 @@ const AlarmClock = (props) => {
     await useFonts();
   };
 
+  const isDarkMode = useColorScheme().colorScheme === 'dark';
 
-  const [isOneDaySelected, setOneDay] = useState();
-  const [isTwoDaySelected, setTwoDay] = useState(false);
-  const [isThreeDaySelected, setThreeDay] = useState(false);
-  const [isTimePickerActive, setTimePicker] = useState(false);
 
 
 
@@ -88,7 +85,8 @@ const AlarmClock = (props) => {
 
       <View name='switchView' className="flex-row items-center justify-end">
         <Switch
-          trackColor={Platform.OS === 'android' ? { false: '#3e3e3e', true: '#4CD964' } : {}}
+          trackColor={isDarkMode ? { true: '#4CD964', false: '#3e3e3e' } : { true: '#4CD964', false: 'black' }}
+          thumbColor='white'
           ios_backgroundColor="#3e3e3e"
           onValueChange={() => {
             props.onEditToggle(props.id);

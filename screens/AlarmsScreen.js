@@ -489,7 +489,7 @@ export default function AlarmsScreen() {
 
                 < ScrollView className="pt-5 mx-1" >
 
-                    <View name="AlarmsContainer" className="flex flex-1 items-center bg-slate-600 h-full">
+                    <View name="AlarmsContainer" className="flex flex-1 items-center bg-slate-500 h-full">
 
 
                         {

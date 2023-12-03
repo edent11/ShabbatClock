@@ -65,9 +65,9 @@ export default function RingtoneScreen() {
                 </ScrollView >
             </View>
 
-            <Text className='text-center bg-slate-900 text-white text-lg -top-2'> {t('your_ringtone') + ':   ' + ringtone.name}</Text>
+            <Text className='text-center bg-slate-900 text-white text-lg -top-2 mt-4'> {t('your_ringtone') + ':   ' + ringtone.name}</Text>
 
-            <View className=''>
+            <View className='mt-4'>
 
 
                 <Button

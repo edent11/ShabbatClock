@@ -27,32 +27,38 @@ export default function RadioButtonList({ data, onSelect }) {
     return (
         <View className='bg-opacity-60 '>
 
-            {(data).map((ringtone, key) => {
-                return (
-                    <Pressable
-                        key={key}
-                        className={`flex flex-row justify-between items-center border-b-1 h-10 border-gray-300 mb-2 px-1  bg-slate-500 `}
+            {(data)
+                .sort((a, b) => {
+                    if (a.duration > b.duration)
+                        return 1;
+                    else return -1
+                })
+                .map((ringtone, key) => {
+                    return (
+                        <Pressable
+                            key={key}
+                            className={`flex flex-row justify-between items-center border-b-1 h-10 border-gray-300 mb-1 px-1  bg-slate-500 `}
 
-                        onPress={() => { selectHandler(key, ringtone); }}
-                    >
+                            onPress={() => { selectHandler(key, ringtone); }}
+                        >
 
-                        <Fontisto name="applemusic" size={24} color={isDarkMode ? "black" : "white"} />
+                            <Fontisto name="applemusic" size={24} color={isDarkMode ? "black" : "white"} />
 
-                        <Text className={`text-base text-white`}> {ringtone.name}</Text>
+                            <Text className={`text-base text-white`}> {ringtone.name}</Text>
 
-                        <Text className={`text-base text-white`}> {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text>
+                            <Text className={`text-base text-white`}> {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text>
 
-                        <Entypo name="check" size={24} color={key === userOption ? "#1eff00" : 'transparent'} />
+                            <Entypo name="check" size={24} color={key === userOption ? "#1eff00" : 'transparent'} />
 
 
-                        {/* <Image
+                            {/* <Image
                             source={require('../assets/images/check.png')}
                             className={`w-10 h-10 ${value === userOption ? `` : `hidden`}`}
                         /> */}
 
-                    </Pressable>
-                );
-            })}
+                        </Pressable>
+                    );
+                })}
         </View>
     );
 }
