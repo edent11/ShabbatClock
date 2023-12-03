@@ -1,4 +1,4 @@
-import { Alert, Modal, StyleSheet, Text, Pressable, View, Button, TouchableWithoutFeedback, Platform } from 'react-native';
+import { Modal, Pressable, View, Button, TouchableWithoutFeedback, Platform } from 'react-native';
 import { React, useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useColorScheme } from "nativewind";

@@ -1,13 +1,12 @@
 
-import { React, useState, useEffect } from 'react'
+import { React, useState } from 'react'
 import AlarmClock from '../components/AlarmClock'
 import TimePicker from '../components/TimePicker'
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable, Vibration, ToastAndroid } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Vibration, ToastAndroid } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import AlarmNotification from "../components/AlarmNotification";
 import { getAlarmsManager, getDateDisplay, getTimeDisplay } from "../assets/globals";
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -169,6 +168,7 @@ export default function AlarmsScreen() {
                     isToggleEnabled: true
                 }];
             });
+            showToast(t("Alarm scheduled successfully"))
             console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Date: (${getDateDisplay(res[1])}) Time: (${getTimeDisplay(res[1])})`);
 
 
@@ -337,7 +337,7 @@ export default function AlarmsScreen() {
                         .then(res => {
                             console.log(res);
                             alarm.isToggleEnabled = true;
-                            showToast(t("successfully scheduled alarm"));
+                            showToast(t("Alarm scheduled successfully"));
                         })
                         .catch(error => console.log(error));
 
@@ -349,7 +349,7 @@ export default function AlarmsScreen() {
                         .then((res) => {
                             alarm.isToggleEnabled = false;
                             console.log(res);
-                            showToast(t("successfully cancelled alarm"));
+                            showToast(t("Alarm cancelled successfully"));
                         })
                         .catch(error => console.log(error));
 
@@ -473,7 +473,7 @@ export default function AlarmsScreen() {
 
 
 
-        < View className={"pt-10 dark:bg-black h-11/12"} >
+        < View className={"pt-8 dark:bg-black h-11/12"} >
 
             < TimePicker
                 active={isAddAlarm || isEditAlarm}
@@ -490,8 +490,6 @@ export default function AlarmsScreen() {
                 < ScrollView className="pt-5 mx-1" >
 
                     <View name="AlarmsContainer" className="flex flex-1 items-center bg-slate-500 h-full">
-
-
                         {
                             alarms
                                 .sort((a, b) => {
@@ -535,7 +533,7 @@ export default function AlarmsScreen() {
 
             </View>
 
-            <View name='plus button' className='absolute bottom-7 inset-x-0 w-full flex items-center'>
+            <View name='plus button' className='absolute bottom-7 inset-x-0 w-full flex items-center shadow-inner'>
 
                 <TouchableOpacity
                     onPress={() => { Vibration.vibrate(100); setTimePickerAddAlarm(true); }}>

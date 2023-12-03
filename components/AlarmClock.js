@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { View, Text, Switch, Pressable, Alert, StyleSheet, Platform, Modal, Vibration } from 'react-native'
+import { View, Text, Switch, Pressable, Vibration } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import useFonts from '../assets/hooks/useFonts';
-import TimePicker from '../components/TimePicker'
 import { useColorScheme } from "nativewind";
 
 
@@ -97,9 +96,6 @@ const AlarmClock = (props) => {
         />
 
       </View>
-
-
-
     </View >
 
 

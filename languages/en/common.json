@@ -11,6 +11,6 @@
     "alarms_screen": "Schedule An Alarm",
     "alarm_example": "Alarm Test",
     "your_ringtone": "chosen ringtone",
-    "successfully scheduled alarm": "successfully scheduled alarm",
-    "successfully cancelled alarm": "successfully cancelled alarm"
+    "Alarm scheduled successfully": "Alarm scheduled successfully",
+    "Alarm cancelled successfully": "Alarm cancelled successfully"
 }

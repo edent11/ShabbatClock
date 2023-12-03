@@ -1,11 +1,10 @@
 
-import { View, Text, Pressable, Image, ScrollView } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { useState } from 'react'
 import "../languages/i18n";
 import { useColorScheme } from "nativewind";
 import { useTranslation } from 'react-i18next';
-import { Entypo, MaterialCommunityIcons, Fontisto } from '@expo/vector-icons';
+import { Entypo, Fontisto } from '@expo/vector-icons';
 
 
 
@@ -50,7 +49,7 @@ export default function RadioButtonList({ data, onSelect }) {
 
                             <Entypo name="check" size={24} color={key === userOption ? "#1eff00" : 'transparent'} />
 
-
+                            {/* #1eff00 */}
                             {/* <Image
                             source={require('../assets/images/check.png')}
                             className={`w-10 h-10 ${value === userOption ? `` : `hidden`}`}

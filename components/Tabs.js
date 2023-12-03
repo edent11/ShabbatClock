@@ -2,7 +2,7 @@ import React from 'react';
 import RingtoneScreen from "../screens/RingtoneScreen";
 import AlarmsScreen from "../screens/AlarmsScreen";
 import InfoScreen from "../screens/InfoScreen";
-import DateAndTimePicker from "./TimePicker";
+
 
 
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Button } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';

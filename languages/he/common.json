@@ -13,6 +13,6 @@
     "save": "שמור",
     "alarm_example": "שעון מעורר לדוגמה",
     "your_ringtone": "הרינגטון שלך",
-    "successfully scheduled alarm": "שעון מעורר נקבע בהצלחה",
-    "successfully cancelled alarm": "שעון מעורר בוטל בהצלחה"
+    "Alarm scheduled successfully": "שעון מעורר נקבע בהצלחה",
+    "Alarm cancelled successfully": "שעון מעורר בוטל בהצלחה"
 }

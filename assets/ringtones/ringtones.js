@@ -95,7 +95,7 @@ export const ringtones = [
     {
         name: 'morning_ringtone',
         file: morning_ringtone,
-        duration: 22
+        duration: 23
     },
     {
         name: 'relaxation',

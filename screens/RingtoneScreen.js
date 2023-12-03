@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Button } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, Button } from 'react-native';
 import RadioButtonList from '../components/RadioButtonList'
 import TopBar from '../components/TopBar'
 import { ringtones } from '../assets/ringtones/ringtones';
@@ -44,7 +44,7 @@ export default function RingtoneScreen() {
 
     return (
 
-        < SafeAreaView className={"pt-12 px-4 dark:bg-black h-full"} >
+        < SafeAreaView className={"pt-8 px-4 dark:bg-black h-full"} >
 
             <TopBar tabName={t('ringtone_screen')} />
 
