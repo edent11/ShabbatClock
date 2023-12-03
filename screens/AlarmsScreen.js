@@ -248,19 +248,16 @@ export default function AlarmsScreen() {
     }
 
 
-    function getLastAlarm(notificationId) {
+    function getLastAlarm(alarm) {
 
-        if (notificationId['green'] != null && notificationId['green'] != 'on')
-            return 'green';
+        if (alarm.date['green'] != null)
+            return alarm.date['green'];
 
-        if (notificationId['blue'] != null && notificationId['blue'] != 'on')
-            return 'blue';
+        if (alarm.date['blue'] != null)
+            return alarm.date['blue'];
 
-        if (notificationId['red'] != null && notificationId['red'] != 'on')
-            return 'red';
-
-
-
+        if (alarm.date['red'] != null)
+            return alarm.date['red'];
 
     }
 
