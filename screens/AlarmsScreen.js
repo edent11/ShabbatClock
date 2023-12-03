@@ -111,7 +111,6 @@ export default function AlarmsScreen() {
 
                 if (alarm.notificationId[color] != null) {
 
-
                     promises.push(new Promise(async (resolve, reject) => {
                         var alarmColor = alarm.notificationId[color];
                         await alarmsManager.cancelAlarm(alarmColor)
@@ -323,14 +322,14 @@ export default function AlarmsScreen() {
             if (alarmToDelete.notificationId != null) {
 
                 cancelScheduledAlarm(alarmToDelete, null, isUpdateTime = false)
+                    .then((res) => {
+                        console.log("operation: delete \n" + res);
+                    })
                     .catch(error => reject(error))
             }
             else resolve("No alarm to delete");
         });
 
-        cancelAlarm.then((res) => {
-            console.log("operation: delete " + res);
-        }).catch(error => console.log(error));
     }
 
 
