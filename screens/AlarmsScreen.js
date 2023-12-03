@@ -33,6 +33,8 @@ export default function AlarmsScreen() {
                     alarm.notificationId[color] = 'on';
                     alarm.enabledColors++;
 
+                    console.log("operation: add color \n");
+
                     if (alarm.isToggleEnabled) {
 
                         alarmDay = addDaysForAlarm(color);
@@ -53,7 +55,10 @@ export default function AlarmsScreen() {
 
                 }
                 else {
-                    await cancelScheduledAlarm(alarm, color, isUpdateTime = false);
+                    console.log("operation: cancel color \n");
+                    await cancelScheduledAlarm(alarm, color, isUpdateTime = false)
+                        .then((res) => console.log(res))
+                        .catch((err) => console.log(err));;
 
                 }
 
@@ -88,6 +93,8 @@ export default function AlarmsScreen() {
         var promises = [];
 
         if (colorToDelete != null) {
+
+
             promises.push(new Promise(async (resolve, reject) => {
                 await alarmsManager.cancelAlarm(alarm.notificationId[colorToDelete])
                     .then(() => {
@@ -107,7 +114,6 @@ export default function AlarmsScreen() {
 
 
             for (const color in alarm.notificationId) {
-
 
                 if (alarm.notificationId[color] != null) {
 
@@ -137,6 +143,8 @@ export default function AlarmsScreen() {
     }
 
     async function addAlarm(hours, minutes) {
+
+        console.log("operation: add alarm\n");
 
         setTimePickerAddAlarm(false);
 
@@ -185,9 +193,7 @@ export default function AlarmsScreen() {
                     await cancelScheduledAlarm(alarm, null, isUpdateTime = true)
                         .then(async (res) => {
 
-                            console.log('hi');
                             console.log(res);
-                            // await updateAlarmTime(alarm, hours, minutes).then(() => {
                             alarm.hours = hours;
                             alarm.minutes = minutes;
 
@@ -199,8 +205,6 @@ export default function AlarmsScreen() {
 
                         }).catch(error => reject(error))
 
-
-
                 }
 
 
@@ -209,8 +213,6 @@ export default function AlarmsScreen() {
             });
         }).then(() => setAlarms(newAlarmsArray));
     }
-
-
 
 
     async function scheduleColors(alarm) {
@@ -272,7 +274,7 @@ export default function AlarmsScreen() {
             if (index == alarmID) {
 
                 if (!alarm.isToggleEnabled) {
-                    console.log(alarm.enabledColors);
+
                     if (alarm.enabledColors == 0) {
                         alarm.notificationId.red = 'on';
                         alarm.enabledColors++;
