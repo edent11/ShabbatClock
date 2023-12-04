@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getAlarmsManager, getDateDisplay, getTimeDisplay } from "../assets/globals";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData } from "../assets/globals";
+
 
 let alarmIdEdit = '';
 
@@ -22,14 +22,15 @@ export default function AlarmsScreen() {
 
 
 
+
+
+
     const showToast = (message) => {
         ToastAndroid.show(message, ToastAndroid.SHORT);
     };
 
 
     async function setAlarmColor(alarmID, color) {
-
-
 
         newAlarms = await Promise.all(alarms.map(async (alarm, index) => {
 
@@ -38,6 +39,11 @@ export default function AlarmsScreen() {
                 if (alarm.notificationId[color] == null) {
                     alarm.notificationId[color] = 'on';
                     alarm.enabledColors++;
+                    // await storeData('alarms', alarms);
+                    // await getData('alarms').then((data) => { console.log(data) });
+
+                    await storeData('enabledColors', alarm.enabledColors.toString());
+                    await getData('enabledColors').then((data) => { console.log("p " + data) });
 
                     console.log("operation: add color \n");
 

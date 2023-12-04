@@ -1,22 +1,40 @@
 import { Text, View, SafeAreaView, ScrollView, Button } from 'react-native';
 import RadioButtonList from '../components/RadioButtonList'
 import TopBar from '../components/TopBar'
-import { ringtones } from '../assets/ringtones/ringtones';
+import { ringtones } from '../android/app/src/main/res/raw/ringtones';
 import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
-import { getAlarmsManager } from "../assets/globals";
+import { getAlarmsManager, storeData, getDataObject, loadChosenRingtone } from "../assets/globals";
 
-global.alarmSound = ringtones[0].file;
+
+
+
+
+
+
 export default function RingtoneScreen() {
 
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
-    const [ringtone, setRingtone] = useState(ringtones[0]);
+    const [ringtone, setRingtone] = useState();
+    const [ringtoneNumber, setRingtoneNumber] = useState();
     const [sound, setSound] = useState(null);
-    const [lastRingtoneChosen, setLastRingtoneChosen] = useState();
+    const [lastRingtoneChosen, setLastRingtoneChosen] = useState(ringtones[0]);
 
+
+
+    useEffect(() => {
+        loadChosenRingtone().then(ringtoneData => {
+
+            if (ringtoneData != null) {
+                setRingtone(ringtoneData["name"]);
+                setLastRingtoneChosen(ringtoneData["name"]);
+            }
+        });
+
+    }, [])
 
 
     async function playSound(chosenRingtone) {
@@ -53,7 +71,6 @@ export default function RingtoneScreen() {
 
                 < ScrollView className=" border-2 border-slate-700  dark:bg-slate-700 " >
 
-
                     <RadioButtonList
                         data={ringtones}
                         onSelect={async (chosenRingtone) => {
@@ -65,17 +82,20 @@ export default function RingtoneScreen() {
                 </ScrollView >
             </View>
 
-            <Text className='text-center bg-slate-900 text-white text-lg -top-2 mt-4'> {t('your_ringtone') + ':   ' + ringtone.name}</Text>
+            <Text className='text-center bg-slate-900 text-white text-lg -top-2 mt-4'> {t('your_ringtone') + ':   ' + ringtone}</Text>
 
             <View className='mt-4'>
 
 
                 <Button
+                    class='save ringtone'
                     onPress={async () => {
 
-                        setRingtone(lastRingtoneChosen);
-                        await sound.stopAsync();
+                        setRingtone(lastRingtoneChosen.name);
+                        sound ? await sound.stopAsync() : {};
                         await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
+
+                        await storeData('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
                     }}
                     title={t('save')} />
 

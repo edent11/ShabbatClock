@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ToDoList",
+    "name": "ShabbatClock",
     "slug": "ToDoList",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,7 @@
       "**/*"
     ],
     "splash": {
-      "image": "./assets/icon.png",
+      "image": "./assets/splash.png",
       "backgroundColor": "#FEF9B0"
     },
     "ios": {
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "userInterfaceStyle": "automatic",
         "useNextNotificationApi": true
