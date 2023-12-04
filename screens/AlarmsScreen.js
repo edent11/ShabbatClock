@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData } from "../assets/globals";
+import {  getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData } from "../assets/globals";
 
 
 let alarmIdEdit = '';

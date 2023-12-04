@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
-import { getAlarmsManager, storeData, getDataObject, loadChosenRingtone } from "../assets/globals";
+import { getAlarmsManager, storeDataObject, getDataObject, loadChosenRingtone } from "../assets/globals";
 
 
 
@@ -94,8 +94,7 @@ export default function RingtoneScreen() {
                         setRingtone(lastRingtoneChosen.name);
                         sound ? await sound.stopAsync() : {};
                         await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
-
-                        await storeData('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
+                        await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
                     }}
                     title={t('save')} />
 

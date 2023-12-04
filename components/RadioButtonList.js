@@ -5,7 +5,7 @@ import "../languages/i18n";
 import { useColorScheme } from "nativewind";
 import { useTranslation } from 'react-i18next';
 import { Entypo, Fontisto } from '@expo/vector-icons';
-import { loadChosenRingtone } from "../assets/globals";
+import { isDarkMode, loadChosenRingtone } from "../assets/globals";
 
 
 
@@ -14,7 +14,7 @@ import { loadChosenRingtone } from "../assets/globals";
 export default function RadioButtonList(props) {
 
     const { t } = useTranslation();
-    const [userOption, setUserOption] = useState(props.value);
+    const [userOption, setUserOption] = useState(0);
     console.log(props.value);
 
     const selectHandler = (key, ringtone) => {
@@ -28,13 +28,12 @@ export default function RadioButtonList(props) {
 
             if (ringtoneData != null) {
                 setUserOption(ringtoneData["id"] - 1);
-
             }
         });
 
     }, [])
 
-    const isDarkMode = useColorScheme().colorScheme === 'dark';
+
 
     return (
         <View className='bg-opacity-60 '>
