@@ -1,5 +1,5 @@
 
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import AlarmClock from '../components/AlarmClock'
 import TimePicker from '../components/TimePicker'
 import { View, ScrollView, TouchableOpacity, Vibration, ToastAndroid } from 'react-native';
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {  getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData } from "../assets/globals";
+import { getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData, storeDataObject, getDataObject } from "../assets/globals";
 
 
 let alarmIdEdit = '';
@@ -16,13 +16,40 @@ export default function AlarmsScreen() {
 
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
-    const [alarms, setAlarms] = useState([{ id: 0, enabledColors: 0, notificationId: { red: null, blue: null, green: null }, hours: "10", minutes: "30", isToggleEnabled: false, date: { red: null, blue: null, green: null } }]);
+    // const [alarms, setAlarms] = useState([{ id: 0, enabledColors: 0, notificationId: { red: null, blue: null, green: null }, hours: "10", minutes: "30", isToggleEnabled: false, date: { red: null, blue: null, green: null } }]);
+    const [alarms, setAlarms] = useState([]);
     const [isAddAlarm, setTimePickerAddAlarm] = useState(false);
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
 
 
+    useEffect(() => {
+
+        onLoad();
+
+    }, [])
+
+    useEffect(() => {
+
+        storeAlarmsArray();
+
+    }, [alarms])
 
 
+    const storeAlarmsArray = async () => {
+
+        await storeDataObject('alarms', alarms).then(() => console.log('saved success'));
+
+    };
+
+    const onLoad = async () => {
+
+        const alarmsArray = await getDataObject('alarms');
+        console.log(alarmsArray);
+        if (alarmsArray != null)
+            setAlarms(alarmsArray);
+
+
+    };
 
 
     const showToast = (message) => {
@@ -83,6 +110,7 @@ export default function AlarmsScreen() {
         }));
 
         setAlarms(newAlarms);
+
     }
 
 
@@ -162,7 +190,7 @@ export default function AlarmsScreen() {
 
         setTimePickerAddAlarm(false);
 
-        scheduleNewAlarm(hours, minutes, alarmDay = 0).then((res) => {
+        scheduleNewAlarm(hours, minutes, alarmDay = 0).then(async (res) => {
             setAlarms(prevAlarms => {
                 return [...prevAlarms, {
 
@@ -176,6 +204,7 @@ export default function AlarmsScreen() {
             });
             showToast(t("Alarm scheduled successfully"))
             console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Date: (${getDateDisplay(res[1])}) Time: (${getTimeDisplay(res[1])})`);
+            console.log(alarms);
 
 
         }).catch((error) => console.log(error));
@@ -220,7 +249,9 @@ export default function AlarmsScreen() {
             }
             return alarm;
 
-        }))).then((newAlarmsArray) => setAlarms(newAlarmsArray));
+        }))).then(async (newAlarmsArray) => {
+            setAlarms(newAlarmsArray);
+        });
 
     }
 
@@ -249,8 +280,10 @@ export default function AlarmsScreen() {
             }
 
 
-            if (textResolve)
+            if (textResolve) {
+
                 resolve(textResolve);
+            }
             else reject(textReject);
 
         });
@@ -363,7 +396,9 @@ export default function AlarmsScreen() {
             }
             return alarm;
 
-        }))).then((newAlarmsArray) => setAlarms(newAlarmsArray))
+        }))).then(async (newAlarmsArray) => {
+            setAlarms(newAlarmsArray);
+        })
 
 
     }
@@ -401,7 +436,7 @@ export default function AlarmsScreen() {
             if (alarmToDelete.notificationId != null) {
 
                 cancelScheduledAlarm(alarmToDelete, null, isUpdateTime = false)
-                    .then((res) => {
+                    .then(async (res) => {
                         console.log("operation: delete \n" + res);
                     })
                     .catch(error => reject(error))
