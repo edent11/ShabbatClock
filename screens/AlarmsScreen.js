@@ -43,10 +43,42 @@ export default function AlarmsScreen() {
 
     const onLoad = async () => {
 
-        const alarmsArray = await getDataObject('alarms');
+        var alarmsArray = await getDataObject('alarms');
         console.log(alarmsArray);
-        if (alarmsArray != null)
-            setAlarms(alarmsArray);
+        if (alarmsArray != null) {
+            await updatePassedAlarms(alarmsArray).then((updatedAlarmsArray) => setAlarms(updatedAlarmsArray));
+        }
+
+
+    };
+
+    const updatePassedAlarms = async (alarmsArray) => {
+
+        var currentTime = new Date(Date.now());
+
+
+        return await Promise.all(alarmsArray.map((alarm) => {
+
+            for (let color in alarm.notificationId) {
+
+
+                if (alarm.isToggleEnabled && alarm.date[color] != null) {
+
+                    var alarmTime = new Date(alarm.date[color]);
+
+                    if (alarmTime.getTime() <= currentTime.getTime()) {
+                        alarm.enabledColors--;
+                        alarm.notificationId[color] = null;
+                        alarm.date[color] = null;
+                    }
+                }
+
+            }
+            if (alarm.enabledColors == 0)
+                alarm.isToggleEnabled = false;
+            return alarm;
+
+        }));
 
 
     };
@@ -141,6 +173,7 @@ export default function AlarmsScreen() {
             promises.push(new Promise(async (resolve, reject) => {
                 await alarmsManager.cancelAlarm(alarm.notificationId[colorToDelete])
                     .then(async () => {
+
                         alarm.enabledColors--;
                         date = await alarm.date[colorToDelete];
                         noteId = alarm.notificationId[colorToDelete];
