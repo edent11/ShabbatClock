@@ -140,9 +140,9 @@ export default function AlarmsScreen() {
 
             promises.push(new Promise(async (resolve, reject) => {
                 await alarmsManager.cancelAlarm(alarm.notificationId[colorToDelete])
-                    .then(() => {
+                    .then(async () => {
                         alarm.enabledColors--;
-                        date = alarm.date[colorToDelete];
+                        date = await alarm.date[colorToDelete];
                         noteId = alarm.notificationId[colorToDelete];
                         alarm.notificationId[colorToDelete] = isUpdateTime ? noteId ? 'on' : null : null;
                         alarm.date[colorToDelete] = null;
@@ -204,7 +204,7 @@ export default function AlarmsScreen() {
             });
             showToast(t("Alarm scheduled successfully"))
             console.log(`color: (red) successfully scheduled alarm: (${res[0]}) Date: (${getDateDisplay(res[1])}) Time: (${getTimeDisplay(res[1])})`);
-            console.log(alarms);
+
 
 
         }).catch((error) => console.log(error));
@@ -232,6 +232,8 @@ export default function AlarmsScreen() {
 
             if (index == alarmIdEdit) {
 
+                var enabledColors = alarm.enabledColors;
+
                 await cancelScheduledAlarm(alarm, null, isUpdateTime = true)
                     .then(async (res) => {
 
@@ -242,6 +244,7 @@ export default function AlarmsScreen() {
 
                         await scheduleColors(alarm).then(res => {
                             console.log(res);
+                            alarm.enabledColors = enabledColors;
                         })
 
 
