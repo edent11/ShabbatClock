@@ -175,7 +175,7 @@ export default function AlarmsScreen() {
                     .then(async () => {
 
                         alarm.enabledColors--;
-                        date = await alarm.date[colorToDelete];
+                        date = alarm.date[colorToDelete];
                         noteId = alarm.notificationId[colorToDelete];
                         alarm.notificationId[colorToDelete] = isUpdateTime ? noteId ? 'on' : null : null;
                         alarm.date[colorToDelete] = null;
