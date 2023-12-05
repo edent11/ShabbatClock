@@ -282,12 +282,21 @@ export default function AlarmsScreen() {
 
                 var enabledColors = alarm.enabledColors;
 
+
                 await cancelScheduledAlarm(alarm, null, isUpdateTime = true)
                     .then(async (res) => {
 
                         console.log(res);
                         alarm.hours = hours;
                         alarm.minutes = minutes;
+
+                        if (enabledColors == 0) {
+                            alarm.notificationId['red'] = 'on';
+                            enabledColors++;
+                        }
+
+                        alarm.isToggleEnabled = false;
+                        alarm.isToggleEnabled = true;
 
 
                         await scheduleColors(alarm).then(res => {
@@ -422,7 +431,7 @@ export default function AlarmsScreen() {
                 if (!alarm.isToggleEnabled) {
 
                     if (alarm.enabledColors == 0) {
-                        alarm.notificationId.red = 'on';
+                        alarm.notificationId['red'] = 'on';
                         alarm.enabledColors++;
                     }
                     await scheduleColors(alarm)
