@@ -32,6 +32,7 @@ export default function RingtoneScreen() {
                 setRingtone(ringtoneData["name"]);
                 setLastRingtoneChosen(ringtoneData["name"]);
             }
+            else setRingtone(ringtones[0].name);
         });
 
     }, [])
