@@ -8,11 +8,12 @@ import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData, storeDataObject, getDataObject } from "../assets/globals";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let alarmIdEdit = '';
 
 export default function AlarmsScreen() {
+
 
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
@@ -43,6 +44,7 @@ export default function AlarmsScreen() {
 
     const onLoad = async () => {
 
+        // await AsyncStorage.clear();
         var alarmsArray = await getDataObject('alarms');
         console.log(alarmsArray);
         if (alarmsArray != null) {
@@ -55,31 +57,44 @@ export default function AlarmsScreen() {
     const updatePassedAlarms = async (alarmsArray) => {
 
         var currentTime = new Date(Date.now());
-
-
         return await Promise.all(alarmsArray.map((alarm) => {
 
-            for (let color in alarm.notificationId) {
+            var lastAlarm = getLastAlarmDate(alarm);
+
+            if (lastAlarm != null) {
+
+                var lastAlarmTime = new Date(lastAlarm);
+
+                if (lastAlarmTime.getTime() <= currentTime.getTime())
+                    alarm.isToggleEnabled = false;
 
 
-                if (alarm.isToggleEnabled && alarm.date[color] != null) {
+                for (let color in alarm.notificationId) {
 
-                    var alarmTime = new Date(alarm.date[color]);
+                    if (alarm.date[color] != null) {
 
-                    if (alarmTime.getTime() <= currentTime.getTime()) {
-                        alarm.enabledColors--;
-                        alarm.notificationId[color] = null;
-                        alarm.date[color] = null;
+                        var alarmTime = new Date(alarm.date[color]);
+
+                        if (alarmTime.getTime() <= currentTime.getTime()) {
+                            console.log(alarm);
+                            alarm.notificationId[color] = 'on';
+                            alarm.date[color] = null;
+
+                        }
+
+
                     }
                 }
-
             }
-            if (alarm.enabledColors == 0)
-                alarm.isToggleEnabled = false;
+
+
             return alarm;
 
         }));
 
+        //     alarmTime = new Date(getLastAlarmDate(currentAlarm));
+        // if (alarmTime.getTime() <= currentTime.getTime())
+        //     alarm.isToggleEnabled = false;
 
     };
 
@@ -390,6 +405,8 @@ export default function AlarmsScreen() {
         if (alarm.date['red'] != null)
             return alarm.date['red'];
 
+        else return null;
+
     }
 
 
@@ -535,11 +552,14 @@ export default function AlarmsScreen() {
     // const MINUTE_MS = 60000;
 
     // useEffect(() => {
-    //     const interval = setInterval(() => {
+    //     const interval = setInterval(async () => {
     //         console.log('Logs every minute');
+    //         var alarms_copy = JSON.parse(JSON.stringify(alarms));
+    //         console.log(alarms_copy);
+    //         await updatePassedAlarms(alarms_copy).then((updatedAlarmsArray) => setAlarms(updatedAlarmsArray));
 
-    //         // updateToggleWhenTimePassed();
-    //     }, 7000);
+
+    //     }, 10000);
 
     //     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
     // }, [])
