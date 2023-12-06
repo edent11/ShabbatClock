@@ -1,21 +1,39 @@
 import { NavigationContainer } from '@react-navigation/native'
-import React from 'react';
+import { React } from 'react';
+import { StatusBar, SafeAreaView, ScrollView, View } from 'react-native';
 import Tabs from './components/Tabs';
-
-
-import "./languages/i18n";
-
-
-
+import { Audio } from 'expo-av';
+import { sound } from './assets/globals'
 
 export default function App() {
 
+
+
   return (
 
-    < NavigationContainer >
+    <SafeAreaView className='flex-1'>
 
-      <Tabs />
-    </NavigationContainer >
+      <StatusBar
+        backgroundColor="#3474eb"
+      />
+
+
+
+
+
+      < NavigationContainer
+        className='grow-1'>
+        {/* // onStateChange={
+          //   (state) => sound.un
+          // }  */}
+
+
+        <Tabs />
+
+      </NavigationContainer >
+
+
+    </SafeAreaView >
 
   );
 }
