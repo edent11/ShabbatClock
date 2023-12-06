@@ -1,5 +1,5 @@
 
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useCallback } from 'react'
 import AlarmClock from '../components/AlarmClock'
 import TimePicker from '../components/TimePicker'
 import { View, ScrollView, TouchableOpacity, Vibration, ToastAndroid } from 'react-native';
@@ -8,7 +8,6 @@ import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, getData, storeDataObject, getDataObject } from "../assets/globals";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let alarmIdEdit = '';
 
@@ -45,18 +44,29 @@ export default function AlarmsScreen() {
     const onLoad = async () => {
 
         // await AsyncStorage.clear();
-        var alarmsArray = await getDataObject('alarms');
-        console.log(alarmsArray);
-        if (alarmsArray != null) {
-            await updatePassedAlarms(alarmsArray).then((updatedAlarmsArray) => setAlarms(updatedAlarmsArray));
-        }
+
+        await updatePassedAlarms().then((updatedAlarmsArray) => setAlarms(updatedAlarmsArray));
+
 
 
     };
 
-    const updatePassedAlarms = async (alarmsArray) => {
+    const isArraysEqual = async (comparedArray) => {
+
+        return alarms.length === comparedArray.length &&
+            alarms.every((element, index) => element === comparedArray[index]);
+
+
+
+    };
+
+    const updatePassedAlarms = async () => {
+
 
         var currentTime = new Date(Date.now());
+
+        var alarmsArray = await getDataObject('alarms');
+
         return await Promise.all(alarmsArray.map((alarm) => {
 
             var lastAlarm = getLastAlarmDate(alarm);
@@ -495,7 +505,7 @@ export default function AlarmsScreen() {
 
         const cancelAlarm = new Promise((resolve, reject) => {
 
-            if (alarmToDelete.notificationId != null) {
+            if (getLastAlarmDate(alarmToDelete) != null) {
 
                 cancelScheduledAlarm(alarmToDelete, null, isUpdateTime = false)
                     .then(async (res) => {
@@ -558,20 +568,18 @@ export default function AlarmsScreen() {
 
 
 
-    // const MINUTE_MS = 60000;
+    const MINUTE_MS = 60000;
 
-    // useEffect(() => {
-    //     const interval = setInterval(async () => {
-    //         console.log('Logs every minute');
-    //         var alarms_copy = JSON.parse(JSON.stringify(alarms));
-    //         console.log(alarms_copy);
-    //         await updatePassedAlarms(alarms_copy).then((updatedAlarmsArray) => setAlarms(updatedAlarmsArray));
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            console.log('Logs every minute');
+            await updatePassedAlarms().then((updatedAlarmsArray) => setAlarms(updatedAlarmsArray));
 
 
-    //     }, 10000);
+        }, MINUTE_MS);
 
-    //     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-    // }, [])
+        return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+    }, [])
 
 
 
