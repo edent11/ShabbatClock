@@ -2,12 +2,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import { React, useRef, useState, useEffect } from 'react';
 import { StatusBar, SafeAreaView, ScrollView, View, AppState } from 'react-native';
 import Tabs from './components/Tabs';
-import { Audio } from 'expo-av';
-import { sound } from './assets/globals'
+
+
 
 export default function App() {
 
   const [tabChanged, setTabChanged] = useState();
+
   // const appState = useRef(AppState.currentState);
   // const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -45,12 +46,12 @@ export default function App() {
 
       < NavigationContainer
         className='grow-1'
-        onStateChange={
-          (state) => {
-            // console.log('changed');
-            setTabChanged(!tabChanged);
-          }
-        }
+      // onStateChange={
+      //   (state) => {
+      //     // console.log('changed');
+      //     setTabChanged(!tabChanged);
+      //   }
+      // }
       >
 
 
