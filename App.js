@@ -7,6 +7,7 @@ import { sound } from './assets/globals'
 
 export default function App() {
 
+  const [tabChanged, setTabChanged] = useState();
   // const appState = useRef(AppState.currentState);
   // const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -43,14 +44,19 @@ export default function App() {
 
 
       < NavigationContainer
-        className='grow-1'>
-        {/* // onStateChange={
-          //   (state) => sound.un
-          // }  */}
+        className='grow-1'
+        onStateChange={
+          (state) => {
+            // console.log('changed');
+            setTabChanged(!tabChanged);
+          }
+        }
+      >
 
 
         <Tabs
-        // appIsForeground={appState.current}
+          // appIsForeground={appState.current}
+          tabChanged={tabChanged}
         />
 
       </NavigationContainer >
