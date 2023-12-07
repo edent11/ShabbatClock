@@ -127,7 +127,7 @@ export default function InfoScreen() {
 
 
                 <View className={`items-center justify-center px-4 pt-4`}>
-                    <Text className='text-white text-base font-semibold h-auto w-auto mb-4'>{t('info_ringtone_update')}</Text>
+                    <Text className='text-white text-base font-semibold h-auto w-auto mb-4 bg-spacial-blue'>{t('info_ringtone_update')}</Text>
 
 
 

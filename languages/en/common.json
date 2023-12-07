@@ -12,5 +12,12 @@
     "alarm_example": "Alarm Test",
     "your_ringtone": "chosen ringtone",
     "Alarm scheduled successfully": "Alarm scheduled successfully",
-    "Alarm cancelled successfully": "Alarm cancelled successfully"
+    "Alarm cancelled successfully": "Alarm cancelled successfully",
+    "info_head": "In order to support connected Shabbat and Chag: ",
+    "info_first_day": "When the button is active, the alarm will fire in one day",
+    "info_second_day": "When the button is active, the alarm will fire in two days",
+    "info_third_day": "When the button is active, the alarm will fire in three days",
+    "info_all_days": "It is possible to activate more than one button in one notification, so that the same notification will sound at the same time on different days (depending on the selected buttons)",
+    "info_remove_alarm": "In order to remove alarm, long press this button",
+    "info_ringtone_update": "You must select a ringtone before setting the alert, otherwise the ringtone will be the default or the previously set one"
 }

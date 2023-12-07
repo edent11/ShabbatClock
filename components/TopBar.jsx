@@ -7,8 +7,8 @@ const TopBar = (props) => {
 
     return (
 
-        <View className={`dark:bg-spacial-blue bg-spacial-blue  items-center justify-center h-14`}>
-            <Text className=' text-white font-bold text-3xl text-center'>{props.tabName}</Text>
+        <View className={` bg-spacial-blue items-center justify-center h-14`}>
+            <Text className=' text-white font-bold text-3xl '>{props.tabName}</Text>
 
 
 
