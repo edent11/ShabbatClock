@@ -1,12 +1,21 @@
-import { Text, View, Button, Pressable, ScrollView, TouchableOpacity } from 'react-native';
-import TopBar from '../components/TopBar'
-import "../languages/i18n";
+/*
+FileName: InfoScreen.jsx
+Role: Displays app's information for the user.
+*/
+
+
+
+
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Clipboard from '@react-native-clipboard/clipboard';
+import TopBar from '../components/TopBar'
+import "../languages/i18n";
 
 
 export default function InfoScreen() {
+
     const { t } = useTranslation();
 
     const copyToClipboard = () => {

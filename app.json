@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "ShabbatClock",
-    "slug": "ToDoList",
+    "slug": "ShabbatClock",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -31,7 +31,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "97052e37-4b63-46ac-9a58-a87c68b6b98f"
+        "projectId": "325120bc-1796-4d42-a185-3255ef3a040e"
       }
     },
     "owner": "edenta11"

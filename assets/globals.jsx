@@ -1,11 +1,17 @@
+/*
+    FileName: globals.jsx
+    Role: global functions
+*/
+
+import { ToastAndroid } from 'react-native';
 import AlarmNotification from "../components/AlarmNotification";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useColorScheme } from "nativewind";
 
+export const showToast = (message) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+};
 
 const alarmsManager = new AlarmNotification();
-// const isDarkMode = useColorScheme().colorScheme === 'dark';
-
 
 export function getAlarmsManager() {
     return alarmsManager;

@@ -1,12 +1,19 @@
-import { Text, View, SafeAreaView, ScrollView, Button, Pressable, TouchableOpacity, AppState } from 'react-native';
-import RadioButtonList from '../components/RadioButtonList'
-import TopBar from '../components/TopBar'
+/*
+    FileName: RingtoneScreen.jsx
+    Role: Displays ringtones for the user to choose. 
+*/
+
+
+
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { ringtones } from '../android/app/src/main/res/raw/ringtones';
 import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
-import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
-import { getAlarmsManager, storeDataObject, getDataObject, loadChosenRingtone } from "../assets/globals";
+import { getAlarmsManager, storeDataObject, loadChosenRingtone, showToast } from "../assets/globals";
+import RadioButtonList from '../components/RadioButtonList'
+import TopBar from '../components/TopBar'
+import "../languages/i18n";
 
 
 
@@ -115,6 +122,7 @@ export default function RingtoneScreen({ navigation, route }) {
                         await sound?.stopAsync();
                         await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
                         await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
+                        showToast(t('ringtone_changed'))
                     }}>
                     <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-10 `}>
                         <Text className='text-white font-bold text-base text-center'>{t('save')}</Text>

@@ -1,12 +1,14 @@
+/*
+    FileName: RadioButtonList.jsx
+    Role: Component, responsible for displaying the alarm ringtones for the user
+*/
 
 import { View, Text, Pressable } from 'react-native';
 import { useState, useEffect } from 'react'
-import "../languages/i18n";
-import { useColorScheme } from "nativewind";
 import { useTranslation } from 'react-i18next';
 import { Entypo, Fontisto } from '@expo/vector-icons';
 import { isDarkMode, loadChosenRingtone } from "../assets/globals";
-
+import "../languages/i18n";
 
 
 
@@ -17,11 +19,15 @@ export default function RadioButtonList(props) {
     const [userOption, setUserOption] = useState(0);
     console.log(props.value);
 
+    /*When the user selects ringtone */
+
     const selectHandler = (key, ringtone) => {
         props.onSelect(ringtone);
         setUserOption(key);
 
     };
+
+    /*On initial render */
 
     useEffect(() => {
         loadChosenRingtone().then(ringtoneData => {
@@ -43,7 +49,8 @@ export default function RadioButtonList(props) {
                     return (
                         <Pressable
                             key={key}
-                            className={`flex flex-row justify-between items-center border-b-2 h-12 border-blue-300  px-2 bg-slate-400 dark:bg-black`}
+                            className={`flex flex-row justify-between items-center border-b-2 h-12
+                             border-blue-300  px-2 bg-slate-400 dark:bg-black`}
 
                             onPress={() => selectHandler(key, ringtone)}>
 
@@ -63,17 +70,8 @@ export default function RadioButtonList(props) {
                                     > {ringtone.name + " (" + ringtone.duration + " " + t("seconds") + ")"}</Text>
                                 </View>
                             </View>
-                            {/* <Text
-                                className={`text-base text-white`}
-                                adjustsFontSizeToFit={true}
-                                numberOfLines={2}>
-                                {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text> */}
-
-
 
                             <Entypo name="check" size={24} color={key === userOption ? "#1eff00" : 'transparent'} />
-
-
 
                         </Pressable>
                     );

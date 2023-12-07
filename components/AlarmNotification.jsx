@@ -1,3 +1,11 @@
+/*
+    FileName: AlarmNotification.jsx
+    Role: Component, responsible for notifications scheduling 
+*/
+
+
+
+
 import React from 'react';
 import { I18nManager } from 'react-native';
 import notifee, { TriggerType } from '@notifee/react-native';
@@ -15,7 +23,7 @@ class AlarmNotification extends React.Component {
 
     }
 
-
+    /* When the user changes ringtones for his alarms */
     async changeAlarmRingtone(ringtone) {
 
 
@@ -34,6 +42,7 @@ class AlarmNotification extends React.Component {
 
     }
 
+    /* Load channel id if already received  */
     async onLoad() {
 
         console.log('onload');
@@ -61,6 +70,7 @@ class AlarmNotification extends React.Component {
 
     }
 
+    /* Schedule alarm */
     async scheduleAlarm(hours, minutes, alarmDay) {
 
 
@@ -83,8 +93,8 @@ class AlarmNotification extends React.Component {
 
 
         const notificationId = await notifee.createTriggerNotification({
-            title: 'We Love You Hashem',
-            body: 'Toda To you',
+            title: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
+            body: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
             android: {
                 channelId: this.channelId,
                 pressAction: {
@@ -100,6 +110,8 @@ class AlarmNotification extends React.Component {
         return Promise.all([notificationId, scheduleTime]);
     }
 
+
+    /* Cancel alarm */
     async cancelAlarm(notificationId) {
 
         if (notificationId != null)
@@ -108,10 +120,8 @@ class AlarmNotification extends React.Component {
     }
 
 
-
+    /* Test alarm */
     async testAlarm() {
-
-
 
         await notifee.displayNotification({
             title: I18nManager.isRTL ? "שעון מעורר לדוגמה" : "Example of Alarm",

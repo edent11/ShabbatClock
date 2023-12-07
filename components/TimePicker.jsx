@@ -1,3 +1,15 @@
+
+
+
+/*
+    FileName: TimePicker.jsx
+    Role: Component, responsible for picking alarm's time when the user wants to edit it.
+*/
+
+
+
+
+
 import { Modal, Pressable, View, Button, TouchableWithoutFeedback, Platform } from 'react-native';
 import { React, useState } from 'react'
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -5,11 +17,8 @@ import { useColorScheme } from "nativewind";
 
 const TimePicker = (props) => {
 
-    const [modalVisible, setModalVisible] = useState(true);
-    const [text, setText] = useState('test');
     const [date, setDate] = useState(new Date());
     const isDarkMode = useColorScheme().colorScheme == 'dark';
-
 
 
     const onTimeChangeIOS = () => {
@@ -41,15 +50,6 @@ const TimePicker = (props) => {
 
     };
 
-    // const fixDisplay = (time) => {
-
-    //     if (time > 9)
-    //         return time;
-    //     else
-    //         return `0${time}`;
-
-    // }
-
 
     return (
 
@@ -66,14 +66,9 @@ const TimePicker = (props) => {
                         visible={
                             props.active
 
-                        }
-                    // onRequestClose={
-                    //     () => {
-                    //         Alert.alert('Modal has been closed.');
-                    //         setModalVisible(!modalVisible);
-                    //     }
-                    // } >
-                    >
+                        }>
+
+
 
                         <View className='flex-col items-center justify-center' >
 

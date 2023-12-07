@@ -1,17 +1,15 @@
 /*
-FileName: AlarmClock.js
-Role: Component, represents single alarm 
+  FileName: AlarmClock.jsx
+  Role: Component, represents single alarm 
 */
 
 
 
 
-import React, { useState } from 'react'
+import React from 'react'
 import { View, Text, Switch, Pressable, Vibration } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import useFonts from '../assets/hooks/useFonts';
 import { useColorScheme } from "nativewind";
-
 
 
 const AlarmClock = (props) => {
@@ -25,6 +23,7 @@ const AlarmClock = (props) => {
     <View name="alarmBox" className={" bg-gray-400 dark:bg-black flex flex-row items-center justify-between w-20/22 h-28 p-3.5 border-b-2 border-blue-300  rounded"}>
 
       {/* remove button */}
+
       <View name='remove' className='absolute top-0 bg-yellow-400 rounded-2xl'>
         <Pressable
           onLongPress={() => {
@@ -39,6 +38,7 @@ const AlarmClock = (props) => {
       </View>
 
       {/* time view */}
+
       <View name='time' className="flex flex-1  flex-row items-center h-full">
         <Pressable onPress={() => props.onEditTime(props.id)} >
           <View>
@@ -53,8 +53,9 @@ const AlarmClock = (props) => {
 
       {/* three-buttons view */}
 
-      
       <View name='buttons' className="flex flex-initial flex-row items-center justify-center ">
+
+        {/* red button */}
         <Pressable onPress={() => props.onColorSelection(props.id, 'red')}>
           <View className={`bg-red-400 ${props.isRedDaySelected ? 'opacity-100' : 'opacity-30'}
                              h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
@@ -63,7 +64,7 @@ const AlarmClock = (props) => {
 
         </Pressable>
 
-
+        {/* blue button */}
         <Pressable onPress={() => props.onColorSelection(props.id, 'blue')}>
           < View className={
             `bg-blue-400 ${props.isBlueDaySelected ? 'opacity-100' : 'opacity-30'}
@@ -73,6 +74,7 @@ const AlarmClock = (props) => {
 
         </Pressable>
 
+        {/* green button */}
         <Pressable onPress={() => props.onColorSelection(props.id, 'green')}>
           <View className={`bg-green-400 ${props.isGreenDaySelected ? ' opacity-100' : 'opacity-30'}
                            h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
@@ -80,10 +82,11 @@ const AlarmClock = (props) => {
           </View>
 
         </Pressable>
+
       </View>
 
 
-
+      {/* switch view */}
       <View name='switchView' className="flex-row items-center justify-end">
         <Switch
           trackColor={isDarkMode ? { true: '#4CD964', false: 'gray' } : { true: '#4CD964', false: 'white' }}
