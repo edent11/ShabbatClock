@@ -95,10 +95,14 @@ export default function RingtoneScreen({ navigation, route }) {
                 </ScrollView >
             </View>
 
+            <View className='items-center justify-center mx-3'>
 
-            <Text className='text-center bg-slate-800 text-white text-lg -top-2'
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}> {t('your_ringtone') + ':   ' + ringtone}</Text>
+
+                <Text className='text-center bg-slate-800 text-white text-base -top-2 h-auto'
+                    adjustsFontSizeToFit={true}
+                    numberOfLines={1}> {t('your_ringtone') + ':   ' + ringtone}</Text>
+
+            </View>
 
 
             <View className=''>
@@ -122,7 +126,6 @@ export default function RingtoneScreen({ navigation, route }) {
                     android_ripple={{ foreground: 'black' }}
 
                     onPress={async () => {
-                        await sound?.stopAsync();
                         alarmsManager.testAlarm();
                     }}>
 
@@ -134,26 +137,7 @@ export default function RingtoneScreen({ navigation, route }) {
 
                 </TouchableOpacity>
 
-
-                {/* <Button
-                    class='save ringtone'
-                    onPress={async () => {
-
-                        setRingtone(lastRingtoneChosen.name);
-                        sound ? await sound.stopAsync() : {};
-                        await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
-                        await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
-                    }}
-
-                    color='#3474eb'
-                    title={t('save')} /> */}
-
             </View>
-            {/* <View className='mt-2'>
-                <Button color={"red"} onPress={() => alarmsManager.testAlarm()} title={t('alarm_example')} />
-
-            </View> */}
-
 
         </View >
 

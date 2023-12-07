@@ -10,7 +10,6 @@ class AlarmNotification extends React.Component {
         super();
         this.channelId;
         this.onLoad();
-        // this.channelChangeTimes = getData('channelChangeTimes');
         this.channelNumber = 0;
 
 

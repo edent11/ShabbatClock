@@ -6,11 +6,12 @@
     "info": "Info",
     "ringtone": "Ringtone",
     "alarms": "Alarms",
-    "info_screen": "Info",
-    "ringtone_screen": "Choose A Ringtone",
-    "alarms_screen": "Schedule An Alarm",
-    "alarm_example": "Alarm Test",
-    "your_ringtone": "chosen ringtone",
+    "info_screen": "INFO",
+    "ringtone_screen": "CHOOSE A RINGTONE",
+    "alarms_screen": "SCHEDULE",
+    "alarm_example": "EXAMPLE ALARM",
+    "your_ringtone": "Chosen ringtone",
+    "save": "SAVE",
     "Alarm scheduled successfully": "Alarm scheduled successfully",
     "Alarm cancelled successfully": "Alarm cancelled successfully",
     "info_head": "In order to support connected Shabbat and Chag: ",
@@ -18,6 +19,8 @@
     "info_second_day": "When the button is active, the alarm will fire in two days",
     "info_third_day": "When the button is active, the alarm will fire in three days",
     "info_all_days": "It is possible to activate more than one button in one notification, so that the same notification will sound at the same time on different days (depending on the selected buttons)",
-    "info_remove_alarm": "In order to remove alarm, long press this button",
-    "info_ringtone_update": "You must select a ringtone before setting the alert, otherwise the ringtone will be the default or the previously set one"
+    "info_remove_alarm": "In order to remove alarm, long press this button which located at the top left corner of every alarm",
+    "info_ringtone_update": "You must approve notifications for this app and select a ringtone at the ringtones tab before setting the alert, otherwise the ringtone will be the default or the previously set one",
+    "contact": "To report bugs or comments, long press the email address:",
+    "contact_mail": "eden.tamar2@gmail.com"
 }

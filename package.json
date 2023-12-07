@@ -12,6 +12,7 @@
     "@expo-google-fonts/inter": "^0.2.3",
     "@notifee/react-native": "^7.8.0",
     "@react-native-async-storage/async-storage": "^1.21.0",
+    "@react-native-clipboard/clipboard": "^1.12.1",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-masked-view/masked-view": "0.2.9",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -19,6 +20,7 @@
     "@react-navigation/native": "^6.1.9",
     "expo": "~49.0.15",
     "expo-av": "~13.4.1",
+    "expo-background-fetch": "~11.3.0",
     "expo-constants": "~14.4.2",
     "expo-dev-client": "~2.4.12",
     "expo-device": "~5.4.0",
@@ -28,6 +30,7 @@
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
+    "expo-task-manager": "~11.3.0",
     "i18next": "^23.7.6",
     "intl-pluralrules": "^2.0.1",
     "nativewind": "^2.0.11",
@@ -45,9 +48,7 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-vector-icons": "^10.0.2",
     "tailwind-react-native-classnames": "^1.5.1",
-    "twrnc": "^3.6.4",
-    "expo-background-fetch": "~11.3.0",
-    "expo-task-manager": "~11.3.0"
+    "twrnc": "^3.6.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

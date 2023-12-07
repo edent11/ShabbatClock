@@ -1,14 +1,17 @@
-import { Text, View, Button, Pressable, ScrollView } from 'react-native';
+import { Text, View, Button, Pressable, ScrollView, TouchableOpacity } from 'react-native';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 import { useTranslation } from 'react-i18next';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 
 export default function InfoScreen() {
     const { t } = useTranslation();
 
+    const copyToClipboard = () => {
+        Clipboard.setString('hello world');
+    };
 
     return (
         <View className="flex h-full pt-4 dark:bg-black pb-20 ">
@@ -18,10 +21,10 @@ export default function InfoScreen() {
             <ScrollView>
 
 
-                <View class='oneDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto flex-row px-4'>
+                <View class='oneDayView' className=' dark:bg-black mt-6 h-auto flex-row px-4'>
 
 
-                    <Text className='text-white text-base font-semibold h-auto w-auto'>{t('info_head')}</Text>
+                    <Text className='text-white text-base font-semibold h-auto w-auto bg-spacial-blue'>{t('info_head')}</Text>
 
 
                 </View>
@@ -88,7 +91,7 @@ export default function InfoScreen() {
 
                             <View className={`bg-blue-400
                              h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className='text-white text-base font-semibold  h-auto w-auto'>2</Text>
+                                <Text className='text-white text-base font-semibold   h-auto w-auto '>2</Text>
 
                             </View>
 
@@ -100,7 +103,7 @@ export default function InfoScreen() {
                             </View>
                         </View>
 
-                        <View className='h-auto w-auto  flex-1'>
+                        <View className='h-auto w-auto flex-1'>
                             <Text className='text-white text-base font-semibold '>{t('info_all_days')}</Text>
                         </View>
 
@@ -126,10 +129,35 @@ export default function InfoScreen() {
                 </View>
 
 
-                <View className={`items-center justify-center px-4 pt-4`}>
-                    <Text className='text-white text-base font-semibold h-auto w-auto mb-4 bg-spacial-blue'>{t('info_ringtone_update')}</Text>
+                <View className={`items-center justify-center mt-6 flex-row bg-spacial-blue`}>
+
+                    <View className='mx-3'>
+
+                        <FontAwesome name="exclamation-triangle" size={36} color="yellow" />
+                    </View>
+
+                    <View className='h-auto w-auto flex-1'>
+                        <Text className='text-white text-base font-semibold '>{t('info_ringtone_update')}</Text>
+                    </View>
+
+                </View>
+
+                <View className={`items-center justify-center mt-6 mx-3`}>
+
+                    <View className='h-auto w-auto flex-1 mb-3 bg-spacial-blue'>
+                        <Text className='text-white text-base font-semibold '>{t('contact')}</Text>
+
+                    </View>
+
+                    <View className='h-auto w-auto flex-1 bg-red-300'>
+
+                        <TouchableOpacity onLongPress={console.log('first')}>
+                            <Text className='text-white text-base font-semibold '>{t('contact_mail')}</Text>
+                        </TouchableOpacity>
 
 
+
+                    </View>
 
                 </View>
 
