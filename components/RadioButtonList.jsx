@@ -36,6 +36,8 @@ export default function RadioButtonList(props) {
             }
         });
 
+        return () => { ignore = true };
+
     }, [])
 
 

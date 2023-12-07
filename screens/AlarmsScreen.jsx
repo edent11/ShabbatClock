@@ -55,12 +55,16 @@ export default function AlarmsScreen(props) {
     useEffect(() => {
 
         onLoad();
+        return () => { ignore = true };
+
 
     }, [])
 
     useEffect(() => {
 
         storeAlarmsArray();
+        return () => { ignore = true };
+
 
     }, [alarms])
 

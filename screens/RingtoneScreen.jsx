@@ -41,6 +41,8 @@ export default function RingtoneScreen({ navigation, route }) {
             else setRingtone(ringtones[0].name);
         });
 
+        return () => { ignore = true };
+
 
     }, [])
 
@@ -72,6 +74,8 @@ export default function RingtoneScreen({ navigation, route }) {
 
             }
             : undefined;
+
+
     }, [sound]);
 
 
