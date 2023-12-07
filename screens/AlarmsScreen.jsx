@@ -43,7 +43,7 @@ export default function AlarmsScreen(props) {
 
             appState.current = nextAppState;
             setAppStateVisible(appState.current);
-            console.log('AppState', appState.current);
+            // console.log('AppState', appState.current);
         });
 
         return () => {

@@ -12,6 +12,7 @@ import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Clipboard from '@react-native-clipboard/clipboard';
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
+import { showToast } from "../assets/globals";
 
 
 export default function InfoScreen() {
@@ -19,7 +20,9 @@ export default function InfoScreen() {
     const { t } = useTranslation();
 
     const copyToClipboard = () => {
-        Clipboard.setString('hello world');
+        Clipboard.setString(t('contact_mail'));
+        showToast(t('mail_copied'));
+
     };
 
     return (
@@ -160,7 +163,7 @@ export default function InfoScreen() {
 
                     <View className='h-auto w-auto flex-1 bg-red-300'>
 
-                        <TouchableOpacity onLongPress={console.log('first')}>
+                        <TouchableOpacity onLongPress={copyToClipboard}>
                             <Text className='text-white text-base font-semibold '>{t('contact_mail')}</Text>
                         </TouchableOpacity>
 

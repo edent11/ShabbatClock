@@ -122,7 +122,7 @@ export default function RingtoneScreen({ navigation, route }) {
                         await sound?.stopAsync();
                         await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
                         await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
-                        showToast(t('ringtone_changed'))
+                        showToast(t('ringtone_changed'));
                     }}>
                     <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-10 `}>
                         <Text className='text-white font-bold text-base text-center'>{t('save')}</Text>
@@ -134,6 +134,7 @@ export default function RingtoneScreen({ navigation, route }) {
                     android_ripple={{ foreground: 'black' }}
 
                     onPress={async () => {
+                        await sound?.stopAsync();
                         alarmsManager.testAlarm();
                     }}>
 

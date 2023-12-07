@@ -17,7 +17,6 @@ export default function RadioButtonList(props) {
 
     const { t } = useTranslation();
     const [userOption, setUserOption] = useState(0);
-    console.log(props.value);
 
     /*When the user selects ringtone */
 

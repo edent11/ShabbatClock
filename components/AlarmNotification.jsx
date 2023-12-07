@@ -30,13 +30,13 @@ class AlarmNotification extends React.Component {
 
         await notifee.createChannel(
             {
-                id: `ShabbatXY_${++this.channelNumber}`,
+                id: `ShabbatAlarm_${++this.channelNumber}`,
                 name: 'Default Channel',
                 sound: ringtone,
 
             }).then(async (channelId) => {
                 this.channelId = channelId;
-                await storeData('channelNumber1', this.channelNumber.toString());
+                await storeData('channelNumber', this.channelNumber.toString());
             })
             .catch((e) => console.log(e));
 
@@ -45,10 +45,10 @@ class AlarmNotification extends React.Component {
     /* Load channel id if already received  */
     async onLoad() {
 
-        console.log('onload');
+        console.log('onload_notifications');
         await notifee.requestPermission();
 
-        await getData('channelNumber1').then(channel => {
+        await getData('channelNumber').then(channel => {
             if (channel == null) {
                 this.channelNumber = 0;
             }
@@ -60,12 +60,12 @@ class AlarmNotification extends React.Component {
         if (this.channelNumber == 0) {
 
             this.channelId = await notifee.createChannel({
-                id: `ShabbatXYZ_`,
+                id: `ShabbatAlarm_`,
                 name: 'Default Channel',
-                sound: 'rooster_call'
+                sound: 'bicycle-horn'
             });
         }
-        else this.channelId = `ShabbatXYZ_${this.channelNumber}`;
+        else this.channelId = `ShabbatAlarm_${this.channelNumber}`;
 
 
     }
