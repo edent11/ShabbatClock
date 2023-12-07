@@ -4,13 +4,10 @@
 */
 
 
-
-
 import React from 'react';
 import { I18nManager } from 'react-native';
 import notifee, { TriggerType } from '@notifee/react-native';
-import { storeData, getData } from "../assets/globals";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AlarmNotification extends React.Component {
 
@@ -20,13 +17,10 @@ class AlarmNotification extends React.Component {
         this.onLoad();
         this.channelNumber = 0;
 
-
     }
 
     /* When the user changes ringtones for his alarms */
     async changeAlarmRingtone(ringtone) {
-
-
 
         await notifee.createChannel(
             {
@@ -36,7 +30,7 @@ class AlarmNotification extends React.Component {
 
             }).then(async (channelId) => {
                 this.channelId = channelId;
-                await storeData('channelNumber', this.channelNumber.toString());
+                await this.storeData('channelNumber', this.channelNumber.toString());
             })
             .catch((e) => console.log(e));
 
@@ -48,7 +42,7 @@ class AlarmNotification extends React.Component {
         console.log('onload_notifications');
         await notifee.requestPermission();
 
-        await getData('channelNumber').then(channel => {
+        await this.getData('channelNumber').then(channel => {
             if (channel == null) {
                 this.channelNumber = 0;
             }
@@ -57,18 +51,31 @@ class AlarmNotification extends React.Component {
 
         });
 
+
         if (this.channelNumber == 0) {
 
             this.channelId = await notifee.createChannel({
-                id: `ShabbatAlarm_`,
+                id: `ShabbatAlarm_0`,
                 name: 'Default Channel',
-                sound: 'bicycle-horn'
+                sound: 'bicycle_horn'
             });
         }
         else this.channelId = `ShabbatAlarm_${this.channelNumber}`;
 
 
     }
+
+    async getData(key) {
+
+        return await AsyncStorage.getItem(key);
+
+    }
+
+    async storeData(key, data) {
+
+        return await AsyncStorage.setItem(key, data);
+
+    };
 
     /* Schedule alarm */
     async scheduleAlarm(hours, minutes, alarmDay) {
@@ -88,7 +95,7 @@ class AlarmNotification extends React.Component {
         // Create a time-based trigger
         const trigger = {
             type: TriggerType.TIMESTAMP,
-            timestamp: scheduleTime.getTime(), // fire at 11:10am (10 minutes before meeting)
+            timestamp: scheduleTime.getTime(),
         };
 
 

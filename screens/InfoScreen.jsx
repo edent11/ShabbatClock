@@ -33,7 +33,7 @@ export default function InfoScreen() {
             <ScrollView>
 
 
-                <View class='oneDayView' className=' dark:bg-black mt-6 h-auto flex-row px-4'>
+                <View class='oneDayView' className=' dark:bg-black justify-center mt-6 h-auto flex-row px-4'>
 
 
                     <Text className='text-white text-base font-semibold h-auto w-auto bg-spacial-blue'>{t('info_head')}</Text>

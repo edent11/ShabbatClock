@@ -29,6 +29,7 @@ const Tabs = (props) => {
     return (
 
         <Tab.Navigator
+            initialRouteName="Alarm"
             screenOptions={{
 
                 tabBarShowLabel: false,

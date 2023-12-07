@@ -53,9 +53,7 @@ export const storeData = async (key, data) => {
 
 export const getData = async (key) => {
 
-    const value = await AsyncStorage.getItem(key);
-    console.log(value)
-    return value;
+    return await AsyncStorage.getItem(key);
 
 };
 

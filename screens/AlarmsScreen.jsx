@@ -15,6 +15,7 @@ import TimePicker from '../components/TimePicker'
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function AlarmsScreen(props) {
 
@@ -62,9 +63,6 @@ export default function AlarmsScreen(props) {
         storeAlarmsArray();
 
     }, [alarms])
-
-
-
 
 
     const storeAlarmsArray = async () => {
