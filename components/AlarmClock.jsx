@@ -24,7 +24,7 @@ const AlarmClock = (props) => {
 
     <View name="alarmBox" className={" bg-gray-400 dark:bg-black flex flex-row items-center justify-between w-20/22 h-28 p-3.5 border-b-2 border-blue-300  rounded"}>
 
-      <View name='remove' className='absolute top-0 bg-yellow-400  rounded-2xl'>
+      <View name='remove' className='absolute top-0 bg-yellow-400 rounded-2xl'>
         <Pressable
           onLongPress={() => {
             Vibration.vibrate(200);

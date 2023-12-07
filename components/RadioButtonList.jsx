@@ -45,23 +45,35 @@ export default function RadioButtonList(props) {
                             key={key}
                             className={`flex flex-row justify-between items-center border-b-2 h-12 border-blue-300  px-2 bg-slate-400 dark:bg-black`}
 
-                            onPress={() => selectHandler(key, ringtone)}
-                        >
+                            onPress={() => selectHandler(key, ringtone)}>
+
+
 
                             <Fontisto name="applemusic" size={24} color={isDarkMode ? "black" : "white"} />
 
-                            <Text
-                                className={`text-sm text-white`}
-                                adjustsFontSizeToFit={true}
-                                numberOfLines={1}> {ringtone.name + " (" + ringtone.duration + " " + t("seconds") + ")"}</Text>
 
+
+                            <View className='h-auto'>
+
+                                <View className='flex-1 items-center justify-center'>
+
+                                    <Text
+                                        className={`text-sm text-white h-auto`}
+
+                                    > {ringtone.name + " (" + ringtone.duration + " " + t("seconds") + ")"}</Text>
+                                </View>
+                            </View>
                             {/* <Text
                                 className={`text-base text-white`}
                                 adjustsFontSizeToFit={true}
                                 numberOfLines={2}>
                                 {"(" + ringtone.duration + " " + t("seconds") + ")"}</Text> */}
 
+
+
                             <Entypo name="check" size={24} color={key === userOption ? "#1eff00" : 'transparent'} />
+
+
 
                         </Pressable>
                     );
