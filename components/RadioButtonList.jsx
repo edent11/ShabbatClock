@@ -40,8 +40,6 @@ export default function RadioButtonList(props) {
 
     }, [])
 
-
-
     return (
         <View className='bg-opacity-60'>
 
@@ -55,11 +53,7 @@ export default function RadioButtonList(props) {
 
                             onPress={() => selectHandler(key, ringtone)}>
 
-
-
                             <Fontisto name="applemusic" size={24} color={isDarkMode ? "black" : "white"} />
-
-
 
                             <View className='h-auto'>
 

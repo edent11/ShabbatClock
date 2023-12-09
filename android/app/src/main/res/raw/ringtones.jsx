@@ -22,15 +22,15 @@ export const ringtones = [
 
     {
         id: 1,
-        name: 'alarm_ring',
-        file: alarm_ring,
+        name: 'bicycle_horn',
+        file: bicycle_horn,
         duration: 1
     },
 
     {
         id: 2,
-        name: 'bicycle_horn',
-        file: bicycle_horn,
+        name: 'alarm_ring',
+        file: alarm_ring,
         duration: 1
     },
 

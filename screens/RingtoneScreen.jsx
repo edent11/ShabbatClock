@@ -143,7 +143,7 @@ export default function RingtoneScreen({ navigation, route }) {
                     }}>
 
 
-                    <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-10 `}>
+                    <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-10`}>
                         <Text className='text-white font-bold text-base text-center'>{t('alarm_example')}</Text>
 
                     </View>

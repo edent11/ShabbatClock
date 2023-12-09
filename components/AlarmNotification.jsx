@@ -3,19 +3,20 @@
     Role: Component, responsible for notifications scheduling 
 */
 
-
 import React from 'react';
 import { I18nManager } from 'react-native';
-import notifee, { TriggerType } from '@notifee/react-native';
+import notifee, { TriggerType, AndroidImportance } from '@notifee/react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AlarmNotification extends React.Component {
 
     constructor() {
+
         super();
         this.channelId;
         this.onLoad();
         this.channelNumber = 0;
+        this.appIcon = require('../assets/icon.png');
 
     }
 
@@ -104,6 +105,8 @@ class AlarmNotification extends React.Component {
             body: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
             android: {
                 channelId: this.channelId,
+                importance: AndroidImportance.HIGH,
+                largeIcon: this.appIcon,
                 pressAction: {
                     id: 'default',
                 },
@@ -111,8 +114,6 @@ class AlarmNotification extends React.Component {
         },
             trigger,
         )
-
-
 
         return Promise.all([notificationId, scheduleTime]);
     }
@@ -136,20 +137,17 @@ class AlarmNotification extends React.Component {
 
             android: {
                 channelId: this.channelId,
-                // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+                largeIcon: this.appIcon,
+                importance: AndroidImportance.HIGH,
+                // smallIcon: 'ic_stat_alarm_on', // optional, defaults to 'ic_launcher'.
+
                 // pressAction is needed if you want the notification to open the app when pressed
                 pressAction: {
                     id: 'default',
                 },
             },
         });
-
-
     }
-
-
 }
-
-
 
 export default AlarmNotification;
