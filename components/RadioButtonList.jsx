@@ -60,7 +60,8 @@ export default function RadioButtonList(props) {
                                 <View className='flex-1 items-center justify-center'>
 
                                     <Text
-                                        className={`text-sm text-white h-auto`}
+                                        className={`text-sm text-white h-auto font-Kanit_SemiBold`}
+
 
                                     > {ringtone.name + " (" + ringtone.duration + " " + t("seconds") + ")"}</Text>
                                 </View>

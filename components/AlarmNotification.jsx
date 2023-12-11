@@ -105,6 +105,7 @@ class AlarmNotification extends React.Component {
             body: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
             android: {
                 channelId: this.channelId,
+                smallIcon: 'ic_alarm',
                 importance: AndroidImportance.HIGH,
                 largeIcon: this.appIcon,
                 pressAction: {
@@ -139,7 +140,7 @@ class AlarmNotification extends React.Component {
                 channelId: this.channelId,
                 largeIcon: this.appIcon,
                 importance: AndroidImportance.HIGH,
-                // smallIcon: 'ic_stat_alarm_on', // optional, defaults to 'ic_launcher'.
+                smallIcon: 'ic_alarm',
 
                 // pressAction is needed if you want the notification to open the app when pressed
                 pressAction: {

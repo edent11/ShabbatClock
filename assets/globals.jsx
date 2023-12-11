@@ -84,12 +84,20 @@ export const loadChosenRingtone = async () => {
 
 export const loadIcons = async () => {
 
+
     await Font.loadAsync(Entypo.font);
     await Font.loadAsync(AntDesign.font);
     await Font.loadAsync(Fontisto.font);
     await Font.loadAsync(MaterialCommunityIcons.font);
     await Font.loadAsync(MaterialIcons.font);
     await Font.loadAsync(FontAwesome.font);
+
+    // };
+};
+
+export const loadRingtones = async () => {
+
+    await require('../android/app/src/main/res/raw/ringtones');
 
 };
 

@@ -11,7 +11,13 @@ module.exports = {
         'spacial-blue': '#3474eb'
       },
       fontFamily: {
-        MPLUSRounded1cMedium: ['MPLUSRounded1c-Medium', 'sans-serif'],
+        MPLUSRounded1c_Medium: ['MPLUSRounded1c_Medium', 'sans-serif'],
+        SuezOne_Regular: ['SuezOne_Regular', 'sans-serif'],
+        Alef_Regular: ['Alef_Regular', 'sans-serif'],
+        Kanit_Medium: ['Kanit_Medium', 'sans-serif'],
+        Kanit_SemiBold: ['Kanit_SemiBold', 'sans-serif'],
+        Geneva01: ['Geneva01', 'sans-serif'],
+        Alef_Bold: ['Alef_Bold', 'sans-serif'],
       }, //end of fontFamily
 
       inset: {

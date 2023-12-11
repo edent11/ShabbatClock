@@ -36,93 +36,99 @@ export default function InfoScreen() {
                 <View class='oneDayView' className=' dark:bg-black justify-center mt-6 h-auto flex-row px-4'>
 
 
-                    <Text className='text-white text-base font-semibold h-auto w-auto bg-spacial-blue'>{t('info_head')}</Text>
+                    <Text className='text-black dark:text-white text-base font-semibold h-auto w-auto
+                      font-MPLUSRounded1c_Medium'>{t('info_head')}</Text>
 
 
                 </View>
 
                 <View class='daysExplanation'>
 
-                    <View class='oneDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal items-center flex-row border-2 border-gray-800'>
+                    <View class='oneDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal
+                     items-center flex-row border-2 border-gray-800'>
 
                         <View className={`bg-red-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
-                            <Text className='text-white text-base font-semibold  h-auto w-auto'>1</Text>
+                            <Text className='text-white font-Alef_Bold text-xl  h-auto w-auto'>1</Text>
                         </View>
 
 
                         <View className='h-auto w-auto  flex-1'>
-                            <Text className='text-white text-base font-semibold '>{t('info_first_day')}</Text>
+                            <Text className='text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_first_day')}</Text>
                         </View>
                     </View>
 
 
 
 
-                    <View class='twoDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal items-center flex-row border-2 border-gray-800'>
+                    <View class='twoDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal
+                     items-center flex-row border-2 border-gray-800'>
 
                         <View className={`bg-blue-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
-                            <Text className='text-white text-base font-semibold  h-auto w-auto'>2</Text>
+                            <Text className='text-white font-Alef_Bold text-xl h-auto w-auto '>2</Text>
 
 
 
 
                         </View>
 
-                        <View className='h-auto w-auto  flex-1'>
-                            <Text className='text-white text-base font-semibold '>{t('info_second_day')}</Text>
+                        <View className='h-auto w-auto flex-1'>
+                            <Text className='text-white text-base font-MPLUSRounded1c_Medium mr-2' >{t('info_second_day')}</Text>
                         </View>
                     </View>
 
 
-                    <View class='threeDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal items-center flex-row border-2 border-gray-800'>
+                    <View class='threeDayView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal
+                     items-center flex-row border-2 border-gray-800'>
 
                         <View className={`bg-green-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
-                            <Text className='text-white text-base font-semibold h-auto w-auto'>3</Text>
+                            <Text className='text-white font-Alef_Bold text-xl h-auto w-auto'>3</Text>
 
                         </View>
 
                         <View className='h-auto w-auto  flex-1'>
-                            <Text className='text-white text-base font-semibold '>{t('info_third_day')}</Text>
+                            <Text className='text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_third_day')}</Text>
                         </View>
                     </View>
 
 
 
-                    <View class='allDaysView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal items-center flex-row border-2 border-gray-800'>
+                    <View class='allDaysView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal
+                     items-center flex-row border-2 border-gray-800'>
 
                         <View class='btns' className='flex-row mx-3' >
 
                             <View className={`bg-red-400
                              h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className='text-white text-base font-semibold  h-auto w-auto'>1</Text>
+                                <Text className='text-white font-Alef_Bold text-xl  h-auto w-auto'>1</Text>
                             </View>
 
 
                             <View className={`bg-blue-400
                              h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className='text-white text-base font-semibold   h-auto w-auto '>2</Text>
+                                <Text className='text-white font-Alef_Bold text-xl   h-auto w-auto '>2</Text>
 
                             </View>
 
                             <View className={`bg-green-400
                              h-8 w-8 rounded-full  items-center justify-center`}>
-                                <Text className='text-white text-base font-semibold h-auto w-auto'>3</Text>
+                                <Text className='text-white font-Alef_Bold text-xl h-auto w-auto'>3</Text>
 
 
                             </View>
                         </View>
 
                         <View className='h-auto w-auto flex-1'>
-                            <Text className='text-white text-base font-semibold '>{t('info_all_days')}</Text>
+                            <Text className='text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_all_days')}</Text>
                         </View>
 
                     </View>
 
 
-                    <View class='deleteView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal items-center flex-row border-2 border-gray-800'>
+                    <View class='deleteView' className='bg-gray-400 dark:bg-black mt-6 h-auto justify-normal
+                     items-center flex-row border-2 border-gray-800'>
 
                         <View className={`bg-yellow-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
@@ -131,7 +137,7 @@ export default function InfoScreen() {
                         </View>
 
                         <View className='h-auto w-auto flex-1'>
-                            <Text className='text-white text-base font-semibold '>{t('info_remove_alarm')}</Text>
+                            <Text className='text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_remove_alarm')}</Text>
                         </View>
                     </View>
 
@@ -149,15 +155,16 @@ export default function InfoScreen() {
                     </View>
 
                     <View className='h-auto w-auto flex-1'>
-                        <Text className='text-white text-base font-semibold '>{t('info_ringtone_update')}</Text>
+                        <Text className='text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_ringtone_update')}</Text>
                     </View>
 
                 </View>
 
                 <View className={`items-center justify-center mt-6 mx-3`}>
 
-                    <View className='h-auto w-auto flex-1 mb-3 bg-spacial-blue'>
-                        <Text className='text-white text-base font-semibold '>{t('contact')}</Text>
+                    <View className='h-auto w-auto flex-1 mb-3  '>
+                        <Text className='text-base font-semibold font-MPLUSRounded1c_Medium
+                         text-black dark:text-white'>{t('contact')}</Text>
 
                     </View>
 

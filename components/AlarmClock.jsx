@@ -42,7 +42,7 @@ const AlarmClock = (props) => {
       <View name='time' className="flex flex-1  flex-row items-center h-full">
         <Pressable onPress={() => props.onEditTime(props.id)} >
           <View>
-            <Text className="text-3xl text-white"
+            <Text className="text-4xl text-white font-Geneva01"
               adjustsFontSizeToFit={true}
               numberOfLines={1}>
               {props.time} </Text>
@@ -59,7 +59,7 @@ const AlarmClock = (props) => {
         <Pressable onPress={() => props.onColorSelection(props.id, 'red')}>
           <View className={`bg-red-400 ${props.isRedDaySelected ? 'opacity-100' : 'opacity-30'}
                              h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text className='text-white font-semibold'>1</Text>
+            <Text className='text-white font-Alef_Bold text-xl'>1</Text>
           </View>
 
         </Pressable>
@@ -69,7 +69,7 @@ const AlarmClock = (props) => {
           < View className={
             `bg-blue-400 ${props.isBlueDaySelected ? 'opacity-100' : 'opacity-30'}
                             h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text className='text-white font-semibold'>2</Text>
+            <Text className='text-white font-Alef_Bold text-xl'>2</Text>
           </View>
 
         </Pressable>
@@ -78,7 +78,7 @@ const AlarmClock = (props) => {
         <Pressable onPress={() => props.onColorSelection(props.id, 'green')}>
           <View className={`bg-green-400 ${props.isGreenDaySelected ? ' opacity-100' : 'opacity-30'}
                            h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text className='text-white font-semibold'>3</Text>
+            <Text className='text-white font-Alef_Bold text-xl'>3</Text>
           </View>
 
         </Pressable>

@@ -13,8 +13,10 @@ const TopBar = (props) => {
 
     return (
 
-        <View className={` bg-spacial-blue items-center justify-center h-14`}>
-            <Text className=' text-white font-bold text-3xl '>{props.tabName}</Text>
+        <View className='flex bg-spacial-blue items-center justify-center h-14 w-full '>
+
+            <Text className='font-Alef_Bold text-3xl -right-2 text-white '>{props.tabName} </Text>
+
         </View>
 
     );

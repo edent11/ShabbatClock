@@ -26,7 +26,6 @@ export default function RingtoneScreen({ navigation, route }) {
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
     const [ringtone, setRingtone] = useState();
-    const [ringtoneNumber, setRingtoneNumber] = useState();
     const [sound, setSound] = useState(null);
     const [lastRingtoneChosen, setLastRingtoneChosen] = useState(ringtones[0]);
 
@@ -38,18 +37,13 @@ export default function RingtoneScreen({ navigation, route }) {
                 setRingtone(ringtoneData["name"]);
                 setLastRingtoneChosen(ringtoneData["name"]);
             }
-            else setRingtone(ringtones[0].name);
+            else setRingtone(ringtones[0]?.name);
         });
 
         return () => { ignore = true };
 
 
     }, [])
-
-
-
-
-
 
 
     async function playSound(chosenRingtone) {
@@ -86,7 +80,6 @@ export default function RingtoneScreen({ navigation, route }) {
 
         < View className={"pt-4  dark:bg-black h-full "} >
 
-
             <TopBar tabName={t('ringtone_screen')} />
 
 
@@ -109,7 +102,7 @@ export default function RingtoneScreen({ navigation, route }) {
             <View className='items-center justify-center mx-3'>
 
 
-                <Text className='text-center bg-slate-800 text-white text-base -top-2 h-auto'
+                <Text className='text-center bg-slate-800 text-white text-base -top-2 h-auto font-Kanit_SemiBold'
                     adjustsFontSizeToFit={true}
                     numberOfLines={1}> {t('your_ringtone') + ':   ' + ringtone}</Text>
 
@@ -129,7 +122,7 @@ export default function RingtoneScreen({ navigation, route }) {
                         showToast(t('ringtone_changed'));
                     }}>
                     <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-10 `}>
-                        <Text className='text-white font-bold text-base text-center'>{t('save')}</Text>
+                        <Text className='text-white text-base text-center font-Alef_Bold'>{t('save')}</Text>
                     </View>
 
                 </TouchableOpacity>
@@ -144,7 +137,7 @@ export default function RingtoneScreen({ navigation, route }) {
 
 
                     <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-10`}>
-                        <Text className='text-white font-bold text-base text-center'>{t('alarm_example')}</Text>
+                        <Text className='text-white  text-base text-center font-Alef_Bold'>{t('alarm_example')}</Text>
 
                     </View>
 
