@@ -10,6 +10,7 @@ import { ringtones } from '../android/app/src/main/res/raw/ringtones';
 import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
 import { useTranslation } from 'react-i18next';
+import { useIsFocused } from "@react-navigation/native";
 import { getAlarmsManager, storeDataObject, loadChosenRingtone, showToast } from "../assets/globals";
 import RadioButtonList from '../components/RadioButtonList'
 import TopBar from '../components/TopBar'
@@ -23,6 +24,7 @@ import "../languages/i18n";
 
 export default function RingtoneScreen({ navigation, route }) {
 
+    const isFocused = useIsFocused();
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
     const [ringtone, setRingtone] = useState();
@@ -44,6 +46,11 @@ export default function RingtoneScreen({ navigation, route }) {
 
 
     }, [])
+
+    if (!isFocused) {
+        sound?.stopAsync();
+    }
+
 
 
     async function playSound(chosenRingtone) {
