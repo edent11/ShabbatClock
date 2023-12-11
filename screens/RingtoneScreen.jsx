@@ -5,7 +5,7 @@
 
 
 
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { ringtones } from '../android/app/src/main/res/raw/ringtones';
 import { useState, useEffect } from 'react'
 import { Audio } from 'expo-av';
@@ -22,8 +22,10 @@ import "../languages/i18n";
 
 
 
+
 export default function RingtoneScreen({ navigation, route }) {
 
+    const { height, fontScale } = useWindowDimensions();
     const isTabFocused = useIsFocused();
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
@@ -72,6 +74,7 @@ export default function RingtoneScreen({ navigation, route }) {
 
     useEffect(() => {
 
+        console.log(fontScale)
 
         return sound
             ? () => {
@@ -90,12 +93,12 @@ export default function RingtoneScreen({ navigation, route }) {
 
     return (
 
-        < View className={"pt-4  dark:bg-black h-full "} >
+        < View className={"pt-4  dark:bg-black h-screen "} >
 
             <TopBar tabName={t('ringtone_screen')} />
 
 
-            <View name='RingtonesView' className='mb-2 h-1/2 mt-4 border-2 border-blue-300 ' >
+            <View name='RingtonesView' className={`mb-2 ${height < 600 ? 'h-2/5' : 'h-1/2'} mt-4 border-2 border-blue-300`} >
 
 
                 < ScrollView className="bg-slate-800" >
@@ -122,7 +125,7 @@ export default function RingtoneScreen({ navigation, route }) {
             </View>
 
 
-            <View class='buttons' className='mt-5'>
+            <View class='buttons' className=' mt-5 '>
 
                 <TouchableOpacity className='mb-4'
                     android_ripple={{ foreground: 'black' }}
@@ -149,8 +152,7 @@ export default function RingtoneScreen({ navigation, route }) {
 
                     onPress={async () => {
                         try {
-                            if (sound.is)
-                                await sound?.stopAsync();
+                            await sound?.stopAsync();
                         } catch (e) {
                             console.log(e);
                         }

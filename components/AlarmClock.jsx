@@ -7,7 +7,7 @@
 
 
 import React from 'react'
-import { View, Text, Switch, Pressable, Vibration } from 'react-native'
+import { View, Text, Switch, Pressable, Vibration, useWindowDimensions } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColorScheme } from "nativewind";
 
@@ -17,11 +17,12 @@ const AlarmClock = (props) => {
   // for dark-mode support
   const isDarkMode = useColorScheme().colorScheme === 'dark';
 
+  const { fontScale } = useWindowDimensions();
 
   return (
 
-    <View name="alarmBox" className={" bg-gray-200 dark:bg-black flex flex-row items-center justify-between"
-      + " w-20/22 h-28 p-3.5 border-b-2 border-blue-300 rounded"}>
+    <View name="alarmBox" className={` bg-gray-200 dark:bg-black flex flex-row items-center justify-between
+     w-20/22 h-28 p-3.5 border-b-2 border-blue-300 rounded`}>
 
       {/* remove button */}
 
@@ -59,8 +60,8 @@ const AlarmClock = (props) => {
         {/* red button */}
         <Pressable onPress={() => props.onColorSelection(props.id, 'red')}>
           <View className={`bg-red-400 ${props.isRedDaySelected ? 'opacity-100' : 'opacity-30'}
-                             h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text className='text-white font-Alef_Bold text-xl'>1</Text>
+                             h-8 w-8 rounded-full mx-3 flex items-center justify-center `}>
+            <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>1</Text>
           </View>
 
         </Pressable>
@@ -70,7 +71,7 @@ const AlarmClock = (props) => {
           < View className={
             `bg-blue-400 ${props.isBlueDaySelected ? 'opacity-100' : 'opacity-30'}
                             h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text className='text-white font-Alef_Bold text-xl'>2</Text>
+            <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>2</Text>
           </View>
 
         </Pressable>
@@ -79,7 +80,7 @@ const AlarmClock = (props) => {
         <Pressable onPress={() => props.onColorSelection(props.id, 'green')}>
           <View className={`bg-green-400 ${props.isGreenDaySelected ? ' opacity-100' : 'opacity-30'}
                            h-8 w-8 rounded-full mx-3 flex items-center justify-center`}>
-            <Text className='text-white font-Alef_Bold text-xl'>3</Text>
+            <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>3</Text>
           </View>
 
         </Pressable>

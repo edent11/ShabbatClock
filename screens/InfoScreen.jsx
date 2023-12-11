@@ -6,7 +6,7 @@ Role: Displays app's information for the user.
 
 
 
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -18,6 +18,7 @@ import { showToast } from "../assets/globals";
 export default function InfoScreen() {
 
     const { t } = useTranslation();
+    const { fontScale } = useWindowDimensions();
 
     const copyToClipboard = () => {
         Clipboard.setString(t('contact_mail'));
@@ -49,7 +50,7 @@ export default function InfoScreen() {
 
                         <View className={`bg-red-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
-                            <Text className='text-white font-Alef_Bold text-xl  h-auto w-auto'>1</Text>
+                            <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>1</Text>
                         </View>
 
 
@@ -66,7 +67,7 @@ export default function InfoScreen() {
 
                         <View className={`bg-blue-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
-                            <Text className='text-white font-Alef_Bold text-xl h-auto w-auto '>2</Text>
+                            <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>2</Text>
 
 
 
@@ -84,7 +85,7 @@ export default function InfoScreen() {
 
                         <View className={`bg-green-400
                              h-8 w-8 rounded-full mx-3 items-center justify-center`}>
-                            <Text className='text-white font-Alef_Bold text-xl h-auto w-auto'>3</Text>
+                            <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>3</Text>
 
                         </View>
 
@@ -102,19 +103,19 @@ export default function InfoScreen() {
 
                             <View className={`bg-red-400
                              h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className='text-white font-Alef_Bold text-xl  h-auto w-auto'>1</Text>
+                                <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>1</Text>
                             </View>
 
 
                             <View className={`bg-blue-400
                              h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className='text-white font-Alef_Bold text-xl   h-auto w-auto '>2</Text>
+                                <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>2</Text>
 
                             </View>
 
                             <View className={`bg-green-400
                              h-8 w-8 rounded-full  items-center justify-center`}>
-                                <Text className='text-white font-Alef_Bold text-xl h-auto w-auto'>3</Text>
+                                <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>3</Text>
 
 
                             </View>
@@ -137,7 +138,8 @@ export default function InfoScreen() {
                         </View>
 
                         <View className='h-auto w-auto flex-1'>
-                            <Text className=' text-gray-700 dark:text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_remove_alarm')}</Text>
+                            <Text className={`text-gray-700 dark:text-white text-base font-semibold
+                             font-MPLUSRounded1c_Medium mr-2`}>{t('info_remove_alarm')}</Text>
                         </View>
                     </View>
 
