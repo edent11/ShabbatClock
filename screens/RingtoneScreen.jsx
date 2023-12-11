@@ -24,7 +24,7 @@ import "../languages/i18n";
 
 export default function RingtoneScreen({ navigation, route }) {
 
-    const isFocused = useIsFocused();
+    const isTabFocused = useIsFocused();
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
     const [ringtone, setRingtone] = useState();
@@ -47,8 +47,13 @@ export default function RingtoneScreen({ navigation, route }) {
 
     }, [])
 
-    if (!isFocused) {
-        sound?.stopAsync();
+    //if sound is playing and we changed screen
+    if (!isTabFocused) {
+        try {
+            sound?.stopAsync();
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 
@@ -90,12 +95,13 @@ export default function RingtoneScreen({ navigation, route }) {
             <TopBar tabName={t('ringtone_screen')} />
 
 
-            <View name='RingtonesView' className='mb-2 h-4/7 mt-4 border-2 border-blue-300 ' >
+            <View name='RingtonesView' className='mb-2 h-1/2 mt-4 border-2 border-blue-300 ' >
 
 
                 < ScrollView className="bg-slate-800" >
 
                     <RadioButtonList
+                        isTabFocused={isTabFocused}
                         data={ringtones}
                         onSelect={async (chosenRingtone) => {
                             playSound(chosenRingtone);
@@ -109,26 +115,30 @@ export default function RingtoneScreen({ navigation, route }) {
             <View className='items-center justify-center mx-3'>
 
 
-                <Text className='text-center bg-slate-800 text-white text-base -top-2 h-auto font-Kanit_SemiBold'
+                <Text className='text-center bg-gray-500 dark:bg-slate-800 text-white text-base mt-3 -top-2 h-auto font-Kanit_SemiBold'
                     adjustsFontSizeToFit={true}
                     numberOfLines={1}> {t('your_ringtone') + ':   ' + ringtone}</Text>
 
             </View>
 
 
-            <View className=''>
+            <View class='buttons' className='mt-5'>
 
-                <TouchableOpacity className='mb-2'
+                <TouchableOpacity className='mb-4'
                     android_ripple={{ foreground: 'black' }}
                     onPress={async () => {
 
                         setRingtone(lastRingtoneChosen.name);
-                        await sound?.stopAsync();
+                        try {
+                            await sound?.stopAsync();
+                        } catch (e) {
+                            console.log(e);
+                        }
                         await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
                         await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
                         showToast(t('ringtone_changed'));
                     }}>
-                    <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-10 `}>
+                    <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-8 `}>
                         <Text className='text-white text-base text-center font-Alef_Bold'>{t('save')}</Text>
                     </View>
 
@@ -138,12 +148,17 @@ export default function RingtoneScreen({ navigation, route }) {
                     android_ripple={{ foreground: 'black' }}
 
                     onPress={async () => {
-                        await sound?.stopAsync();
+                        try {
+                            if (sound.is)
+                                await sound?.stopAsync();
+                        } catch (e) {
+                            console.log(e);
+                        }
                         alarmsManager.testAlarm();
                     }}>
 
 
-                    <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-10`}>
+                    <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-8`}>
                         <Text className='text-white  text-base text-center font-Alef_Bold'>{t('alarm_example')}</Text>
 
                     </View>

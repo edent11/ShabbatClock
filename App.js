@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { React, useState, useEffect, useCallback, useRef } from 'react';
-import { StatusBar, SafeAreaView, Text } from 'react-native';
+import { StatusBar, SafeAreaView } from 'react-native';
 import Tabs from './components/Tabs';
 import * as SplashScreen from 'expo-splash-screen';
 import { loadIcons, loadRingtones } from './assets/globals';

@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Entypo, MaterialIcons, AntDesign, Fontisto, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons/';
 import * as Font from 'expo-font';
 
+
 export const showToast = (message) => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
 };
@@ -92,7 +93,6 @@ export const loadIcons = async () => {
     await Font.loadAsync(MaterialIcons.font);
     await Font.loadAsync(FontAwesome.font);
 
-    // };
 };
 
 export const loadRingtones = async () => {

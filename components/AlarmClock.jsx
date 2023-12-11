@@ -20,7 +20,8 @@ const AlarmClock = (props) => {
 
   return (
 
-    <View name="alarmBox" className={" bg-gray-400 dark:bg-black flex flex-row items-center justify-between w-20/22 h-28 p-3.5 border-b-2 border-blue-300  rounded"}>
+    <View name="alarmBox" className={" bg-gray-200 dark:bg-black flex flex-row items-center justify-between"
+      + " w-20/22 h-28 p-3.5 border-b-2 border-blue-300 rounded"}>
 
       {/* remove button */}
 
@@ -42,7 +43,7 @@ const AlarmClock = (props) => {
       <View name='time' className="flex flex-1  flex-row items-center h-full">
         <Pressable onPress={() => props.onEditTime(props.id)} >
           <View>
-            <Text className="text-4xl text-white font-Geneva01"
+            <Text className="text-4xl text-gray-600 dark:text-white font-Geneva01"
               adjustsFontSizeToFit={true}
               numberOfLines={1}>
               {props.time} </Text>
