@@ -7,7 +7,7 @@
 
 import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { ringtones } from '../android/app/src/main/res/raw/ringtones';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Audio } from 'expo-av';
 import { useTranslation } from 'react-i18next';
 import { useIsFocused } from "@react-navigation/native";
@@ -25,7 +25,8 @@ import "../languages/i18n";
 
 export default function RingtoneScreen({ navigation, route }) {
 
-    const { height, fontScale } = useWindowDimensions();
+    const scrollRef = useRef();
+    const { height } = useWindowDimensions();
     const isTabFocused = useIsFocused();
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
@@ -34,15 +35,27 @@ export default function RingtoneScreen({ navigation, route }) {
     const [lastRingtoneChosen, setLastRingtoneChosen] = useState(ringtones[0]);
 
 
+
     useEffect(() => {
         loadChosenRingtone().then(ringtoneData => {
 
             if (ringtoneData != null) {
                 setRingtone(ringtoneData["name"]);
                 setLastRingtoneChosen(ringtoneData["name"]);
+                scrollRef.current?.scrollTo({
+                    y: 41 * ringtoneData["id"],
+                    animated: true,
+                });
             }
-            else setRingtone(ringtones[0]?.name);
+            else {
+                setRingtone(ringtones[0]?.name);
+
+            }
+
+
         });
+
+
 
         return () => { ignore = true };
 
@@ -52,11 +65,13 @@ export default function RingtoneScreen({ navigation, route }) {
     //if sound is playing and we changed screen
     if (!isTabFocused) {
         try {
+
             sound?.stopAsync();
         } catch (e) {
             console.log(e);
         }
     }
+
 
 
 
@@ -74,7 +89,6 @@ export default function RingtoneScreen({ navigation, route }) {
 
     useEffect(() => {
 
-        console.log(fontScale)
 
         return sound
             ? () => {
@@ -98,10 +112,13 @@ export default function RingtoneScreen({ navigation, route }) {
             <TopBar tabName={t('ringtone_screen')} />
 
 
-            <View name='RingtonesView' className={`mb-2 ${height < 600 ? 'h-2/5' : 'h-1/2'} mt-4 border-2 border-blue-300`} >
 
+            <View name='RingtonesView' className={`mb-2 mt-4 border-2 border-blue-300`}
+                style={{ height: height < 600 ? height < 500 ? 194 : 242 : 338 }}>
 
-                < ScrollView className="bg-slate-800" >
+                < ScrollView
+                    className="bg-slate-800"
+                    ref={scrollRef} >
 
                     <RadioButtonList
                         isTabFocused={isTabFocused}
@@ -109,6 +126,7 @@ export default function RingtoneScreen({ navigation, route }) {
                         onSelect={async (chosenRingtone) => {
                             playSound(chosenRingtone);
                             setLastRingtoneChosen(chosenRingtone);
+
 
                         }} />
 

@@ -16,7 +16,6 @@ const AlarmClock = (props) => {
 
   // for dark-mode support
   const isDarkMode = useColorScheme().colorScheme === 'dark';
-
   const { fontScale } = useWindowDimensions();
 
   return (

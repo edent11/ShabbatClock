@@ -10,7 +10,7 @@ import { Text, View, useWindowDimensions } from 'react-native';
 
 
 const TopBar = (props) => {
-    
+
     const { fontScale } = useWindowDimensions();
 
     return (

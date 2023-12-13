@@ -16,7 +16,7 @@ class AlarmNotification extends React.Component {
         this.channelId;
         this.onLoad();
         this.channelNumber = 0;
-        this.appIcon = require('../assets/icon.png');
+        this.appIcon = require('../assets/notification_icon.png');
 
     }
 

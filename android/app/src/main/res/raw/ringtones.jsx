@@ -10,7 +10,7 @@ const bicycle_horn = require('./bicycle_horn.mp3');
 const digital_alarm = require('./digital_alarm.mp3');
 const guitar = require('./guitar.mp3');
 const kring = require('./kring.mp3');
-const morning_alarm_foba = require('./morning_alarm_foba.mp3');
+const morning_alarm = require('./morning_alarm.mp3');
 const morning_birds = require('./morning_birds.mp3');
 const morning_ringtone = require('./morning_ringtone.mp3');
 const piano_sound = require('./piano_sound.mp3');
@@ -57,8 +57,8 @@ export const ringtones = [
 
     {
         id: 6,
-        name: 'morning_alarm_foba',
-        file: morning_alarm_foba,
+        name: 'morning_alarm',
+        file: morning_alarm,
         duration: 7
     },
 

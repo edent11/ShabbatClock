@@ -6,7 +6,7 @@
 
 
 import { React, useState, useEffect, useRef } from 'react'
-import { View, ScrollView, TouchableOpacity, Vibration, AppState } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Vibration, AppState, useWindowDimensions } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getAlarmsManager, getDateDisplay, getTimeDisplay, storeData, storeDataObject, getDataObject, showToast } from "../assets/globals";
@@ -15,11 +15,11 @@ import TimePicker from '../components/TimePicker'
 import TopBar from '../components/TopBar'
 import "../languages/i18n";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function AlarmsScreen(props) {
 
-
+    const { height } = useWindowDimensions();
     const [alarmIdEdit, setAlarmIdEdit] = useState('');
     const alarmsManager = getAlarmsManager();
     const { t } = useTranslation();
@@ -514,6 +514,7 @@ export default function AlarmsScreen(props) {
 
 
 
+
     return (
 
 
@@ -531,7 +532,10 @@ export default function AlarmsScreen(props) {
 
 
 
-            <View class='alarmsView' className='h-5/7 mt-4 border-t-2 border-blue-300'>
+            <View class='alarmsView'
+                className={`mt-4 border-t-2 border-blue-300`}
+                style={{ height: height < 600 ? height < 500 ? 226 : 338 : 450 }}>
+
 
 
                 < ScrollView className="mx-1 " >
