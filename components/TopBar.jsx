@@ -16,7 +16,7 @@ const TopBar = (props) => {
     return (
 
 
-        <View className='flex bg-spacial-blue items-center justify-center h-14 w-full '>
+        <View className='flex bg-spacial-blue items-center justify-center h-16 w-full '>
 
             <Text className={`font-Alef_Bold  ${fontScale > 1.2 ? 'text-xl' : 'text-3xl'} -right-2 text-white`}>{props.tabName} </Text>
 

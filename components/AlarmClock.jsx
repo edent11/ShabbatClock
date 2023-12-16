@@ -21,7 +21,7 @@ const AlarmClock = (props) => {
   return (
 
     <View name="alarmBox" className={` bg-gray-200 dark:bg-black flex flex-row items-center justify-between
-     w-20/22 h-28 p-3.5 border-b-2 border-blue-300 rounded`}>
+     w-20/22 h-[15vh] p-3.5 border-b-2 border-blue-300 rounded`}>
 
       {/* remove button */}
 

@@ -26,10 +26,10 @@ export default function AlarmsScreen(props) {
     const [alarms, setAlarms] = useState([]);
     const [isAddAlarm, setTimePickerAddAlarm] = useState(false);
     const [isEditAlarm, setTimePickerEditAlarm] = useState(false);
-
     const appState = useRef(AppState.currentState);
-
     const [appStateVisible, setAppStateVisible] = useState(appState.current);
+    // const alarmsHeight = height < 1100 ? height < 900 ? height < 600 ? height < 500 ? 226 : 338 : 450 : 562 : 674;
+
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', async (nextAppState) => {
@@ -67,6 +67,11 @@ export default function AlarmsScreen(props) {
 
 
     }, [alarms])
+
+
+
+
+
 
 
     const storeAlarmsArray = async () => {
@@ -515,11 +520,13 @@ export default function AlarmsScreen(props) {
 
 
 
+
+
     return (
 
 
 
-        < View className={" pt-4 dark:bg-black h-11/12"} >
+        < View className={" pt-4 dark:bg-black h-[90%]"} >
 
             <TopBar tabName={t('alarms_screen')} />
 
@@ -533,14 +540,15 @@ export default function AlarmsScreen(props) {
 
 
             <View class='alarmsView'
-                className={`mt-4 border-t-2 border-blue-300`}
-                style={{ height: height < 600 ? height < 500 ? 226 : 338 : 450 }}>
+
+                className={`mt-4 border-t-2 border-blue-300 h-[60.3vh]`}>
+                {/* style={{ height: alarmsHeight }}> */}
 
 
 
                 < ScrollView className="mx-1 " >
 
-                    <View name="AlarmsContainer" className="flex flex-1 items-center">
+                    <View name="AlarmsContainer" className="flex flex-1 items-center ">
                         {
 
                             alarms
@@ -585,7 +593,8 @@ export default function AlarmsScreen(props) {
 
             </View>
 
-            <View name='plus button' className='absolute bottom-7 inset-x-0 w-full flex items-center shadow-inner'>
+            <View name='plus button'
+                className='absolute bottom-4 inset-x-0 w-full flex items-center shadow-inner'>
 
                 <TouchableOpacity
                     onPress={() => { Vibration.vibrate(100); setTimePickerAddAlarm(true); }}>

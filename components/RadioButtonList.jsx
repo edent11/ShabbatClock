@@ -66,7 +66,7 @@ export default function RadioButtonList(props) {
                     return (
                         <Pressable
                             key={key}
-                            className={`flex flex-row justify-between items-center border-b-2 h-12
+                            className={`flex flex-row justify-between items-center border-b-2 h-[8vh]
                              border-blue-300  px-2 bg-gray-200 dark:bg-black`}
 
                             onPress={() => selectHandler(key, ringtone)}>

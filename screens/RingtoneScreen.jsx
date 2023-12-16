@@ -5,7 +5,7 @@
 
 
 
-import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, useWindowDimensions, Vibration } from 'react-native';
 import { ringtones } from '../android/app/src/main/res/raw/ringtones';
 import { useState, useEffect, useRef } from 'react'
 import { Audio } from 'expo-av';
@@ -65,7 +65,6 @@ export default function RingtoneScreen({ navigation, route }) {
     //if sound is playing and we changed screen
     if (!isTabFocused) {
         try {
-
             sound?.stopAsync();
         } catch (e) {
             console.log(e);
@@ -73,17 +72,15 @@ export default function RingtoneScreen({ navigation, route }) {
     }
 
 
-
-
     async function playSound(chosenRingtone) {
 
         // console.log('Loading Sound');
         console.log("playing " + chosenRingtone.name);
         const { sound } = await Audio.Sound.createAsync(chosenRingtone.file);
-        setSound(sound);
 
-        // console.log('Playing Sound');
+        setSound(sound);
         await sound.playAsync();
+
     }
 
 
@@ -103,18 +100,15 @@ export default function RingtoneScreen({ navigation, route }) {
 
 
 
-
-
     return (
 
-        < View className={"pt-4  dark:bg-black h-screen "} >
+        < View className={"pt-4 dark:bg-black h-full"} >
 
             <TopBar tabName={t('ringtone_screen')} />
 
-
-
-            <View name='RingtonesView' className={`mb-2 mt-4 border-2 border-blue-300`}
-                style={{ height: height < 600 ? height < 500 ? 194 : 242 : 338 }}>
+            <View name='RingtonesView' className='mb-2 mt-4 border-2 h-[40vh] border-blue-300 mx-1'
+            >
+                {/* style={{ height: height < 600 ? height < 500 ? 194 : 242 : 338 }} */}
 
                 < ScrollView
                     className="bg-slate-800"
@@ -143,7 +137,7 @@ export default function RingtoneScreen({ navigation, route }) {
             </View>
 
 
-            <View class='buttons' className=' mt-5 '>
+            <View class='buttons' className=' mt-5 flex items-center '>
 
                 <TouchableOpacity className='mb-4'
                     android_ripple={{ foreground: 'black' }}
@@ -155,11 +149,12 @@ export default function RingtoneScreen({ navigation, route }) {
                         } catch (e) {
                             console.log(e);
                         }
+                        Vibration.vibrate(100);
                         await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
                         await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
                         showToast(t('ringtone_changed'));
                     }}>
-                    <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-8 `}>
+                    <View class='saveRingtoneBtn' className={`bg-spacial-blue items-center justify-center h-8 rounded-lg w-[30vh]`}>
                         <Text className='text-white text-base text-center font-Alef_Bold'>{t('save')}</Text>
                     </View>
 
@@ -175,10 +170,11 @@ export default function RingtoneScreen({ navigation, route }) {
                             console.log(e);
                         }
                         alarmsManager.testAlarm();
+                        Vibration.vibrate(100);
                     }}>
 
 
-                    <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-8`}>
+                    <View class='testAlarmBtn' className={`bg-red-600 items-center justify-center h-8 rounded-lg w-[30vh]`}>
                         <Text className='text-white  text-base text-center font-Alef_Bold'>{t('alarm_example')}</Text>
 
                     </View>

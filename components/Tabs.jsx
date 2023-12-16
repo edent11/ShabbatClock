@@ -34,7 +34,7 @@ const Tabs = (props) => {
 
                 tabBarShowLabel: false,
                 headerShown: false, //h- 18
-                tabBarStyle: isDarkMode ? tw`absolute border-t-4 bg-slate-800  h-18` : tw`absolute h-18 border-t-4 bg-white`
+                tabBarStyle: isDarkMode ? tw`absolute border-t-4 bg-slate-800 h-18` : tw`absolute h-18 border-t-4 bg-white`
 
             }}
         >
