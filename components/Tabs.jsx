@@ -8,11 +8,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Entypo, MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { Entypo, MaterialIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from "nativewind";
 import tw from 'twrnc';
 import { useTranslation } from 'react-i18next';
-import RingtoneScreen from "../screens/RingtoneScreen";
+import RingtoneScreen from "../screens/SettingsScreen";
 import AlarmsScreen from "../screens/AlarmsScreen";
 import InfoScreen from "../screens/InfoScreen";
 import "../languages/i18n";
@@ -41,14 +41,14 @@ const Tabs = (props) => {
 
             <Tab.Screen
 
-                name="Ringtone"
+                name="Settings"
                 component={RingtoneScreen}
                 options={{
                     tabBarIcon: ({ focused }) => {
 
                         return (
                             <View className="items-center justify-center">
-                                <Entypo name="beamed-note" size={focused ? 28 : 20} color={focused ? "#3474eb" : isDarkMode ? "white" : "gray"} />
+                                <Ionicons name="settings-sharp" size={focused ? 28 : 22} color={focused ? "#3474eb" : isDarkMode ? "white" : "gray"} />
                             </View>
                         )
                     }

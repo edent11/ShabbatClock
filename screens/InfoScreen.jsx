@@ -95,39 +95,6 @@ export default function InfoScreen() {
                     </View>
 
 
-
-                    <View class='allDaysView' className='bg-gray-200 dark:bg-black mt-6 h-auto justify-normal
-                     items-center flex-row border-2 border-gray-800'>
-
-                        <View class='btns' className='flex-row mx-3' >
-
-                            <View className={`bg-red-400
-                             h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>1</Text>
-                            </View>
-
-
-                            <View className={`bg-blue-400
-                             h-8 w-8 rounded-full items-center justify-center`}>
-                                <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>2</Text>
-
-                            </View>
-
-                            <View className={`bg-green-400
-                             h-8 w-8 rounded-full  items-center justify-center`}>
-                                <Text className={`text-white font-Alef_Bold text-xl text-center ${fontScale > 1 ? '-top-1' : {}}`}>3</Text>
-
-
-                            </View>
-                        </View>
-
-                        <View className='h-auto w-auto flex-1'>
-                            <Text className=' text-gray-700 dark:text-white text-base font-semibold font-MPLUSRounded1c_Medium mr-2'>{t('info_all_days')}</Text>
-                        </View>
-
-                    </View>
-
-
                     <View class='deleteView' className='bg-gray-200 dark:bg-black mt-6 h-auto justify-normal
                      items-center flex-row border-2 border-gray-800'>
 

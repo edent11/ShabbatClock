@@ -24,12 +24,10 @@ export function getDateDisplay(fullTime) {
 
     if (fullTime == null || fullTime == undefined)
         fullTime = new Date();
-    else fullTime = new Date(fullTime);
 
-    var day = String(fullTime.getDate()).padStart(2, '0');
-    var month = String(fullTime.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var year = fullTime.getFullYear();
-    return (day + '/' + month + '/' + year);
+    var day = String(fullTime.getDate());
+    var month = String(fullTime.getMonth() + 1); //January is 0!
+    return (day + '/' + month);
 
 }
 
@@ -82,6 +80,7 @@ export const loadChosenRingtone = async () => {
     return ringtoneFromData;
 
 };
+
 
 export const loadIcons = async () => {
 

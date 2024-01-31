@@ -11,44 +11,51 @@
 
 
 import { Modal, Pressable, View, Button, TouchableWithoutFeedback, Platform } from 'react-native';
-import { React, useState } from 'react'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { React, useEffect, useState } from 'react'
+// import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-date-picker'
 import { useColorScheme } from "nativewind";
+import { useTranslation } from 'react-i18next';
+import "../languages/i18n";
 
 const TimePicker = (props) => {
 
     const [date, setDate] = useState(new Date());
     const isDarkMode = useColorScheme().colorScheme == 'dark';
+    const { t } = useTranslation();
 
+    useEffect(() => {
+
+        setDate(getClosestShabbat());
+        return () => { ignore = true };
+
+
+    }, [])
 
     const onTimeChangeIOS = () => {
 
         props.onSelect(selectedDate.getHours(), selectedDate.getMinutes());
     };
 
+    const onTimeChangeAndroid = (selectedDate) => {
+
+        props.onSelect(selectedDate);
+
+    };
 
 
+    const getClosestShabbat = () => {
 
-    const onTimeChangeAndroid = (event, selectedDate) => {
-
-        if (event?.type === 'set') {
-
-            props.onSelect(selectedDate.getHours(), selectedDate.getMinutes());
-        }
-        if (event?.type === 'dismissed') {
-
-            props.onCancel();
-        }
+        var currentDate = new Date();
+        var closestShabbat = new Date();
+        var diff = (6 - currentDate.getDay());
+        closestShabbat.setDate(currentDate.getDate() + diff)
+        return closestShabbat;
 
 
     };
 
-    const onTimeUpdateIOS = (event, selectedDate) => {
 
-        setDate(selectedDate);
-
-
-    };
 
 
     return (
@@ -69,7 +76,6 @@ const TimePicker = (props) => {
                         }>
 
 
-
                         <View className='flex-col items-center justify-center' >
 
                             <Pressable onPress={
@@ -78,31 +84,31 @@ const TimePicker = (props) => {
 
                                 <View className='flex-1 flex-col items-center justify-center'>
 
-
                                     <TouchableWithoutFeedback >
 
                                         <View className={`w - 80 h - 80 ${isDarkMode ? 'bg-black' : 'bg-white'} `}>
 
-                                            <DateTimePicker
+                                            {/* <DateTimePicker
                                                 mode="time"
                                                 display='spinner'
                                                 value={
                                                     date
                                                 }
                                                 onChange={onTimeUpdateIOS}
-                                            />
+                                            /> */}
 
                                             <Button
                                                 title={props.label}
-                                                onPress={onTimeChangeIOS}
+                                                onPress={onTimeChangeIOS}>
 
-                                            >
+
                                             </Button>
+
                                             <Button
                                                 title='cancel'
-                                                onPress={() => props.onCancel()}
+                                                onPress={() => props.onCancel()}>
 
-                                            >
+
                                             </Button>
                                         </View>
                                     </TouchableWithoutFeedback>
@@ -115,17 +121,36 @@ const TimePicker = (props) => {
 
                     <View name='android_picker'>
 
-                        {props.active &&
 
-                            <DateTimePicker
-                                mode="time"
-                                display='spinner'
-                                value={
-                                    new Date()
-                                }
-                                onChange={onTimeChangeAndroid}
-                            />
-                        }
+
+                        {/* // <DateTimePicker
+                            //     mode="time"
+                            //     display='spinner'
+                            //     value={
+                            //         new Date()
+                            //     }
+                            //     onChange={onTimeChangeAndroid}
+                            // /> */}
+
+
+                        <DatePicker
+                            modal
+                            open={props.active}
+                            date={date}
+                            title={t('date&hour')}
+                            confirmText={t('CONFIRM')}
+                            cancelText={t('CANCEL')}
+                            minimumDate={new Date()}
+                            textColor={'#38bdf8'}
+                            onConfirm={(date) => {
+                                setDate(date)
+                                onTimeChangeAndroid(date)
+                            }}
+                            onCancel={() => {
+                                props.onCancel()
+                            }}
+                        />
+
 
                     </View>
             }

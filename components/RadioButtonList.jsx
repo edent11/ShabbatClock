@@ -45,18 +45,6 @@ export default function RadioButtonList(props) {
 
     }, [props.isTabFocused])
 
-    useEffect(() => {
-        loadChosenRingtone().then(ringtoneData => {
-
-            if (ringtoneData != null) {
-                setUserOption(ringtoneData["id"] - 1);
-            }
-        });
-
-        return () => { ignore = true };
-
-
-    }, [props.isTabFocused])
 
     return (
         <View className='bg-opacity-60'>

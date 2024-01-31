@@ -25,7 +25,7 @@ class AlarmNotification extends React.Component {
 
         await notifee.createChannel(
             {
-                id: `ShabbatAlarm_${++this.channelNumber}`,
+                id: `ShabbatAlarm_111${++this.channelNumber}`,
                 name: 'Default Channel',
                 sound: ringtone,
 
@@ -56,12 +56,12 @@ class AlarmNotification extends React.Component {
         if (this.channelNumber == 0) {
 
             this.channelId = await notifee.createChannel({
-                id: `ShabbatAlarm_0`,
+                id: `ShabbatAlarm_221`,
                 name: 'Default Channel',
                 sound: 'bicycle_horn'
             });
         }
-        else this.channelId = `ShabbatAlarm_${this.channelNumber}`;
+        else this.channelId = `ShabbatAlarm_111${this.channelNumber}`;
 
 
     }
@@ -79,19 +79,8 @@ class AlarmNotification extends React.Component {
     };
 
     /* Schedule alarm */
-    async scheduleAlarm(hours, minutes, alarmDay) {
+    async scheduleAlarm(scheduleTime) {
 
-
-        const scheduleTime = new Date(Date.now());
-
-        if (hours < scheduleTime.getHours() ||
-            hours == scheduleTime.getHours() && minutes <= scheduleTime.getMinutes()) {
-            scheduleTime.setDate(scheduleTime.getDate() + 1);
-        }
-
-        scheduleTime.setHours(hours);
-        scheduleTime.setMinutes(minutes);
-        scheduleTime.setDate(scheduleTime.getDate() + alarmDay);
 
         // Create a time-based trigger
         const trigger = {
@@ -99,25 +88,72 @@ class AlarmNotification extends React.Component {
             timestamp: scheduleTime.getTime(),
         };
 
+        return new Promise(async (resolve, reject) => {
 
-        const notificationId = await notifee.createTriggerNotification({
-            title: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
-            body: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
-            android: {
-                channelId: this.channelId,
-                smallIcon: 'ic_alarm',
-                importance: AndroidImportance.HIGH,
-                largeIcon: this.appIcon,
-                pressAction: {
-                    id: 'default',
+            try {
+                await notifee.createTriggerNotification({
+                    title: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
+                    body: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
+                    android: {
+                        channelId: this.channelId,
+                        smallIcon: 'ic_alarm',
+                        importance: AndroidImportance.HIGH,
+                        largeIcon: this.appIcon,
+                        pressAction: {
+                            id: 'default',
+                        },
+                    },
+                },
+                    trigger,
+                ).then((notificationID) => {
+                    resolve(notificationID);
+
+
+                }).catch((err) => { reject(err) });
+            } catch (err) {
+                console.log(err);
+
+            }
+        })
+
+    }
+
+    /* Edit alarm time */
+    async changeAlarmTime(notificationId, newTime) {
+
+
+        // Create a time-based trigger
+        const trigger = {
+            type: TriggerType.TIMESTAMP,
+            timestamp: newTime.getTime(),
+        };
+
+        return new Promise(async (resolve, reject) => {
+
+            await notifee.createTriggerNotification({
+                id: notificationId,
+                title: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
+                body: I18nManager.isRTL ? "שעון מעורר שבת מופעל" : "Shabbat Alarm is on",
+                android: {
+                    channelId: this.channelId,
+                    smallIcon: 'ic_alarm',
+                    importance: AndroidImportance.HIGH,
+                    largeIcon: this.appIcon,
+                    pressAction: {
+                        id: 'default',
+                    },
                 },
             },
-        },
-            trigger,
-        )
+                trigger,
+            ).then((notificationID) => {
+                resolve(notificationID);
 
-        return Promise.all([notificationId, scheduleTime]);
+
+            }).catch((err) => { reject(err); });
+        })
+
     }
+
 
 
     /* Cancel alarm */
