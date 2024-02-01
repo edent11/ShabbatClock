@@ -2,7 +2,7 @@
   "expo": {
     "name": "ShabbatClock",
     "slug": "ShabbatClock",
-    "version": "1.0.1",
+    "version": "1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundImage": "./assets/background-image.png",
         "userInterfaceStyle": "automatic",
-        "useNextNotificationApi": true
+        "useNextNotificationApi": true,
+        "versionCode": 2
       },
       "package": "com.eDenT11.ShabbatClock"
     },
