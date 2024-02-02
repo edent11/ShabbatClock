@@ -23,7 +23,7 @@
         "backgroundImage": "./assets/background-image.png",
         "userInterfaceStyle": "automatic",
         "useNextNotificationApi": true,
-        "versionCode": 2
+        "versionCode": 3
       },
       "package": "com.eDenT11.ShabbatClock"
     },
