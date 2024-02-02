@@ -42,7 +42,7 @@ export default function SettingsScreen({ navigation, route }) {
 
             if (ringtoneData != null) {
                 setRingtone(ringtoneData["name"]);
-                setLastRingtoneChosen(ringtoneData["name"]);
+                setLastRingtoneChosen(ringtones[ringtoneData["id"] - 1]);
                 scrollRef.current?.scrollTo({
                     y: 41 * ringtoneData["id"],
                     animated: true,
@@ -50,7 +50,6 @@ export default function SettingsScreen({ navigation, route }) {
             }
             else {
                 setRingtone(ringtones[0].name);
-
             }
 
         });
@@ -148,14 +147,14 @@ export default function SettingsScreen({ navigation, route }) {
                             onPress={async () => {
 
 
-                                setRingtone(lastRingtoneChosen.name);
+                                setRingtone(lastRingtoneChosen["name"]);
                                 try {
                                     await sound?.stopAsync();
                                 } catch (e) {
                                     console.log(e);
                                 }
                                 Vibration.vibrate(200);
-                                await alarmsManager.changeAlarmRingtone(lastRingtoneChosen.name);
+                                await alarmsManager.changeAlarmRingtone(lastRingtoneChosen["name"]);
                                 await storeDataObject('ringtone', { id: lastRingtoneChosen["id"], name: lastRingtoneChosen["name"] });
 
                                 await storeData('repeatTime', dropDownValue);

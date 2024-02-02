@@ -95,10 +95,9 @@ export default function AlarmsScreen(props) {
 
     const updatePassedAlarms = async () => {
 
-        if (alarms.length === 0)
-            var alarmsArray = await getDataObject('alarms');
-        else
-            var alarmsArray = alarms;
+
+        var alarmsArray = await getDataObject('alarms');
+
         var currentTime = new Date(Date.now());
 
         if (alarmsArray != null) {
@@ -183,9 +182,8 @@ export default function AlarmsScreen(props) {
 
         alarm.enabledColor = newColorNumber;
 
+
     }
-
-
 
 
     async function scheduleAlarm(color, scheduleTime) {
@@ -302,6 +300,23 @@ export default function AlarmsScreen(props) {
 
         var alarm = alarms[alarmIdEdit];
 
+        if (alarm.isToggleEnabled) {
+
+            for (let color in alarm.notificationId) {
+
+                if (alarm.notificationId[color] != null) {
+
+                    alarmsManager.changeAlarmTime(alarm.notificationId[color], newTime).then((res) => {
+
+                        console.log(`color: ${color} changed time to Date: (${getDateDisplay(newTime)}) Time: (${getTimeDisplay(newTime)})`)
+                    });
+
+                }
+
+            }
+
+        }
+
         setAlarms(prevAlarms => {
             return prevAlarms?.filter((alarm, index) => {
                 if (index == alarmIdEdit) {
@@ -312,23 +327,6 @@ export default function AlarmsScreen(props) {
 
             })
         });
-
-        if (alarm.isToggleEnabled) {
-
-            for (let color in alarm.notificationId) {
-
-                if (alarm.notificationId[color] != null) {
-
-                    alarmsManager.changeAlarmTime(alarm.notificationId[color], newTime).then((res) => {
-
-                        console.log(`color: ${color} changed time to Date: (${getDateDisplay(newTime)}) Time: (${getTimeDisplay(newTime)})`)
-                        alarm.notificationId[color] = res;
-                    });
-
-                }
-
-            }
-        }
 
         showToast(t("alarm_updated"));
     }
@@ -380,7 +378,7 @@ export default function AlarmsScreen(props) {
 
         console.log("operation: delete \n");
 
-        alarmToDelete = {};
+        var alarmToDelete = {};
         setAlarms(prevAlarms => {
             return prevAlarms?.filter((alarm, index) => {
                 alarmToDelete = alarm;

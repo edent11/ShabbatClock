@@ -49,14 +49,13 @@ const AlarmClock = (props) => {
 
       {/* time & date view */}
 
-      <View name='time' className="flex flex-1 flex-row items-center h-full ">
+      <View name='time' className="flex flex-1 flex-col items-center justify-center mt-5 ">
 
-        <View className=" flex w-1/2 mt-8 items-center">
+        <View className="flex w-3/4 justify-center items-center">
           <Pressable onPress={() => props.onEditTime(props.id)} >
             {/* time view */}
-            <View className="flex justify-center w-auto h-auto pl-3 ">
-              <Text className="text-4xl  text-gray-600 dark:text-white font-Geneva01"
-                adjustsFontSizeToFit={true}
+            <View className="flex justify-center items-center ">
+              <Text className="text-4xl text-gray-600 dark:text-white font-Geneva01"
                 numberOfLines={1}>
                 {props.time}
               </Text>
@@ -65,8 +64,8 @@ const AlarmClock = (props) => {
             </View>
 
             {/* date view */}
-            <View className="flex justify-center items-center -mt-2 pl-3 ">
-              <Text className="  text-2xl  text-gray-600 dark:text-blue font-Geneva01"
+            <View className="flex justify-center items-center -mt-2">
+              <Text className="  text-2xl  text-gray-600 font-Geneva01"
                 adjustsFontSizeToFit={true}
                 numberOfLines={1}>
                 {props.date}
