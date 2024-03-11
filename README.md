@@ -9,7 +9,7 @@ Android alarm clock app for Shabbat using React Native
 - Both dark and light modes are supported
 
  # Libraries
- - Notifee
+ - Notifee for Notifications schedualing
 
 # Google Play Store Link
 https://play.google.com/store/apps/details?id=com.eDenT11.ShabbatClock
