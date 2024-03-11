@@ -1,6 +1,6 @@
 /*
     FileName: RadioButtonList.jsx
-    Role: Component, responsible for displaying the alarm ringtones for the user
+    Role: Component, responsible for displaying alarm ringtones 
 */
 
 import { View, Text, Pressable } from 'react-native';
