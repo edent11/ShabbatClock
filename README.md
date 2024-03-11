@@ -1,12 +1,15 @@
 # Shabbat-Clock
 
-Android alarm clock app for Shabbat using React Native. 
+Android alarm clock app for Shabbat using React Native
 
 # Features
 
 - Alarm clock scheduling 
 - Supported languages: English and Hebrew
 - Both dark and light modes are supported
+
+ # Libraries
+ - Notifee
 
 # Google Play Store Link
 https://play.google.com/store/apps/details?id=com.eDenT11.ShabbatClock
