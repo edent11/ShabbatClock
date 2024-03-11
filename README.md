@@ -9,10 +9,35 @@ Android alarm clock app for Shabbat using React Native
 - Both dark and light modes are supported
 
  # Libraries
- - Notifee for Notifications schedualing
+ - Notifee for notifications scheduling
+
+
 
 # Google Play Store Link
 https://play.google.com/store/apps/details?id=com.eDenT11.ShabbatClock
+
+# Project Tree
+ 
+```bash
+ShabbatClock/
+├── assets/
+│   ├── fonts/
+│   └── images/
+├── components/
+│   ├── AlarmClock.jsx # Displaying one alarm box
+│   ├── AlarmNotification.jsx # Alarm Notification Manager
+│   ├── DropDownComp.jsx # Displaying dropdown snooze-mode intervals
+│   ├── RadioButtonList.jsx # Displaying ringtones
+│   ├── Tabs.jsx # Bottom navigation bar
+│   └── TimePicker.jsx # Displaying customised Modal time-picker
+├── lagnguages/
+│   ├── he
+│   └── en
+└── screens-UI/
+    ├── AlarmsScreen.jsx  Displaying alarms
+    ├── InfoScreen.jsx Displaying info and guidness
+    └── SettingsScreen.jsx Picking ringtone and snooze-mode intervals
+```
 
 # Screenshots
 
