@@ -14,6 +14,7 @@ Android alarm clock app for Shabbat using React Native
 
 
 # Google Play Store Link
+#### Update: Currently out of market due to harmful NPM package, will be fixed with the new version. 
 https://play.google.com/store/apps/details?id=com.eDenT11.ShabbatClock
 
 # Project Tree
@@ -30,12 +31,12 @@ ShabbatClock/
 │   ├── RadioButtonList.jsx # Displaying ringtones
 │   ├── Tabs.jsx # Bottom navigation bar
 │   └── TimePicker.jsx # Displaying customised Modal time-picker
-├── lagnguages/
+├── languages/
 │   ├── he
 │   └── en
 └── screens-UI/
     ├── AlarmsScreen.jsx  Displaying alarms
-    ├── InfoScreen.jsx Displaying info and guidness
+    ├── InfoScreen.jsx Displaying info and guidelines
     └── SettingsScreen.jsx Picking ringtone and snooze-mode intervals
 ```
 
