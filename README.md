@@ -12,11 +12,6 @@ Android alarm clock app for Shabbat using React Native
  - Notifee for notifications scheduling
 
 
-
-# Google Play Store Link
-#### Update: Currently out of market due to harmful NPM package, will be fixed with the new version. 
-https://play.google.com/store/apps/details?id=com.eDenT11.ShabbatClock
-
 # Project Tree
  
 ```bash
